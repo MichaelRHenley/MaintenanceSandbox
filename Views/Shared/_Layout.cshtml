@@ -1,0 +1,421 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+@using MaintenanceSandbox.Services
+@inject ITierProvider TierProvider
+@using Microsoft.AspNetCore.Localization
+
+
+@functions {
+    string IsActive(string controller, string action)
+    {
+        var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+        var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
+        return (string.Equals(currentController, controller, StringComparison.OrdinalIgnoreCase)
+             && string.Equals(currentAction, action, StringComparison.OrdinalIgnoreCase))
+            ? "active"
+            : string.Empty;
+    }
+}
+
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var htmlLang = requestCulture?.RequestCulture.UICulture.Name ?? "en";
+
+    // Tier text via SR
+    var tierEnum = TierProvider.CurrentTier;
+    var tierClass = tierEnum switch
+    {
+        ProductTier.Enhanced => "sentinel-tier-pill--enhanced",
+        ProductTier.Premium => "sentinel-tier-pill--premium",
+        _ => "sentinel-tier-pill--standard"
+    };
+
+    string tierLabelKey = tierEnum switch
+    {
+        ProductTier.Enhanced => "Tier_Label_Enhanced",
+        ProductTier.Premium => "Tier_Label_Premium",
+        _ => "Tier_Label_Standard"
+    };
+
+    var tierText = SR[tierLabelKey];
+    var tierSuffix = SR["Tier_Label_TierSuffix"];
+}
+
+<!DOCTYPE html>
+<html lang="@htmlLang">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @SR["App_Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MaintenanceSandbox.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg sentinel-navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    @SR["App_Title"]
+                    <span>Sentinel</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <span></span>
+                    </span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link @IsActive("Home", "Index")"
+                               asp-area="" asp-controller="Home" asp-action="Index">
+                                @SR["Nav_Home"]
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @IsActive("Home", "Privacy")"
+                               asp-area="" asp-controller="Home" asp-action="Privacy">
+                                @SR["Nav_Privacy"]
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @IsActive("Maintenance", "Index")"
+                               asp-area="" asp-controller="Maintenance" asp-action="Index">
+                                @SR["Nav_Maintenance"]
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Parts" asp-action="Index">
+                                Parts
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Production" asp-action="Index">Production</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @IsActive("Settings", "Index")"
+                               asp-area="" asp-controller="Settings" asp-action="Index">
+                                @SR["Nav_Settings"]
+                            </a>
+                        </li>
+                        @await Component.InvokeAsync("OnboardingNav")
+                    </ul>
+
+                    <div class="d-flex align-items-center gap-3">
+
+                        <!-- Tier badge -->
+                        <div class="sentinel-tier-pill @tierClass">
+                            <span>@tierText</span>
+                            <small>@tierSuffix</small>
+                        </div>
+
+                        <!-- 🔔 Sound toggle -->
+                        <div class="sentinel-user-pill" id="sound-toggle-pill">
+                            <button type="button"
+                                    id="sound-toggle-btn"
+                                    class="btn btn-outline-light btn-sm"
+                                    data-text-on="@SR["Nav_SoundOn"]"
+                                    data-text-off="@SR["Nav_SoundOff"]">
+                                🔊 @SR["Nav_SoundOn"]
+                            </button>
+                        </div>
+
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <div style="font-size:12px; opacity:.6">
+                                tenant_id claim: @User.FindFirst("tenant_id")?.Value
+                            </div>
+                        }
+
+
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            var roleClaim = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? "User";
+                            var tenantId = User.FindFirst("TenantId")?.Value;
+
+                            // Map raw role claim → resource key
+                            string? roleKey = roleClaim switch
+                            {
+                                "Supervisor" => "Role_Supervisor",
+                                "Operator" => "Role_Operator",
+                                "MaintenanceManager" => "Role_MaintenanceManager",
+                                "Manager" => "Role_MaintenanceManager", // safety alias
+                                _ => null
+                            };
+
+                            var localizedRole = roleKey is null ? roleClaim : SR[roleKey];
+
+                            <div class="sentinel-user-pill">
+                                <span>
+                                    @User.Identity!.Name (@localizedRole)
+                                    @if (!string.IsNullOrEmpty(tenantId))
+                                    {
+                                        <small class="ms-2 text-muted">
+                                            @SR["Layout_TenantLabel"] @tenantId
+                                        </small>
+                                    }
+                                </span>
+
+                                <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-light">Sign out</button>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="sentinel-user-pill">
+                                <a href="/Identity/Account/Login" class="btn btn-outline-light">Sign in</a>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span>
+                &copy; 2025 - MaintenanceSandbox -
+                <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                    @SR["Nav_Privacy"]
+                </a>
+            </span>
+
+            <span id="global-live-indicator"
+                  class="sentinel-live-indicator sentinel-live-indicator--offline"
+                  data-label-live="@SR["LiveIndicator_Label_Live"]"
+                  data-label-reconnecting="@SR["LiveIndicator_Label_Reconnecting"]"
+                  data-label-offline="@SR["LiveIndicator_Label_Offline"]"
+                  data-toast-reconnected="@SR["Toast_Reconnected"]"
+                  data-toast-reconnecting="@SR["Toast_Reconnecting"]"
+                  data-toast-offline="@SR["Toast_Offline"]">
+                <span class="dot"></span>
+                <span class="label">@SR["LiveIndicator_Label_Offline"]</span>
+            </span>
+        </div>
+    </footer>
+
+    <audio id="maintenance-alert-sound"
+           src="~/sounds/alarm-siren-sound-effect-type-01-294194.mp3"
+           preload="auto">
+    </audio>
+
+    <audio id="maintenance-comment-sound"
+           src="~/sounds/chime-alert.mp3"
+           preload="auto">
+    </audio>
+
+    
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+
+    <script>
+        (function () {
+            const STORAGE_KEY = "sentinel.maintenance.sound.enabled";
+
+            function getSoundEnabled() {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw === null) return true; // default: ON
+                return raw === "true";
+            }
+
+            function setSoundEnabled(value) {
+                localStorage.setItem(STORAGE_KEY, value ? "true" : "false");
+            }
+
+                    function updateSoundToggleUi() {
+            const btn = document.getElementById("sound-toggle-btn");
+            if (!btn) return;
+
+            const enabled = getSoundEnabled();
+            btn.dataset.enabled = enabled ? "true" : "false";
+
+            const onText = btn.dataset.textOn || "Sound on";
+            const offText = btn.dataset.textOff || "Sound off";
+
+            btn.textContent = enabled ? `🔊 ${onText}` : `🔈 ${offText}`;
+            btn.classList.toggle("btn-outline-light", enabled);
+            btn.classList.toggle("btn-outline-secondary", !enabled);
+        }
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+                updateSoundToggleUi();
+
+                const btn = document.getElementById("sound-toggle-btn");
+                if (!btn) return;
+
+                btn.addEventListener("click", function () {
+                    const current = getSoundEnabled();
+                    setSoundEnabled(!current);
+                    updateSoundToggleUi();
+                });
+            });
+
+            window.sentinelSoundEnabled = function () {
+                return getSoundEnabled();
+            };
+
+            window.sentinelHapticAlert = function () {
+                if (!getSoundEnabled()) return;
+                if (!("vibrate" in navigator)) return;
+
+                try {
+                    navigator.vibrate([120, 60, 120]);
+                } catch (e) {
+                    console.warn("Vibration not available or blocked:", e);
+                }
+            };
+                    // 🔊 Notification engine: separate sounds + cooldown
+        const NOTIFY_COOLDOWN_MS = 8000; // 8 seconds
+        let lastEmAlertTs = 0;
+        let lastCommentChimeTs = 0;
+
+        function playWithCooldown(audioElementId, isEmAlert) {
+            // Respect global sound toggle
+            if (!getSoundEnabled()) return;
+
+            const now = Date.now();
+
+            if (isEmAlert) {
+                if (now - lastEmAlertTs < NOTIFY_COOLDOWN_MS) return;
+                lastEmAlertTs = now;
+            } else {
+                if (now - lastCommentChimeTs < NOTIFY_COOLDOWN_MS) return;
+                lastCommentChimeTs = now;
+            }
+
+            const audio = document.getElementById(audioElementId);
+            if (!audio) return;
+
+            try {
+                audio.currentTime = 0;
+                audio.play().catch(err => {
+                    console.warn("Audio play blocked:", err);
+                });
+            } catch (err) {
+                console.warn("Audio playback error:", err);
+            }
+
+            // Optional haptics
+            if (window.sentinelHapticAlert) {
+                window.sentinelHapticAlert();
+            }
+        }
+
+        // 🌟 Public helpers for pages to call
+        window.sentinelPlayNewEmAlert = function () {
+            playWithCooldown("maintenance-alert-sound", true);
+        };
+
+        window.sentinelPlayCommentChime = function () {
+            playWithCooldown("maintenance-comment-sound", false);
+        };
+
+
+            function showToast(message, kind) {
+                const el = document.getElementById("sentinel-toast");
+                if (!el || !message) return;
+
+                el.className = "sentinel-toast";
+                if (kind) {
+                    el.classList.add("sentinel-toast--" + kind);
+                }
+
+                el.textContent = message;
+                el.classList.add("show");
+
+                clearTimeout(el._hideTimer);
+                el._hideTimer = setTimeout(() => {
+                    el.classList.remove("show");
+                }, 4000);
+            }
+
+                   let lastState = null; // "ok", "reconnecting", "offline"
+
+        window.sentinelUpdateLiveIndicator = function (state, options) {
+            const local  = document.getElementById("live-indicator");
+            const global = document.getElementById("global-live-indicator");
+            const targets = [local, global].filter(Boolean);
+            if (!targets.length) return;
+
+            const raw = (state || "").toLowerCase();
+            let normalized;
+            if (raw === "ok" || raw === "live" || raw === "online") {
+                normalized = "ok";
+            } else if (raw === "reconnecting" || raw === "connecting") {
+                normalized = "reconnecting";
+            } else {
+                normalized = "offline";
+            }
+
+            // Grab localized labels & messages from data attributes
+            const g = global;
+            const labelLive         = g?.dataset.labelLive         || "Live";
+            const labelReconnecting = g?.dataset.labelReconnecting || "Reconnecting…";
+            const labelOffline      = g?.dataset.labelOffline      || "Offline";
+            const toastReconnected  = g?.dataset.toastReconnected  || "Reconnected to live updates.";
+            const toastReconnecting = g?.dataset.toastReconnecting || "Connection disrupted. Attempting to reconnect…";
+            const toastOffline      = g?.dataset.toastOffline      || "Live updates are offline. Changes may not appear in real time.";
+
+            targets.forEach(el => {
+                el.classList.remove(
+                    "sentinel-live-indicator--ok",
+                    "sentinel-live-indicator--reconnecting",
+                    "sentinel-live-indicator--offline"
+                );
+
+                const label = el.querySelector(".label");
+
+                switch (normalized) {
+                    case "ok":
+                        el.classList.add("sentinel-live-indicator--ok");
+                        if (label) label.textContent = labelLive;
+                        break;
+                    case "reconnecting":
+                        el.classList.add("sentinel-live-indicator--reconnecting");
+                        if (label) label.textContent = labelReconnecting;
+                        break;
+                    case "offline":
+                    default:
+                        el.classList.add("sentinel-live-indicator--offline");
+                        if (label) label.textContent = labelOffline;
+                        break;
+                }
+            });
+
+            const suppressToast = options && options.suppressToast;
+            if (!suppressToast && lastState && lastState !== normalized) {
+                if (normalized === "ok") {
+                    showToast(toastReconnected, "success");
+                } else if (normalized === "reconnecting") {
+                    showToast(toastReconnecting, "warning");
+                } else if (normalized === "offline") {
+                    showToast(toastOffline, "error");
+                }
+            }
+
+            lastState = normalized;
+        };
+        })();
+    </script>
+
+    @RenderSection("Scripts", required: false)
+    <div id="sentinel-toast" class="sentinel-toast"></div>
+
+</body>
+</html>

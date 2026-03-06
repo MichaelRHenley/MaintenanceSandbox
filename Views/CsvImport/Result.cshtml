@@ -1,0 +1,52 @@
+﻿@model MaintenanceSandbox.ViewModels.CsvImportResultViewModel
+
+@{
+    ViewData["Title"] = "CSV Import Result";
+}
+
+<div class="container py-4">
+    <h1 class="h3 mb-3">CSV Import Result</h1>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">Import type</dt>
+                <dd class="col-sm-9">@Model.ImportType</dd>
+
+                <dt class="col-sm-3">Dry run</dt>
+                <dd class="col-sm-9">@Model.IsDryRun</dd>
+
+                <dt class="col-sm-3">Total rows</dt>
+                <dd class="col-sm-9">@Model.TotalRows</dd>
+
+                <dt class="col-sm-3">Inserted</dt>
+                <dd class="col-sm-9">@Model.Inserted</dd>
+
+                <dt class="col-sm-3">Updated</dt>
+                <dd class="col-sm-9">@Model.Updated</dd>
+            </dl>
+        </div>
+    </div>
+
+    @if (Model.Errors.Any())
+    {
+        <div class="alert alert-warning">
+            <strong>Validation issues:</strong>
+            <ul class="mb-0">
+                @foreach (var err in Model.Errors)
+                {
+                    <li>@err</li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success">
+            Import completed with no reported errors.
+        </div>
+    }
+
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to import</a>
+</div>
+

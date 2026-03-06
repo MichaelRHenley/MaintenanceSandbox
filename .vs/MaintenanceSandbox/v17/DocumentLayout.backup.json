@@ -1,0 +1,2308 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\migrations\\directorydb\\20260225234226_directory_pendingchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:migrations\\directorydb\\20260225234226_directory_pendingchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\data\\appdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\data\\appdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\maintenancecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\maintenancecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\viewmodels\\createmaintenancerequestviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:viewmodels\\createmaintenancerequestviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\viewmodels\\maintenanceindexvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\viewmodels\\maintenanceindexvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\masterdata\\area.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\masterdata\\area.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\masterdata\\site.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\masterdata\\site.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\masterdata\\workcenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\masterdata\\workcenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\tenant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\tenant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\migrations\\20260225215327_syncmaintenancerequestrelationships.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:migrations\\20260225215327_syncmaintenancerequestrelationships.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\maintenancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\maintenancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\maintenancesuggestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\maintenancesuggestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\userinvitesadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\userinvitesadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\viewmodels\\admin\\inviteuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\viewmodels\\admin\\inviteuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\models\\tenants\\tenantuserinvite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\models\\tenants\\tenantuserinvite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\itenantprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\itenantprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\viewmodels\\admin\\userrowvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:viewmodels\\admin\\userrowvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\viewmodels\\admin\\createuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:viewmodels\\admin\\createuservm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\usersadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\usersadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\models\\tenants\\tenantuserrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\models\\tenants\\tenantuserrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\tenantuserinvitescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\tenantuserinvitescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\services\\invitetoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\services\\invitetoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\models\\viewmodels\\inviteacceptvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\models\\viewmodels\\inviteacceptvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\demo\\idemomode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:demo\\idemomode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\services\\invitetoken.cs||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\services\\invitetoken.cs||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\usersadmin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\usersadmin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\demo\\demooptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:demo\\demooptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\data\\directorydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\data\\directorydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\subscribecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\subscribecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\usersadmin\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\usersadmin\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\maintenance\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\maintenance\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\settings\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\settings\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\equipmentrequestsadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\equipmentrequestsadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\masterdata\\equipmentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\masterdata\\equipmentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\equipmentadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\equipmentadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\viewmodels\\equipmentbulkimportvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:viewmodels\\equipmentbulkimportvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\viewmodels\\equipmentcreatevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:viewmodels\\equipmentcreatevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\onboardingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\onboardingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\models\\tenants\\tenantsubscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\models\\tenants\\tenantsubscription.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\middleware\\subscriptiongatemiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:middleware\\subscriptiongatemiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\onboarding\\onboardingsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\onboarding\\onboardingsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\viewcomponents\\onboardingnavviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:viewcomponents\\onboardingnavviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\onboarding\\onboardingaiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\onboarding\\onboardingaiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\onboarding\\onboardingmessagevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\onboarding\\onboardingmessagevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\masterdata\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\masterdata\\equipment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\maintenance\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\maintenance\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\requiretenantfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\requiretenantfilter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\tenantprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\tenantprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\maintenance\\_commentslist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\maintenance\\_commentslist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\demo\\demomode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:demo\\demomode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\maintenancemessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\maintenancemessage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\itierprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\itierprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\itenantscoped.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\itenantscoped.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\idemouserprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\idemouserprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\demouserprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\demouserprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\demouser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\demouser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\demotenant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\demotenant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\onboarding\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\onboarding\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\shared\\components\\onboardingnav\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\shared\\components\\onboardingnav\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\base\\tenantentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\base\\tenantentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\onboarding\\requests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\onboarding\\requests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\production\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\production\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\models\\tenants\\tenant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\models\\tenants\\tenant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\resources\\sharedresource.en-ca.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:resources\\sharedresource.en-ca.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\resources\\sharedresource.en-ca.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:resources\\sharedresource.en-ca.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\onboarding\\ionboardingaiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\onboarding\\ionboardingaiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\onboarding\\onboardingdraft.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\onboarding\\onboardingdraft.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\iaiassistantclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\iaiassistantclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\onboarding\\draftmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\onboarding\\draftmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\ai\\onboardingaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\ai\\onboardingaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\ai\\maintenanceaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\ai\\maintenanceaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\ai\\ionboardingaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\ai\\ionboardingaiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\ai\\ichatmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\ai\\ichatmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\stubaiassistantclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\stubaiassistantclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\onboarding\\claudedtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\onboarding\\claudedtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\parts\\addinventoryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\parts\\addinventoryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\migrations\\20251223121220_initbusinessdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:migrations\\20251223121220_initbusinessdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\site.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\site.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\subscribe\\start.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\subscribe\\start.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\security\\tenantclaimstransformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:security\\tenantclaimstransformation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\subscribe\\required.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\subscribe\\required.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\subscribestartvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\subscribestartvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\part.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\part.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\services\\tenantprovisioningservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\services\\tenantprovisioningservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\directory\\services\\itenantprovisioningservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:directory\\services\\itenantprovisioningservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\areas\\identity\\data\\maintenancesandboxcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:areas\\identity\\data\\maintenancesandboxcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\scaffoldingreadme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:scaffoldingreadme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\bomitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\bomitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\asset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\asset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\inventorylevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\inventorylevel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\locationbin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\locationbin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\aicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\aicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\settingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\settingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\productioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\productioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\partscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\partscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\languagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\languagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\demousercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\demousercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\csvimportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\csvimportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\aitestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\aitestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\tierprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\tierprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\maintenancesandbox.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:maintenancesandbox.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\production\\productioncountlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\production\\productioncountlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\production\\productionindexvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\production\\productionindexvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\resources\\sharedresource.es-mx.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:resources\\sharedresource.es-mx.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\resources\\sharedresource.fr-ca.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:resources\\sharedresource.fr-ca.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\maintenance\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\maintenance\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\shared\\_aihelplauncher.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\shared\\_aihelplauncher.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\data\\aihelpintent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:data\\aihelpintent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\ai\\claudechatmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\ai\\claudechatmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\suggestionitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\suggestionitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\parts\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\parts\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\parts\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\parts\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\parts\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\parts\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\parts\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\parts\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\parts\\addbomitem.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\parts\\addbomitem.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\parts\\addinventory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\parts\\addinventory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\ai\\aioptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\ai\\aioptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\models\\parts\\addbomitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:models\\parts\\addbomitemviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\csvimport\\result.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\csvimport\\result.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\csvimport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\csvimport\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\viewmodels\\csvimportresultviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:viewmodels\\csvimportresultviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\controllers\\demouserviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:controllers\\demouserviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\views\\demouser\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:views\\demouser\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\hubs\\maintenancehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:hubs\\maintenancehub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\resources\\sharedresources.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:resources\\sharedresources.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\requeststatusrules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\requeststatusrules.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\services\\imaintenancesuggestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:services\\imaintenancesuggestionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\migrations\\20251223124106_addonboardingsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:migrations\\20251223124106_addonboardingsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\migrations\\20251230161705_addtenantidtomaintenancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:migrations\\20251230161705_addtenantidtomaintenancerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|c:\\users\\michael\\source\\repos\\maintenancesandbox\\migrations\\20260225232823_addtenants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{70E6A9E6-D8D6-49ED-B16F-9789AAAFD21E}|MaintenanceSandbox.csproj|solutionrelative:migrations\\20260225232823_addtenants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20260225234226_Directory_PendingChanges.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\DirectoryDb\\20260225234226_Directory_PendingChanges.cs",
+              "RelativeDocumentMoniker": "Migrations\\DirectoryDb\\20260225234226_Directory_PendingChanges.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\DirectoryDb\\20260225234226_Directory_PendingChanges.cs",
+              "RelativeToolTip": "Migrations\\DirectoryDb\\20260225234226_Directory_PendingChanges.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T23:42:26.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AppDbContextFactory.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Data\\AppDbContextFactory.cs",
+              "RelativeDocumentMoniker": "Directory\\Data\\AppDbContextFactory.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Data\\AppDbContextFactory.cs",
+              "RelativeToolTip": "Directory\\Data\\AppDbContextFactory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T23:30:08.282Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 142,
+              "Title": "20260225232823_AddTenants.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20260225232823_AddTenants.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225232823_AddTenants.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20260225232823_AddTenants.cs",
+              "RelativeToolTip": "Migrations\\20260225232823_AddTenants.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T23:28:24.195Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DbInitializer.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Data\\DbInitializer.cs",
+              "RelativeDocumentMoniker": "Data\\DbInitializer.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Data\\DbInitializer.cs",
+              "RelativeToolTip": "Data\\DbInitializer.cs",
+              "ViewState": "AgIAABcBAAAAAAAAAAAkwEwBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-23T19:34:12.523Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "UsersAdminController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\UsersAdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersAdminController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\UsersAdminController.cs",
+              "RelativeToolTip": "Controllers\\UsersAdminController.cs",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAkwKoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T15:05:17.892Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MaintenanceRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MaintenanceRequest.cs",
+              "RelativeDocumentMoniker": "Models\\MaintenanceRequest.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MaintenanceRequest.cs",
+              "RelativeToolTip": "Models\\MaintenanceRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-23T19:31:22.663Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAJIAAAAAAAAAAAAjwLYAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-23T19:34:42.648Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "UserRowVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\Admin\\UserRowVm.cs",
+              "RelativeDocumentMoniker": "ViewModels\\Admin\\UserRowVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\Admin\\UserRowVm.cs",
+              "RelativeToolTip": "ViewModels\\Admin\\UserRowVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T15:07:42.595Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAAJwAAAAAAAAAAAAYwMMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-23T19:33:40.27Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MaintenanceController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\MaintenanceController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MaintenanceController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\MaintenanceController.cs",
+              "RelativeToolTip": "Controllers\\MaintenanceController.cs",
+              "ViewState": "AgIAAAwCAAAAAAAAAAAmwGwCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-23T19:36:45.258Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CreateMaintenanceRequestViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\CreateMaintenanceRequestViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\CreateMaintenanceRequestViewModel.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\CreateMaintenanceRequestViewModel.cs",
+              "RelativeToolTip": "ViewModels\\CreateMaintenanceRequestViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-23T20:01:01.383Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Tenant.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Tenant.cs",
+              "RelativeDocumentMoniker": "Models\\Tenant.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Tenant.cs",
+              "RelativeToolTip": "Models\\Tenant.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T02:16:01.501Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Area.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\Area.cs",
+              "RelativeDocumentMoniker": "Models\\MasterData\\Area.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\Area.cs",
+              "RelativeToolTip": "Models\\MasterData\\Area.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-13T12:45:29.967Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MaintenanceIndexVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\ViewModels\\MaintenanceIndexVm.cs",
+              "RelativeDocumentMoniker": "Models\\ViewModels\\MaintenanceIndexVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\ViewModels\\MaintenanceIndexVm.cs",
+              "RelativeToolTip": "Models\\ViewModels\\MaintenanceIndexVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T17:20:20.898Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "WorkCenter.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\WorkCenter.cs",
+              "RelativeDocumentMoniker": "Models\\MasterData\\WorkCenter.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\WorkCenter.cs",
+              "RelativeToolTip": "Models\\MasterData\\WorkCenter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-13T12:46:25.013Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Site.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\Site.cs",
+              "RelativeDocumentMoniker": "Models\\MasterData\\Site.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\Site.cs",
+              "RelativeToolTip": "Models\\MasterData\\Site.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-13T12:45:01.306Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "InviteToken.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Services\\InviteToken.cs",
+              "RelativeDocumentMoniker": "Directory\\Services\\InviteToken.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Services\\InviteToken.cs",
+              "RelativeToolTip": "Directory\\Services\\InviteToken.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T16:20:55.49Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "InviteToken.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Services\\InviteToken.cs",
+              "RelativeDocumentMoniker": "Directory\\Services\\InviteToken.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Services\\InviteToken.cs",
+              "RelativeToolTip": "Directory\\Services\\InviteToken.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T15:58:01.604Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ITenantProvider.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\ITenantProvider.cs",
+              "RelativeDocumentMoniker": "Services\\ITenantProvider.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\ITenantProvider.cs",
+              "RelativeToolTip": "Services\\ITenantProvider.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T02:18:27.83Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "20260225215327_SyncMaintenanceRequestRelationships.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20260225215327_SyncMaintenanceRequestRelationships.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260225215327_SyncMaintenanceRequestRelationships.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20260225215327_SyncMaintenanceRequestRelationships.cs",
+              "RelativeToolTip": "Migrations\\20260225215327_SyncMaintenanceRequestRelationships.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAYwEcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T21:53:29.977Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "TenantUserInvitesController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\TenantUserInvitesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TenantUserInvitesController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\TenantUserInvitesController.cs",
+              "RelativeToolTip": "Controllers\\TenantUserInvitesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFAAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T15:59:48.736Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MaintenanceSuggestionService.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\MaintenanceSuggestionService.cs",
+              "RelativeDocumentMoniker": "Services\\MaintenanceSuggestionService.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\MaintenanceSuggestionService.cs",
+              "RelativeToolTip": "Services\\MaintenanceSuggestionService.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAkwD8AAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T21:03:44.079Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "CreateUserVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\Admin\\CreateUserVm.cs",
+              "RelativeDocumentMoniker": "ViewModels\\Admin\\CreateUserVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\Admin\\CreateUserVm.cs",
+              "RelativeToolTip": "ViewModels\\Admin\\CreateUserVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T15:07:11.499Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "EquipmentRequestsAdminController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\EquipmentRequestsAdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EquipmentRequestsAdminController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\EquipmentRequestsAdminController.cs",
+              "RelativeToolTip": "Controllers\\EquipmentRequestsAdminController.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAYwFsAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T16:56:25.373Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "TenantUserRole.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\Tenants\\TenantUserRole.cs",
+              "RelativeDocumentMoniker": "Directory\\Models\\Tenants\\TenantUserRole.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\Tenants\\TenantUserRole.cs",
+              "RelativeToolTip": "Directory\\Models\\Tenants\\TenantUserRole.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T22:14:35.862Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "DirectoryDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Data\\DirectoryDbContext.cs",
+              "RelativeDocumentMoniker": "Directory\\Data\\DirectoryDbContext.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Data\\DirectoryDbContext.cs",
+              "RelativeToolTip": "Directory\\Data\\DirectoryDbContext.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAwwEEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T22:15:20.882Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "TenantUserInvite.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\Tenants\\TenantUserInvite.cs",
+              "RelativeDocumentMoniker": "Directory\\Models\\Tenants\\TenantUserInvite.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\Tenants\\TenantUserInvite.cs",
+              "RelativeToolTip": "Directory\\Models\\Tenants\\TenantUserInvite.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T15:47:17.907Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UserInvitesAdminController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\UserInvitesAdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserInvitesAdminController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\UserInvitesAdminController.cs",
+              "RelativeToolTip": "Controllers\\UserInvitesAdminController.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAUwG0AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T20:28:24.25Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "InviteUserVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\ViewModels\\Admin\\InviteUserVm.cs",
+              "RelativeDocumentMoniker": "Models\\ViewModels\\Admin\\InviteUserVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\ViewModels\\Admin\\InviteUserVm.cs",
+              "RelativeToolTip": "Models\\ViewModels\\Admin\\InviteUserVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-25T20:29:43.251Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "InviteAcceptVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\ViewModels\\InviteAcceptVm.cs",
+              "RelativeDocumentMoniker": "Directory\\Models\\ViewModels\\InviteAcceptVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\ViewModels\\InviteAcceptVm.cs",
+              "RelativeToolTip": "Directory\\Models\\ViewModels\\InviteAcceptVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-04T16:28:33.47Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AppUser.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\AppUser.cs",
+              "RelativeDocumentMoniker": "Models\\AppUser.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\AppUser.cs",
+              "RelativeToolTip": "Models\\AppUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T21:54:36.544Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "DemoOptions.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Demo\\DemoOptions.cs",
+              "RelativeDocumentMoniker": "Demo\\DemoOptions.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Demo\\DemoOptions.cs",
+              "RelativeToolTip": "Demo\\DemoOptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T16:34:12.36Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\UsersAdmin\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\UsersAdmin\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\UsersAdmin\\Index.cshtml",
+              "RelativeToolTip": "Views\\UsersAdmin\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-04T15:08:51.305Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "IDemoMode.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Demo\\IDemoMode.cs",
+              "RelativeDocumentMoniker": "Demo\\IDemoMode.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Demo\\IDemoMode.cs",
+              "RelativeToolTip": "Demo\\IDemoMode.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T16:35:09.998Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "EquipmentRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\EquipmentRequest.cs",
+              "RelativeDocumentMoniker": "Models\\MasterData\\EquipmentRequest.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\EquipmentRequest.cs",
+              "RelativeToolTip": "Models\\MasterData\\EquipmentRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T15:45:39.945Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "EquipmentAdminController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\EquipmentAdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EquipmentAdminController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\EquipmentAdminController.cs",
+              "RelativeToolTip": "Controllers\\EquipmentAdminController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAowCgAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T16:55:41.435Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "OnboardingNavViewComponent.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewComponents\\OnboardingNavViewComponent.cs",
+              "RelativeDocumentMoniker": "ViewComponents\\OnboardingNavViewComponent.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewComponents\\OnboardingNavViewComponent.cs",
+              "RelativeToolTip": "ViewComponents\\OnboardingNavViewComponent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T16:24:22.68Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "Directory\\Models\\ApplicationUser.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\ApplicationUser.cs",
+              "RelativeToolTip": "Directory\\Models\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T22:12:55.984Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "SubscribeController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\SubscribeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\SubscribeController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\SubscribeController.cs",
+              "RelativeToolTip": "Controllers\\SubscribeController.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAowGMAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T10:36:02.942Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\UsersAdmin\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\UsersAdmin\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\UsersAdmin\\Create.cshtml",
+              "RelativeToolTip": "Views\\UsersAdmin\\Create.cshtml",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAgwEEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-04T15:09:24.471Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Maintenance\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\Maintenance\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Maintenance\\Create.cshtml",
+              "RelativeToolTip": "Views\\Maintenance\\Create.cshtml",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAAFQAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-23T20:02:21.679Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "EquipmentCreateVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\EquipmentCreateVm.cs",
+              "RelativeDocumentMoniker": "ViewModels\\EquipmentCreateVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\EquipmentCreateVm.cs",
+              "RelativeToolTip": "ViewModels\\EquipmentCreateVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T16:58:34.787Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Settings\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Settings\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Settings\\Index.cshtml",
+              "RelativeToolTip": "Views\\Settings\\Index.cshtml",
+              "ViewState": "AgIAABcAAAAAAAAAAAAgwEQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T21:44:15.776Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Account\\Login.cshtml",
+              "RelativeToolTip": "Views\\Account\\Login.cshtml",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAmwDIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T22:36:02.117Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "EquipmentBulkImportVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\EquipmentBulkImportVm.cs",
+              "RelativeDocumentMoniker": "ViewModels\\EquipmentBulkImportVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\EquipmentBulkImportVm.cs",
+              "RelativeToolTip": "ViewModels\\EquipmentBulkImportVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-31T16:59:01.591Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "OnboardingAiClient.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Onboarding\\OnboardingAiClient.cs",
+              "RelativeDocumentMoniker": "Services\\Onboarding\\OnboardingAiClient.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Onboarding\\OnboardingAiClient.cs",
+              "RelativeToolTip": "Services\\Onboarding\\OnboardingAiClient.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAIAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T15:01:21.016Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "OnboardingMessageVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\OnboardingMessageVm.cs",
+              "RelativeDocumentMoniker": "Models\\Onboarding\\OnboardingMessageVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\OnboardingMessageVm.cs",
+              "RelativeToolTip": "Models\\Onboarding\\OnboardingMessageVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:36:34.66Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "OnboardingSession.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\OnboardingSession.cs",
+              "RelativeDocumentMoniker": "Models\\Onboarding\\OnboardingSession.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\OnboardingSession.cs",
+              "RelativeToolTip": "Models\\Onboarding\\OnboardingSession.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:35:48.556Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "SubscriptionGateMiddleware.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Middleware\\SubscriptionGateMiddleware.cs",
+              "RelativeDocumentMoniker": "Middleware\\SubscriptionGateMiddleware.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Middleware\\SubscriptionGateMiddleware.cs",
+              "RelativeToolTip": "Middleware\\SubscriptionGateMiddleware.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAqwEEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T10:42:20.826Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "TenantSubscription.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\Tenants\\TenantSubscription.cs",
+              "RelativeDocumentMoniker": "Directory\\Models\\Tenants\\TenantSubscription.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\Tenants\\TenantSubscription.cs",
+              "RelativeToolTip": "Directory\\Models\\Tenants\\TenantSubscription.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T22:14:05.664Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "OnboardingController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\OnboardingController.cs",
+              "RelativeDocumentMoniker": "Controllers\\OnboardingController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\OnboardingController.cs",
+              "RelativeToolTip": "Controllers\\OnboardingController.cs",
+              "ViewState": "AgIAAMMAAAAAAAAAAAAUwPoAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:38:30.937Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "Equipment.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\Equipment.cs",
+              "RelativeDocumentMoniker": "Models\\MasterData\\Equipment.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MasterData\\Equipment.cs",
+              "RelativeToolTip": "Models\\MasterData\\Equipment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-13T12:47:00.231Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Maintenance\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Maintenance\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Maintenance\\Index.cshtml",
+              "RelativeToolTip": "Views\\Maintenance\\Index.cshtml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAEgAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-23T19:37:35.819Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAJAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-23T19:38:10.101Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-24T21:13:26.664Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "_CommentsList.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Maintenance\\_CommentsList.cshtml",
+              "RelativeDocumentMoniker": "Views\\Maintenance\\_CommentsList.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Maintenance\\_CommentsList.cshtml",
+              "RelativeToolTip": "Views\\Maintenance\\_CommentsList.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-29T12:43:07.996Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "RequireTenantFilter.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\RequireTenantFilter.cs",
+              "RelativeDocumentMoniker": "Services\\RequireTenantFilter.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\RequireTenantFilter.cs",
+              "RelativeToolTip": "Services\\RequireTenantFilter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T22:26:46.754Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "TenantProvider.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\TenantProvider.cs",
+              "RelativeDocumentMoniker": "Services\\TenantProvider.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\TenantProvider.cs",
+              "RelativeToolTip": "Services\\TenantProvider.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T02:18:54.29Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "ITierProvider.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\ITierProvider.cs",
+              "RelativeDocumentMoniker": "Services\\ITierProvider.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\ITierProvider.cs",
+              "RelativeToolTip": "Services\\ITierProvider.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T21:14:32.357Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "IDemoUserProvider.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\IDemoUserProvider.cs",
+              "RelativeDocumentMoniker": "Services\\IDemoUserProvider.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\IDemoUserProvider.cs",
+              "RelativeToolTip": "Services\\IDemoUserProvider.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T21:50:04.396Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "DemoMode.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Demo\\DemoMode.cs",
+              "RelativeDocumentMoniker": "Demo\\DemoMode.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Demo\\DemoMode.cs",
+              "RelativeToolTip": "Demo\\DemoMode.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T16:35:49.87Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "MaintenanceMessage.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MaintenanceMessage.cs",
+              "RelativeDocumentMoniker": "Models\\MaintenanceMessage.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\MaintenanceMessage.cs",
+              "RelativeToolTip": "Models\\MaintenanceMessage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-23T19:32:05.008Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "ITenantScoped.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\ITenantScoped.cs",
+              "RelativeDocumentMoniker": "Models\\ITenantScoped.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\ITenantScoped.cs",
+              "RelativeToolTip": "Models\\ITenantScoped.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T16:39:12.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "DemoUserProvider.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\DemoUserProvider.cs",
+              "RelativeDocumentMoniker": "Services\\DemoUserProvider.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\DemoUserProvider.cs",
+              "RelativeToolTip": "Services\\DemoUserProvider.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAwFQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T21:50:35.253Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "DemoUser.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\DemoUser.cs",
+              "RelativeDocumentMoniker": "Services\\DemoUser.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\DemoUser.cs",
+              "RelativeToolTip": "Services\\DemoUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T21:49:28.37Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "DemoTenant.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\DemoTenant.cs",
+              "RelativeDocumentMoniker": "Models\\DemoTenant.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\DemoTenant.cs",
+              "RelativeToolTip": "Models\\DemoTenant.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T16:20:43.324Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 141,
+              "Title": "20251230161705_AddTenantIdToMaintenanceRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20251230161705_AddTenantIdToMaintenanceRequest.cs",
+              "RelativeDocumentMoniker": "Migrations\\20251230161705_AddTenantIdToMaintenanceRequest.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20251230161705_AddTenantIdToMaintenanceRequest.cs",
+              "RelativeToolTip": "Migrations\\20251230161705_AddTenantIdToMaintenanceRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T16:17:06.054Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 69,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Production\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Production\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Production\\Index.cshtml",
+              "RelativeToolTip": "Views\\Production\\Index.cshtml",
+              "ViewState": "AgIAAPkAAAAAAAAAAAAmwCMBAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-13T10:30:11.61Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Shared\\Components\\OnboardingNav\\Default.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\Components\\OnboardingNav\\Default.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Shared\\Components\\OnboardingNav\\Default.cshtml",
+              "RelativeToolTip": "Views\\Shared\\Components\\OnboardingNav\\Default.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-27T17:01:38.418Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 68,
+              "Title": "Requests.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\Requests.cs",
+              "RelativeDocumentMoniker": "Models\\Onboarding\\Requests.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\Requests.cs",
+              "RelativeToolTip": "Models\\Onboarding\\Requests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T14:49:44.128Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 70,
+              "Title": "Tenant.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\Tenants\\Tenant.cs",
+              "RelativeDocumentMoniker": "Directory\\Models\\Tenants\\Tenant.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Models\\Tenants\\Tenant.cs",
+              "RelativeToolTip": "Directory\\Models\\Tenants\\Tenant.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-15T22:13:31.835Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 72,
+              "Title": "SharedResource.en-CA.resx",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResource.en-CA.resx",
+              "RelativeDocumentMoniker": "Resources\\SharedResource.en-CA.resx",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResource.en-CA.resx",
+              "RelativeToolTip": "Resources\\SharedResource.en-CA.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-11-25T22:22:53.246Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 67,
+              "Title": "TenantEntity.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Base\\TenantEntity.cs",
+              "RelativeDocumentMoniker": "Models\\Base\\TenantEntity.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Base\\TenantEntity.cs",
+              "RelativeToolTip": "Models\\Base\\TenantEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T02:15:24.154Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 75,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "wwwroot\\css\\site.css",
+              "ViewState": "AgIAAD8GAAAAAAAAAAAIwKYGAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-26T21:51:27.028Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 74,
+              "Title": "OnboardingDraft.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\OnboardingDraft.cs",
+              "RelativeDocumentMoniker": "Models\\Onboarding\\OnboardingDraft.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\OnboardingDraft.cs",
+              "RelativeToolTip": "Models\\Onboarding\\OnboardingDraft.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:55:47.092Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Onboarding\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Onboarding\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Onboarding\\Index.cshtml",
+              "RelativeToolTip": "Views\\Onboarding\\Index.cshtml",
+              "ViewState": "AgIAAAwCAAAAAAAAAAAgwDICAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T12:39:17.144Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 73,
+              "Title": "IOnboardingAiClient.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Onboarding\\IOnboardingAiClient.cs",
+              "RelativeDocumentMoniker": "Services\\Onboarding\\IOnboardingAiClient.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Onboarding\\IOnboardingAiClient.cs",
+              "RelativeToolTip": "Services\\Onboarding\\IOnboardingAiClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T14:49:06.27Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 79,
+              "Title": "MaintenanceAiService.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\MaintenanceAiService.cs",
+              "RelativeDocumentMoniker": "Services\\Ai\\MaintenanceAiService.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\MaintenanceAiService.cs",
+              "RelativeToolTip": "Services\\Ai\\MaintenanceAiService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T21:46:50.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 80,
+              "Title": "IOnboardingAiService.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\IOnboardingAiService.cs",
+              "RelativeDocumentMoniker": "Services\\Ai\\IOnboardingAiService.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\IOnboardingAiService.cs",
+              "RelativeToolTip": "Services\\Ai\\IOnboardingAiService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T14:21:32.083Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 71,
+              "Title": "SharedResource.en-CA.resx",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResource.en-CA.resx",
+              "RelativeDocumentMoniker": "Resources\\SharedResource.en-CA.resx",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResource.en-CA.resx",
+              "RelativeToolTip": "Resources\\SharedResource.en-CA.resx",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAYwB4AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-11-30T18:51:24.182Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 81,
+              "Title": "IChatModel.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\IChatModel.cs",
+              "RelativeDocumentMoniker": "Services\\Ai\\IChatModel.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\IChatModel.cs",
+              "RelativeToolTip": "Services\\Ai\\IChatModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T21:45:46.607Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 76,
+              "Title": "IAiAssistantClient.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\IAiAssistantClient.cs",
+              "RelativeDocumentMoniker": "Services\\IAiAssistantClient.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\IAiAssistantClient.cs",
+              "RelativeToolTip": "Services\\IAiAssistantClient.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAowL8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T23:02:29.527Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 78,
+              "Title": "OnboardingAiService.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\OnboardingAiService.cs",
+              "RelativeDocumentMoniker": "Services\\Ai\\OnboardingAiService.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\OnboardingAiService.cs",
+              "RelativeToolTip": "Services\\Ai\\OnboardingAiService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwEAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T14:22:15.956Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 77,
+              "Title": "DraftMerge.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\DraftMerge.cs",
+              "RelativeDocumentMoniker": "Models\\Onboarding\\DraftMerge.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\DraftMerge.cs",
+              "RelativeToolTip": "Models\\Onboarding\\DraftMerge.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAowGEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T14:47:33.956Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 82,
+              "Title": "StubAiAssistantClient.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\StubAiAssistantClient.cs",
+              "RelativeDocumentMoniker": "Services\\StubAiAssistantClient.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\StubAiAssistantClient.cs",
+              "RelativeToolTip": "Services\\StubAiAssistantClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T23:02:59.737Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 83,
+              "Title": "ClaudeDtos.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\ClaudeDtos.cs",
+              "RelativeDocumentMoniker": "Models\\Onboarding\\ClaudeDtos.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Onboarding\\ClaudeDtos.cs",
+              "RelativeToolTip": "Models\\Onboarding\\ClaudeDtos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T14:46:59.297Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 140,
+              "Title": "20251223124106_AddOnboardingSession.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20251223124106_AddOnboardingSession.cs",
+              "RelativeDocumentMoniker": "Migrations\\20251223124106_AddOnboardingSession.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20251223124106_AddOnboardingSession.cs",
+              "RelativeToolTip": "Migrations\\20251223124106_AddOnboardingSession.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:41:06.599Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 84,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAmwIkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-26T23:01:42.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 85,
+              "Title": "AddInventoryViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Parts\\AddInventoryViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\Parts\\AddInventoryViewModel.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Parts\\AddInventoryViewModel.cs",
+              "RelativeToolTip": "Models\\Parts\\AddInventoryViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T23:25:19.982Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 86,
+              "Title": "20251223121220_InitBusinessDb.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20251223121220_InitBusinessDb.cs",
+              "RelativeDocumentMoniker": "Migrations\\20251223121220_InitBusinessDb.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Migrations\\20251223121220_InitBusinessDb.cs",
+              "RelativeToolTip": "Migrations\\20251223121220_InitBusinessDb.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T12:12:21.254Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 88,
+              "Title": "Start.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Subscribe\\Start.cshtml",
+              "RelativeDocumentMoniker": "Views\\Subscribe\\Start.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Subscribe\\Start.cshtml",
+              "RelativeToolTip": "Views\\Subscribe\\Start.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T10:49:19.365Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 87,
+              "Title": "Site.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Site.cs",
+              "RelativeDocumentMoniker": "Models\\Site.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Site.cs",
+              "RelativeToolTip": "Models\\Site.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T02:16:32.217Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 89,
+              "Title": "TenantClaimsTransformation.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Security\\TenantClaimsTransformation.cs",
+              "RelativeDocumentMoniker": "Security\\TenantClaimsTransformation.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Security\\TenantClaimsTransformation.cs",
+              "RelativeToolTip": "Security\\TenantClaimsTransformation.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAADwvygAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T10:39:54.381Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 90,
+              "Title": "Required.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Subscribe\\Required.cshtml",
+              "RelativeDocumentMoniker": "Views\\Subscribe\\Required.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Subscribe\\Required.cshtml",
+              "RelativeToolTip": "Views\\Subscribe\\Required.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-23T10:54:20.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 91,
+              "Title": "SubscribeStartVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\SubscribeStartVm.cs",
+              "RelativeDocumentMoniker": "Models\\SubscribeStartVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\SubscribeStartVm.cs",
+              "RelativeToolTip": "Models\\SubscribeStartVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T10:35:13.647Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 92,
+              "Title": "Part.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Part.cs",
+              "RelativeDocumentMoniker": "Models\\Part.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Part.cs",
+              "RelativeToolTip": "Models\\Part.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T21:23:48.211Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 93,
+              "Title": "TenantProvisioningService.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Services\\TenantProvisioningService.cs",
+              "RelativeDocumentMoniker": "Directory\\Services\\TenantProvisioningService.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Services\\TenantProvisioningService.cs",
+              "RelativeToolTip": "Directory\\Services\\TenantProvisioningService.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAqwHYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T10:45:46.323Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 94,
+              "Title": "ITenantProvisioningService.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Services\\ITenantProvisioningService.cs",
+              "RelativeDocumentMoniker": "Directory\\Services\\ITenantProvisioningService.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Directory\\Services\\ITenantProvisioningService.cs",
+              "RelativeToolTip": "Directory\\Services\\ITenantProvisioningService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T10:45:15.458Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 95,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\LoginViewModel.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\LoginViewModel.cs",
+              "RelativeToolTip": "Models\\LoginViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T22:34:16.069Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 96,
+              "Title": "MaintenanceSandboxContext.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Areas\\Identity\\Data\\MaintenanceSandboxContext.cs",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Data\\MaintenanceSandboxContext.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Areas\\Identity\\Data\\MaintenanceSandboxContext.cs",
+              "RelativeToolTip": "Areas\\Identity\\Data\\MaintenanceSandboxContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T10:18:48.288Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 98,
+              "Title": "BomItem.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\BomItem.cs",
+              "RelativeDocumentMoniker": "Models\\BomItem.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\BomItem.cs",
+              "RelativeToolTip": "Models\\BomItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T21:26:30.91Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 99,
+              "Title": "Asset.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Asset.cs",
+              "RelativeDocumentMoniker": "Models\\Asset.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Asset.cs",
+              "RelativeToolTip": "Models\\Asset.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAEAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T21:25:38.304Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 100,
+              "Title": "InventoryLevel.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\InventoryLevel.cs",
+              "RelativeDocumentMoniker": "Models\\InventoryLevel.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\InventoryLevel.cs",
+              "RelativeToolTip": "Models\\InventoryLevel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T21:25:00.666Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 101,
+              "Title": "LocationBin.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\LocationBin.cs",
+              "RelativeDocumentMoniker": "Models\\LocationBin.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\LocationBin.cs",
+              "RelativeToolTip": "Models\\LocationBin.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAEAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T21:24:26.36Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 97,
+              "Title": "ScaffoldingReadMe.txt",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ScaffoldingReadMe.txt",
+              "RelativeDocumentMoniker": "ScaffoldingReadMe.txt",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ScaffoldingReadMe.txt",
+              "RelativeToolTip": "ScaffoldingReadMe.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-12-16T00:15:29.546Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 107,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T23:01:15.356Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 102,
+              "Title": "AiController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\AiController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AiController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\AiController.cs",
+              "RelativeToolTip": "Controllers\\AiController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T22:57:05.667Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 103,
+              "Title": "SettingsController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\SettingsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\SettingsController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\SettingsController.cs",
+              "RelativeToolTip": "Controllers\\SettingsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T21:43:07.808Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 104,
+              "Title": "ProductionController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\ProductionController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProductionController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\ProductionController.cs",
+              "RelativeToolTip": "Controllers\\ProductionController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-13T10:40:18.31Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 105,
+              "Title": "PartsController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\PartsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PartsController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\PartsController.cs",
+              "RelativeToolTip": "Controllers\\PartsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T21:32:34.732Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 106,
+              "Title": "LanguageController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\LanguageController.cs",
+              "RelativeDocumentMoniker": "Controllers\\LanguageController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\LanguageController.cs",
+              "RelativeToolTip": "Controllers\\LanguageController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T21:19:54.353Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 108,
+              "Title": "DemoUserController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\DemoUserController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DemoUserController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\DemoUserController.cs",
+              "RelativeToolTip": "Controllers\\DemoUserController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwB0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T21:51:52.589Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 109,
+              "Title": "CsvImportController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\CsvImportController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CsvImportController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\CsvImportController.cs",
+              "RelativeToolTip": "Controllers\\CsvImportController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T21:40:52.861Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 110,
+              "Title": "AiTestController.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\AiTestController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AiTestController.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\AiTestController.cs",
+              "RelativeToolTip": "Controllers\\AiTestController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T21:48:23.591Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 111,
+              "Title": "TierProvider.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\TierProvider.cs",
+              "RelativeDocumentMoniker": "Services\\TierProvider.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\TierProvider.cs",
+              "RelativeToolTip": "Services\\TierProvider.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T21:18:08.145Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 112,
+              "Title": "MaintenanceSandbox.csproj",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\MaintenanceSandbox.csproj",
+              "RelativeDocumentMoniker": "MaintenanceSandbox.csproj",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\MaintenanceSandbox.csproj",
+              "RelativeToolTip": "MaintenanceSandbox.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-23T19:43:46.758Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 113,
+              "Title": "ProductionCountLog.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Production\\ProductionCountLog.cs",
+              "RelativeDocumentMoniker": "Models\\Production\\ProductionCountLog.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Production\\ProductionCountLog.cs",
+              "RelativeToolTip": "Models\\Production\\ProductionCountLog.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-13T11:29:24.858Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 114,
+              "Title": "ProductionIndexVm.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Production\\ProductionIndexVm.cs",
+              "RelativeDocumentMoniker": "Models\\Production\\ProductionIndexVm.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Production\\ProductionIndexVm.cs",
+              "RelativeToolTip": "Models\\Production\\ProductionIndexVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-13T11:17:02.59Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 115,
+              "Title": "SharedResource.es-MX.resx",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResource.es-MX.resx",
+              "RelativeDocumentMoniker": "Resources\\SharedResource.es-MX.resx",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResource.es-MX.resx",
+              "RelativeToolTip": "Resources\\SharedResource.es-MX.resx",
+              "ViewState": "AgIAAA4EAAAAAAAAAAAYwCcEAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-11-30T18:52:15.339Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 117,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Maintenance\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Maintenance\\Details.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Maintenance\\Details.cshtml",
+              "RelativeToolTip": "Views\\Maintenance\\Details.cshtml",
+              "ViewState": "AgIAAKMAAAAAAAAAAAAmwPwBAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-23T20:05:13.367Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 116,
+              "Title": "SharedResource.fr-CA.resx",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResource.fr-CA.resx",
+              "RelativeDocumentMoniker": "Resources\\SharedResource.fr-CA.resx",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResource.fr-CA.resx",
+              "RelativeToolTip": "Resources\\SharedResource.fr-CA.resx",
+              "ViewState": "AgIAAAgEAAAAAAAAAAAYwCwEAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-11-30T18:51:47.073Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 118,
+              "Title": "_AiHelpLauncher.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Shared\\_AiHelpLauncher.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_AiHelpLauncher.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Shared\\_AiHelpLauncher.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_AiHelpLauncher.cshtml",
+              "ViewState": "AgIAABkAAAAAAAAAAAAmwC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-08T22:55:20.971Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 119,
+              "Title": "AiHelpIntent.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Data\\AiHelpIntent.cs",
+              "RelativeDocumentMoniker": "Data\\AiHelpIntent.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Data\\AiHelpIntent.cs",
+              "RelativeToolTip": "Data\\AiHelpIntent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T22:53:26.821Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 120,
+              "Title": "ClaudeChatModel.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\ClaudeChatModel.cs",
+              "RelativeDocumentMoniker": "Services\\Ai\\ClaudeChatModel.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\ClaudeChatModel.cs",
+              "RelativeToolTip": "Services\\Ai\\ClaudeChatModel.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAowFgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T21:46:15.843Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 121,
+              "Title": "SuggestionItem.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\SuggestionItem.cs",
+              "RelativeDocumentMoniker": "Services\\SuggestionItem.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\SuggestionItem.cs",
+              "RelativeToolTip": "Services\\SuggestionItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T22:36:51.245Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 122,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\Parts\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\Create.cshtml",
+              "RelativeToolTip": "Views\\Parts\\Create.cshtml",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAmwFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T22:01:48.333Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 123,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Parts\\Details.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\Details.cshtml",
+              "RelativeToolTip": "Views\\Parts\\Details.cshtml",
+              "ViewState": "AgIAANYBAAAAAAAAAAAmwAACAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T21:33:56.638Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 124,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Views\\Parts\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\Edit.cshtml",
+              "RelativeToolTip": "Views\\Parts\\Edit.cshtml",
+              "ViewState": "AgIAADgAAAAAAAAAAAAmwGIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T22:02:26.204Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 125,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Parts\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\Index.cshtml",
+              "RelativeToolTip": "Views\\Parts\\Index.cshtml",
+              "ViewState": "AgIAALMAAAAAAAAAAAAmwOkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T21:33:21.645Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 126,
+              "Title": "AddBomItem.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\AddBomItem.cshtml",
+              "RelativeDocumentMoniker": "Views\\Parts\\AddBomItem.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\AddBomItem.cshtml",
+              "RelativeToolTip": "Views\\Parts\\AddBomItem.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T23:28:32.909Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 127,
+              "Title": "AddInventory.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\AddInventory.cshtml",
+              "RelativeDocumentMoniker": "Views\\Parts\\AddInventory.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\Parts\\AddInventory.cshtml",
+              "RelativeToolTip": "Views\\Parts\\AddInventory.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T23:28:03.111Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 128,
+              "Title": "AiOptions.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\AiOptions.cs",
+              "RelativeDocumentMoniker": "Services\\Ai\\AiOptions.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\Ai\\AiOptions.cs",
+              "RelativeToolTip": "Services\\Ai\\AiOptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-08T21:44:38.798Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 129,
+              "Title": "AddBomItemViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Parts\\AddBomItemViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\Parts\\AddBomItemViewModel.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Models\\Parts\\AddBomItemViewModel.cs",
+              "RelativeToolTip": "Models\\Parts\\AddBomItemViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T23:25:48.212Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 133,
+              "Title": "CsvImportResultViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\CsvImportResultViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\CsvImportResultViewModel.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\ViewModels\\CsvImportResultViewModel.cs",
+              "RelativeToolTip": "ViewModels\\CsvImportResultViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T21:40:12.344Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 132,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\CsvImport\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\CsvImport\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\CsvImport\\Index.cshtml",
+              "RelativeToolTip": "Views\\CsvImport\\Index.cshtml",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAmwCsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T21:42:46.004Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 131,
+              "Title": "Result.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\CsvImport\\Result.cshtml",
+              "RelativeDocumentMoniker": "Views\\CsvImport\\Result.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\CsvImport\\Result.cshtml",
+              "RelativeToolTip": "Views\\CsvImport\\Result.cshtml",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAmwDMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-04T21:43:23.667Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 130,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-12-04T22:10:26.771Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 134,
+              "Title": "DemoUserViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\DemoUserViewModel.cs",
+              "RelativeDocumentMoniker": "Controllers\\DemoUserViewModel.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Controllers\\DemoUserViewModel.cs",
+              "RelativeToolTip": "Controllers\\DemoUserViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-04T03:23:23.52Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 135,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\DemoUser\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\DemoUser\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Views\\DemoUser\\Index.cshtml",
+              "RelativeToolTip": "Views\\DemoUser\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-24T21:53:08.221Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 136,
+              "Title": "MaintenanceHub.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Hubs\\MaintenanceHub.cs",
+              "RelativeDocumentMoniker": "Hubs\\MaintenanceHub.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Hubs\\MaintenanceHub.cs",
+              "RelativeToolTip": "Hubs\\MaintenanceHub.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAUwFoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T22:24:15.622Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 137,
+              "Title": "SharedResources.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResources.cs",
+              "RelativeDocumentMoniker": "Resources\\SharedResources.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Resources\\SharedResources.cs",
+              "RelativeToolTip": "Resources\\SharedResources.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-25T21:49:28.153Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 139,
+              "Title": "IMaintenanceSuggestionService.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\IMaintenanceSuggestionService.cs",
+              "RelativeDocumentMoniker": "Services\\IMaintenanceSuggestionService.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\IMaintenanceSuggestionService.cs",
+              "RelativeToolTip": "Services\\IMaintenanceSuggestionService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T21:03:01.151Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 138,
+              "Title": "RequestStatusRules.cs",
+              "DocumentMoniker": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\RequestStatusRules.cs",
+              "RelativeDocumentMoniker": "Services\\RequestStatusRules.cs",
+              "ToolTip": "C:\\Users\\Michael\\source\\repos\\MaintenanceSandbox\\Services\\RequestStatusRules.cs",
+              "RelativeToolTip": "Services\\RequestStatusRules.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-25T20:55:29.479Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

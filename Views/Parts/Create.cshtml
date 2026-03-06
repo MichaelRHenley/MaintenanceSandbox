@@ -1,0 +1,331 @@
+﻿@model MaintenanceSandbox.Models.Part
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = SR["Parts_Create_Title"];
+    ViewData["AiModuleKey"] = "Part_Create";
+
+    var notSetText = SR["Parts_Create_Review_NotSet"];
+    var activeText = SR["Parts_Status_Active"];
+    var inactiveText = SR["Parts_Status_Inactive"];
+    var partNumberRequiredText = SR["Parts_Create_Validation_PartNumberRequired"];
+}
+
+<div class="container py-4">
+    <div class="mb-3">
+        <a asp-action="Index" class="btn btn-sm btn-outline-light">
+            ← @SR["Parts_Create_Breadcrumb_BackToParts"]
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <div class="text-uppercase small text-muted mb-1">
+                @SR["Parts_Create_Header_WizardTitle"]
+            </div>
+            <h1 class="h3 mb-0">@SR["Parts_Create_Header_NewPart"]</h1>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+            @await Html.PartialAsync("_AiHelpLauncher")
+        </div>
+    </div>
+
+    <!-- Wizard progress -->
+    <div class="mb-3">
+        <div class="d-flex justify-content-between small text-muted">
+            <div class="wizard-step-label" data-step-label="1">
+                @SR["Parts_Create_Step1_Label"]
+            </div>
+            <div class="wizard-step-label" data-step-label="2">
+                @SR["Parts_Create_Step2_Label"]
+            </div>
+            <div class="wizard-step-label" data-step-label="3">
+                @SR["Parts_Create_Step3_Label"]
+            </div>
+        </div>
+        <div class="progress" style="height: 4px;">
+            <div id="wizardProgressBar" class="progress-bar" role="progressbar"
+                 style="width: 33%;"></div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <form asp-action="Create" method="post" id="partWizardForm">
+                @Html.AntiForgeryToken()
+
+                <!-- STEP 1: Basic Info -->
+                <div class="mb-3">
+                    <label class="form-label small text-uppercase text-muted mb-1"
+                           for="PartNumber">
+                        @SR["Parts_Field_PartNumber"]
+                    </label>
+                    <input asp-for="PartNumber" class="form-control" id="PartNumber" required />
+                    <span asp-validation-for="PartNumber" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small text-uppercase text-muted mb-1"
+                           for="ShortDescription">
+                        @SR["Parts_Field_ShortDescription"]
+                    </label>
+                    <input asp-for="ShortDescription" class="form-control" id="ShortDescription" required />
+                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small text-uppercase text-muted mb-1"
+                           for="LongDescription">
+                        @SR["Parts_Field_LongDescription"]
+                    </label>
+                    <textarea asp-for="LongDescription" rows="3" class="form-control" id="LongDescription"></textarea>
+                    <span asp-validation-for="LongDescription" class="text-danger"></span>
+                </div>
+
+
+                <!-- STEP 2: Manufacturer -->
+                <div class="wizard-step d-none" data-step="2">
+                    <h2 class="h5 mb-3">@SR["Parts_Create_Step2_Title"]</h2>
+                    <p class="text-muted small mb-4">
+                        @SR["Parts_Create_Step2_Intro"]
+                    </p>
+
+                    <div class="mb-3">
+                        <label asp-for="Manufacturer" class="form-label"></label>
+                        <input asp-for="Manufacturer" class="form-control" />
+                        <span asp-validation-for="Manufacturer" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ManufacturerPartNumber" class="form-label"></label>
+                        <input asp-for="ManufacturerPartNumber" class="form-control" />
+                        <span asp-validation-for="ManufacturerPartNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input asp-for="IsActive" class="form-check-input" />
+                        <label asp-for="IsActive" class="form-check-label">
+                            @SR["Parts_Create_IsActive_Label"]
+                        </label>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Review -->
+                <div class="wizard-step d-none" data-step="3">
+                    <h2 class="h5 mb-3">@SR["Parts_Create_Step3_Title"]</h2>
+                    <p class="text-muted small mb-4">
+                        @SR["Parts_Create_Step3_Intro"]
+                    </p>
+
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="border rounded-3 p-3 h-100">
+                                <div class="small text-muted text-uppercase fw-semibold mb-2">
+                                    @SR["Parts_Create_Review_BasicInfo"]
+                                </div>
+                                <dl class="mb-0">
+                                    <dt class="small text-muted">
+                                        @SR["Parts_Create_Review_PartNumber"]
+                                    </dt>
+                                    <dd id="reviewPartNumber" class="fw-semibold"></dd>
+
+                                    <dt class="small text-muted">
+                                        @SR["Parts_Create_Review_ShortDescription"]
+                                    </dt>
+                                    <dd id="reviewShortDescription"></dd>
+
+                                    <dt class="small text-muted">
+                                        @SR["Parts_Create_Review_LongDescription"]
+                                    </dt>
+                                    <dd id="reviewLongDescription"></dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="border rounded-3 p-3 h-100">
+                                <div class="small text-muted text-uppercase fw-semibold mb-2">
+                                    @SR["Parts_Create_Review_ManufacturerSection"]
+                                </div>
+                                <dl class="mb-0">
+                                    <dt class="small text-muted">
+                                        @SR["Parts_Create_Review_Manufacturer"]
+                                    </dt>
+                                    <dd id="reviewManufacturer"></dd>
+
+                                    <dt class="small text-muted">
+                                        @SR["Parts_Create_Review_MfgPart"]
+                                    </dt>
+                                    <dd id="reviewMfgPart"></dd>
+
+                                    <dt class="small text-muted">
+                                        @SR["Parts_Create_Review_Status"]
+                                    </dt>
+                                    <dd id="reviewStatus"></dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-4 mb-0 small">
+                        @SR["Parts_Create_InfoPanel_Intro"]
+                        <ul class="mb-0">
+                            <li>@SR["Parts_Create_InfoPanel_Item_AddInventory"]</li>
+                            <li>@SR["Parts_Create_InfoPanel_Item_LinkBom"]</li>
+                            <li>@SR["Parts_Create_InfoPanel_Item_Enhance"]</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wizard navigation buttons -->
+                <div class="mt-4 d-flex justify-content-between">
+                    <button type="button"
+                            class="btn btn-outline-secondary"
+                            id="wizardPrevBtn"
+                            disabled>
+                        ← @SR["Parts_Create_Button_Back"]
+                    </button>
+
+                    <div>
+                        <button type="button"
+                                class="btn btn-outline-light"
+                                id="wizardNextBtn">
+                            @SR["Parts_Create_Button_Next"] →
+                        </button>
+
+                        <button type="submit"
+                                class="btn btn-primary d-none"
+                                id="wizardSubmitBtn">
+                            @SR["Parts_Create_Button_CreatePart"]
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        (function () {
+            let currentStep = 1;
+            const maxStep = 3;
+
+            const steps = document.querySelectorAll('.wizard-step');
+            const progressBar = document.getElementById('wizardProgressBar');
+            const prevBtn = document.getElementById('wizardPrevBtn');
+            const nextBtn = document.getElementById('wizardNextBtn');
+            const submitBtn = document.getElementById('wizardSubmitBtn');
+
+            const stepLabels = document.querySelectorAll('.wizard-step-label');
+
+            const NOT_SET = '@notSetText';
+            const ACTIVE_TEXT = '@activeText';
+            const INACTIVE_TEXT = '@inactiveText';
+            const PARTNUMBER_REQUIRED = '@partNumberRequiredText';
+
+            function updateReview() {
+                // Pull values from form inputs into the review section
+                document.getElementById('reviewPartNumber').textContent =
+                    document.getElementById('PartNumber')?.value || NOT_SET;
+                document.getElementById('reviewShortDescription').textContent =
+                    document.getElementById('ShortDescription')?.value || NOT_SET;
+                document.getElementById('reviewLongDescription').textContent =
+                    document.getElementById('LongDescription')?.value || NOT_SET;
+
+                document.getElementById('reviewManufacturer').textContent =
+                    document.getElementById('Manufacturer')?.value || NOT_SET;
+                document.getElementById('reviewMfgPart').textContent =
+                    document.getElementById('ManufacturerPartNumber')?.value || NOT_SET;
+
+                const isActiveCheckbox = document.getElementById('IsActive');
+                const statusText = isActiveCheckbox && isActiveCheckbox.checked
+                    ? ACTIVE_TEXT
+                    : INACTIVE_TEXT;
+
+                document.getElementById('reviewStatus').textContent = statusText;
+            }
+
+            function goToStep(step) {
+                currentStep = step;
+
+                steps.forEach(s => {
+                    const stepNum = parseInt(s.getAttribute('data-step'));
+                    s.classList.toggle('d-none', stepNum !== currentStep);
+                });
+
+                // Labels
+                stepLabels.forEach(label => {
+                    const labelStep = parseInt(label.getAttribute('data-step-label'));
+                    if (labelStep === currentStep) {
+                        label.classList.add('fw-semibold');
+                    } else {
+                        label.classList.remove('fw-semibold');
+                    }
+                });
+
+                // Progress bar
+                const pct = (currentStep / maxStep) * 100;
+                progressBar.style.width = pct + '%';
+
+                // Buttons
+                prevBtn.disabled = currentStep === 1;
+                nextBtn.classList.toggle('d-none', currentStep === maxStep);
+                submitBtn.classList.toggle('d-none', currentStep !== maxStep);
+
+                if (currentStep === maxStep) {
+                    updateReview();
+                }
+            }
+
+            prevBtn.addEventListener('click', function () {
+                if (currentStep > 1) {
+                    goToStep(currentStep - 1);
+                }
+            });
+
+            nextBtn.addEventListener('click', function () {
+                // Soft validation on Step 1 before allowing Next
+                if (currentStep === 1) {
+                    const partNumberInput = document.getElementById('PartNumber');
+                    const msgSpan = document.querySelector('[data-valmsg-for="PartNumber"]');
+
+                    const value = partNumberInput.value.trim();
+                    if (!value) {
+                        if (msgSpan) {
+                            msgSpan.textContent = PARTNUMBER_REQUIRED;
+                        }
+                        partNumberInput.classList.add('is-invalid');
+                        partNumberInput.focus();
+                        return; // 🚫 don’t move to next step
+                    } else {
+                        if (msgSpan) {
+                            msgSpan.textContent = '';
+                        }
+                        partNumberInput.classList.remove('is-invalid');
+                    }
+                }
+
+                if (currentStep < maxStep) {
+                    goToStep(currentStep + 1);
+                }
+            });
+
+            // Init
+            goToStep(1);
+
+            const partNumberInput = document.getElementById('PartNumber');
+            if (partNumberInput) {
+                partNumberInput.addEventListener('input', function () {
+                    this.classList.remove('is-invalid');
+                    const msgSpan = document.querySelector('[data-valmsg-for="PartNumber"]');
+                    if (msgSpan) msgSpan.textContent = '';
+                });
+            }
+        })();
+    </script>
+}

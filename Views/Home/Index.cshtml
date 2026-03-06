@@ -1,0 +1,137 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+@using MaintenanceSandbox.Services
+@inject ITierProvider TierProvider
+
+@{
+    ViewData["Title"] = SR["Home_Title"];
+
+    var tierEnum = TierProvider.CurrentTier;
+    var tierClass = tierEnum switch
+    {
+        ProductTier.Enhanced => "sentinel-tier-pill--enhanced",
+        ProductTier.Premium => "sentinel-tier-pill--premium",
+        _ => "sentinel-tier-pill--standard"
+    };
+
+    string tierLabelKey = tierEnum switch
+    {
+        ProductTier.Enhanced => "Tier_Label_Enhanced",
+        ProductTier.Premium => "Tier_Label_Premium",
+        _ => "Tier_Label_Standard"
+    };
+
+    var tierText = SR[tierLabelKey];
+    var tierSuffix = SR["Tier_Label_TierSuffix"];
+}
+
+<div class="container py-4">
+    <div class="row g-4">
+        <!-- Hero / overview -->
+        <div class="col-12 col-lg-8">
+            <div class="sentinel-card h-100 p-4 d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h1 class="sentinel-page-title mb-1">
+                                @SR["Home_Hero_Title"]
+                            </h1>
+
+                            <p class="sentinel-page-subtitle mb-3">
+                                @SR["Home_Hero_Subtitle"]
+                            </p>                            
+                        </div>
+
+                        <div class="text-end">
+                            <div class="sentinel-tier-pill @tierClass mb-2">
+                                <span>@tierText</span>
+                                <small>@tierSuffix</small>
+                            </div>
+
+                            <span id="live-indicator"
+                                  class="sentinel-live-indicator sentinel-live-indicator--offline">
+                                <span class="dot"></span>
+                                <span class="label">Connecting…</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-3">
+                        <div class="col-12 col-md-6">
+                            <ul class="small text-muted mb-0">
+                                <li>@SR["Home_Hero_Feature_LiveFeed"]</li>
+                                <li>@SR["Home_Hero_Feature_RealTimeComments"]</li>
+                                <li>@SR["Home_Hero_Feature_TierAwareAI"]</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <ul class="small text-muted mb-0">
+                                <li>@SR["Home_Hero_Feature_MultiLanguage"]</li>
+                                <li>@SR["Home_Hero_Feature_AlertsHaptics"]</li>
+                                <li>@SR["Home_Hero_Feature_MultiTenant"]</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 mt-4">
+                    <a asp-controller="Maintenance"
+                       asp-action="Index"
+                       class="btn btn-sentinel-primary">
+                        @SR["Home_Hero_Button_GoToMaintenance"]
+                    </a>
+
+                    <a asp-controller="Settings"
+                       asp-action="Index"
+                       class="btn btn-sentinel-ghost">
+                        @SR["Home_Hero_Button_Settings"]
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Side tiles (stubbed KPIs / explainer) -->
+        <div class="col-12 col-lg-4">
+            <div class="sentinel-card mb-3 p-3">
+                <div class="sentinel-settings-section-title mb-1">
+                    @SR["Home_Telemetry_Title"]
+                </div>
+                <div class="sentinel-settings-section-subtitle mb-2">
+                    @SR["Home_Telemetry_Description"]
+                </div>
+                <ul class="small text-muted mb-0">
+                    <li>@SR["Home_Telemetry_Item_Live"]</li>
+                    <li>@SR["Home_Telemetry_Item_Reconnecting"]</li>
+                    <li>@SR["Home_Telemetry_Item_Offline"]</li>
+                </ul>
+            </div>
+
+            <div class="sentinel-card p-3">
+                <div class="sentinel-settings-section-title mb-1">
+                    @SR["Home_Alerts_Title"]
+                </div>
+                <div class="sentinel-settings-section-subtitle mb-2">
+                    @SR["Home_Alerts_Description"]
+                </div>
+                <a asp-controller="Settings"
+                   asp-action="Index"
+                   class="btn btn-sentinel-ghost btn-sm">
+                    🔔 @SR["Home_Alerts_Button_OpenSettings"]
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            document.addEventListener("DOMContentLoaded", function () {
+                if (window.sentinelUpdateLiveIndicator) {
+                    // Treat home as "ok" on first paint, no toast spam
+                    window.sentinelUpdateLiveIndicator("ok", { suppressToast: true });
+                }
+            });
+        })();
+    </script>
+}

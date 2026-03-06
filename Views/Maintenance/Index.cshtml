@@ -1,0 +1,625 @@
+﻿@model MaintenanceSandbox.Models.ViewModels.MaintenanceIndexVm
+@using Microsoft.Extensions.Localization
+@using System.Globalization
+@inject IStringLocalizer<SharedResource> SR
+
+
+@{
+    ViewData["Title"] = SR["Maint_Index_Title"];
+    ViewData["AiModuleKey"] = "EM_List";
+    
+    int openCount = ViewBag.OpenCount is int oc ? oc : 0;
+    int waitingOnPartsCount = ViewBag.WaitingOnPartsCount is int wc ? wc : 0;
+    int resolvedTodayCount = ViewBag.ResolvedTodayCount is int rc ? rc : 0;
+
+    var tier = ViewBag.ProductTier?.ToString() ?? "Standard";
+
+    string tierLabelKey = tier switch
+    {
+        "Enhanced" => "Tier_Label_Enhanced",
+        "Premium" => "Tier_Label_Premium",
+        _ => "Tier_Label_Standard"
+    };
+
+    var tierText = SR[tierLabelKey];
+
+    Func<string, string> LocalizeSender = sender =>
+{
+    if (string.IsNullOrWhiteSpace(sender)) return "";
+
+    switch (sender.Trim().ToLowerInvariant())
+    {
+        case "operator":
+            return SR["Role_Operator"];
+        case "technician":
+            return SR["Role_Technician"];
+        case "supervisor":
+            return SR["Role_Supervisor"];
+        case "manager":
+            return SR["Role_Manager"];
+        default:
+            return sender; // fall back to raw value
+    }
+};
+
+
+}
+
+<div class="container py-4">
+    <!-- 🔔 Live update banner -->
+    <div id="maintenance-updates-banner" class="sentinel-update-banner">
+        <span>@SR["Maint_Index_UpdatesBanner_Main"]</span>&nbsp;
+        <small>@SR["Maint_Index_UpdatesBanner_Click"]</small>
+    </div>
+        
+    <div class="sentinel-card">
+        <!-- Header -->
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">
+                    @SR["Maint_Index_Title"]
+                </div>
+                <div class="sentinel-page-subtitle">
+                    @SR["App_Title"] · @SR["Nav_Maintenance"]
+                </div>
+                <div class="sentinel-page-meta small text-muted mt-1"
+                     id="last-updated"
+                     data-label-prefix="@SR["Maint_Index_LastUpdated_Label"]"
+                     data-label-justnow="@SR["Maint_Index_LastUpdated_JustNow"]">
+                    @SR["Maint_Index_LastUpdated_Label"]
+                    @DateTime.Now.ToString("T", CultureInfo.CurrentUICulture)
+                </div>
+            </div>
+            
+            <div class="d-flex align-items-center gap-2">
+                @* 👇 New: AI help button lives here, BEFORE the live pill *@
+                @await Html.PartialAsync("_AiHelpLauncher")
+
+                <!-- LIVE indicator -->
+                <span id="live-indicator"
+                      class="sentinel-live-indicator sentinel-live-indicator--offline">
+                    <span class="dot"></span>
+                    <span class="label">@SR["LiveIndicator_Label_Connecting"]</span>
+                </span>
+
+                <span class="sentinel-tier-badge">
+                    @SR["Maint_Index_Badge_Tier"] @tierText
+                </span>
+
+                <a asp-action="Create" class="btn btn-sm btn-sentinel-primary">
+                    @SR["Maint_Index_Button_NewRequest"]
+                </a>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="px-3 px-md-4 pt-3">
+            @if (TempData["TierChanged"] is string msg)
+            {
+                <div class="alert alert-success mb-2">
+                    @msg
+                </div>
+            }
+            @if (TempData["DemoUserChanged"] is string demoMsg)
+            {
+                <div class="alert alert-info mb-3">
+                    @demoMsg
+                </div>
+            }
+        </div>
+
+        <!-- KPIs -->
+        <div id="maintenance-kpis" class="row g-2 g-md-3 justify-content-center">
+            <div class="col-4">
+                <div class="sentinel-kpi-tile text-center">
+                    <div class="sentinel-kpi-label">
+                        @SR["Maint_Index_KPI_Open"]
+                    </div>
+                    <div class="sentinel-kpi-value">
+                        @openCount
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="sentinel-kpi-tile text-center">
+                    <div class="sentinel-kpi-label">
+                        @SR["Maint_Index_KPI_Waiting"]
+                    </div>
+                    <div class="sentinel-kpi-value">
+                        @waitingOnPartsCount
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="sentinel-kpi-tile text-center">
+                    <div class="sentinel-kpi-label">
+                        @SR["Maint_Index_KPI_ResolvedToday"]
+                    </div>
+                    <div class="sentinel-kpi-value">
+                        @resolvedTodayCount
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Filters -->
+    <div class="px-3 px-md-4 pt-2 pb-3 border-top border-secondary">
+            <form id="maintenanceFilterForm" method="get" class="row g-2 align-items-end mb-2">            
+
+            <div class="col-12 col-md-3">
+                <label class="form-label small text-uppercase text-muted mb-1" for="areaId">
+                    @SR["Maint_Index_Filter_Area"]
+                </label>
+                    <select class="form-select" id="areaId" name="areaId">
+                    <option value="">@SR["Maint_Index_Filter_All"]</option>
+                    @foreach (var opt in Model.AreaOptions)
+                    {
+                        <option value="@opt.Value" selected="@(opt.Selected ? "selected" : null)">
+                            @opt.Text
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <label class="form-label small text-uppercase text-muted mb-1" for="workCenterId">
+                    @SR["Maint_Index_Filter_WorkCenter"]
+                </label>
+                    <select class="form-select" id="workCenterId" name="workCenterId">
+                    <option value="">@SR["Maint_Index_Filter_All"]</option>
+                    @foreach (var opt in Model.WorkCenterOptions)
+                    {
+                        <option value="@opt.Value" selected="@(opt.Selected ? "selected" : null)">
+                            @opt.Text
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <label class="form-label small text-uppercase text-muted mb-1" for="search">
+                    @SR["Maint_Index_Filter_Search"]
+                </label>
+                <input type="text"
+                       class="form-control"
+                       id="search"
+                       name="search"
+                       value="@(Model.Search ?? "")"
+                       placeholder="@SR["Maint_Index_Filter_SearchPlaceholder"]" />
+            </div>
+
+            <div class="col-6 col-md-3 mt-2">
+                <div class="form-check mt-2">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="includeClosed"
+                           name="includeClosed"
+                           value="true"
+                           @(Model.IncludeClosed ? "checked" : "") />
+                    <label class="form-check-label small text-muted" for="includeClosed">
+                        @SR["Maint_Index_Filter_IncludeClosed"]
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3 d-grid mt-2">
+                <button type="submit" class="btn btn-sentinel-primary mt-2 mt-md-0">
+                    @SR["Maint_Index_Button_ApplyFilters"]
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+
+    <!-- Results -->
+    <div id="maintenance-list"
+         class="px-3 px-md-4 pb-4"
+         data-siteid="@Model.SiteId"
+         data-areaid="@Model.AreaId"
+         data-workcenterid="@Model.WorkCenterId"
+         data-search="@Model.Search"
+         data-include-closed="@Model.IncludeClosed">
+
+        @if (Model.Requests == null || !Model.Requests.Any())
+        {
+            <div class="text-center mt-4 mb-3">
+                <p class="fs-6 text-muted mb-0">
+                    @SR["Maint_Index_NoResults"]
+                </p>
+            </div>
+        }
+        else
+        {
+            <div class="row g-3 mt-2">
+                @foreach (var r in Model.Requests)
+                {
+                    var latestMessage = r.Messages
+                    .OrderByDescending(c => c.SentAt)
+                    .FirstOrDefault();
+
+                    var statusClass = r.Status?.ToLowerInvariant().Contains("closed") == true
+                    ? "badge-status-closed"
+                    : "badge-status-open";
+
+                    var priorityClass = (r.Priority ?? "").ToLowerInvariant() switch
+                    {
+                        "high" => "badge-priority-high",
+                        "medium" => "badge-priority-medium",
+                        _ => "badge-priority-low"
+                    };
+
+                    var statusText = (r.Status ?? "").ToLowerInvariant() switch
+                    {
+                        "new" => SR["Maint_Status_New"],
+                        "in progress" => SR["Maint_Status_InProgress"],
+                        "waiting on parts" => SR["Maint_Status_WaitingOnParts"],
+                        "resolved" => SR["Maint_Status_Resolved"],
+                        _ => r.Status
+                    };
+
+                    var priorityText = (r.Priority ?? "").ToLowerInvariant() switch
+                    {
+                        "high" => SR["Maint_Create_Priority_High"],
+                        "medium" => SR["Maint_Create_Priority_Medium"],
+                        "low" => SR["Maint_Create_Priority_Low"],
+                        _ => r.Priority
+                    };
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="em-card maintenance-card h-100 d-flex flex-column p-3"
+                             data-request-id="@r.Id"
+                             data-last-comment-ticks="@(latestMessage?.SentAt.Ticks ?? 0)">
+
+                            <div class="em-card-header mb-2">
+                                <div>
+                                    <div class="em-card-title">
+                                        @r.WorkCenter · @r.Equipment
+                                    </div>
+                                    <div class="em-card-meta">
+                                        @r.Site · @r.Area · @r.CreatedAt.ToString("f", CultureInfo.CurrentUICulture)
+                                    </div>
+                                </div>
+
+                                <div class="badge-status @statusClass mb-1"
+                                     data-role="status"
+                                     data-request-id="@r.Id">
+                                    @statusText
+                                </div>
+
+                                <div class="badge-status @priorityClass"
+                                     data-role="priority"
+                                     data-request-id="@r.Id">
+                                    @priorityText
+                                </div>
+                            </div>
+
+                            <div class="small mt-1 mb-2 text-break">
+                                <strong>@SR["Maint_Index_Label_Description"]</strong><br />
+                                @r.Description
+                            </div>
+
+                            @if (latestMessage is not null)
+                            {
+                                <div class="mt-auto pt-2 border-top border-secondary-subtle small">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <div class="fw-bold">
+                                            @SR["Maint_Index_Label_LatestComment"]
+                                        </div>
+                                        <span class="badge bg-warning text-dark new-comment-badge d-none"
+                                              data-comment-badge>
+                                            @SR["Maint_Index_Badge_NewComment"]
+                                        </span>
+                                    </div>
+
+                                    <div class="text-muted">
+                                        @latestMessage.SentAt.ToString("g", CultureInfo.CurrentUICulture)
+                                        · @LocalizeSender(latestMessage.Sender)
+                                    </div>
+
+                                    <div class="text-break">
+                                        @latestMessage.Message
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="mt-3 d-flex justify-content-end">
+                                <a asp-action="Details"
+                                   asp-route-id="@r.Id"
+                                   class="btn btn-sm btn-sentinel-ghost"
+                                   data-maint-details-link>
+                                    @SR["Maint_Index_Button_ViewDetails"]
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            if (!window.signalR) {
+                console.warn("SignalR not loaded");
+                return;
+            }
+
+            const bannerId = "maintenance-updates-banner";
+            const listContainer = document.getElementById("maintenance-list");
+
+            if (!listContainer) {
+                console.warn("No #maintenance-list container found on Index");
+            }
+
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/hubs/maintenance")
+                .withAutomaticReconnect()
+                .build();
+
+            // 🔹 Last updated helper
+                   function updateLastUpdatedStamp(justNow) {
+            const el = document.getElementById("last-updated");
+            if (!el) return;
+
+            const labelPrefix = el.dataset.labelPrefix || "Last updated:";
+            const labelJustNow = el.dataset.labelJustnow || (labelPrefix + " Just now");
+
+            if (justNow) {
+                el.textContent = labelJustNow;
+            } else {
+                const now = new Date();
+                el.textContent = labelPrefix + " " + now.toLocaleTimeString();
+            }
+
+            el.classList.add("updated-pulse");
+            setTimeout(() => el.classList.remove("updated-pulse"), 700);
+
+            if (justNow) {
+                setTimeout(() => {
+                    const el2 = document.getElementById("last-updated");
+                    if (!el2) return;
+                    const prefix2 = el2.dataset.labelPrefix || labelPrefix;
+                    const now2 = new Date();
+                    el2.textContent = prefix2 + " " + now2.toLocaleTimeString();
+                }, 15000);
+            }
+        }
+
+
+            // 🔹 Helpers to rebuild URL with current filters
+                   function getFilterParams() {
+          const siteId = document.getElementById("siteId")?.value || "";
+          const areaId = document.getElementById("areaId")?.value || "";
+          const workCenterId = document.getElementById("workCenterId")?.value || "";
+          const search = document.getElementById("search")?.value || "";
+          const includeClosed = document.getElementById("includeClosed")?.checked || false;
+
+          return { siteId, areaId, workCenterId, search, includeClosed };
+        }
+
+
+                   function buildUrl() {
+          const baseUrl = '@Url.Action("Index", "Maintenance")';
+          const p = getFilterParams();
+          const params = new URLSearchParams();
+
+          if (p.siteId) params.append("siteId", p.siteId);
+          if (p.areaId) params.append("areaId", p.areaId);
+          if (p.workCenterId) params.append("workCenterId", p.workCenterId);
+          if (p.search) params.append("search", p.search);
+          if (p.includeClosed) params.append("includeClosed", "true");
+
+          const qs = params.toString();
+          return qs ? (baseUrl + "?" + qs) : baseUrl;
+        }
+                
+
+                document.addEventListener("DOMContentLoaded", () => {
+          const form = document.getElementById("maintenanceFilterForm");
+          const site = document.getElementById("siteId");
+          const area = document.getElementById("areaId");
+
+          if (site) site.addEventListener("change", () => {
+            document.getElementById("areaId").value = "";
+            document.getElementById("workCenterId").value = "";
+            form?.submit();
+          });
+
+          if (area) area.addEventListener("change", () => {
+            document.getElementById("workCenterId").value = "";
+            form?.submit();
+          });
+        });
+
+
+            // 🔄 Reload list + KPIs via AJAX
+            function reloadList() {
+                if (!listContainer) {
+                    location.reload();
+                    return;
+                }
+
+                const url = buildUrl();
+                let newRequestDetected = false;
+                let updateDetected = false;
+
+                const previousCards = new Map();
+                listContainer.querySelectorAll(".maintenance-card").forEach(card => {
+                    const id = card.getAttribute("data-request-id");
+                    const ticks = card.getAttribute("data-last-comment-ticks") || "0";
+                    if (id) previousCards.set(id, ticks);
+                });
+
+                listContainer.classList.add("maintenance-list-loading");
+
+                $.get(url, function (html) {
+                    const $html = $(html);
+
+                    const newList = $html.find("#maintenance-list");
+                    if (newList.length) {
+                        listContainer.innerHTML = newList[0].innerHTML;
+
+                        const cards = listContainer.querySelectorAll(".maintenance-card");
+                        cards.forEach(card => {
+                            const id = card.getAttribute("data-request-id");
+                            const ticks = card.getAttribute("data-last-comment-ticks") || "0";
+
+                            requestAnimationFrame(() => {
+                                card.classList.add("ready");
+                            });
+
+                            const prevTicks = id ? previousCards.get(id) : null;
+                            const isNewCard = !previousCards.has(id);
+                            const commentChanged = !!prevTicks && prevTicks !== ticks;
+
+                            if (isNewCard) newRequestDetected = true;
+                            if (!isNewCard && commentChanged) updateDetected = true;
+
+                            if (isNewCard || commentChanged) {
+                                const badge = card.querySelector("[data-comment-badge]");
+                                if (badge) badge.classList.remove("d-none");
+                            }
+                        });
+
+                                if (newRequestDetected) {
+            if (window.sentinelPlayNewEmAlert) {
+                window.sentinelPlayNewEmAlert();
+            }
+        } else if (updateDetected) {
+            if (window.sentinelPlayCommentChime) {
+                window.sentinelPlayCommentChime();
+            }
+        }
+                        listContainer.classList.add("maintenance-list-pulse");
+                        setTimeout(() => {
+                            listContainer.classList.remove("maintenance-list-pulse");
+                        }, 800);
+                    }
+
+                    const currentKpis = document.getElementById("maintenance-kpis");
+                    const newKpis = $html.find("#maintenance-kpis");
+                    if (currentKpis && newKpis.length) {
+                        currentKpis.innerHTML = newKpis[0].innerHTML;
+
+                        const tiles = currentKpis.querySelectorAll(".sentinel-kpi-tile");
+                        tiles.forEach(tile => {
+                            tile.classList.add("kpi-pulse");
+                            setTimeout(() => tile.classList.remove("kpi-pulse"), 600);
+                        });
+                    }
+
+                    updateLastUpdatedStamp(true);
+                }).always(function () {
+                    listContainer.classList.remove("maintenance-list-loading");
+                });
+            }
+
+            window.sentinelReloadMaintenanceList = reloadList;
+
+            
+
+            // 🔹 Hub events
+            connection.on("MaintenanceListChanged", function () {
+                const banner = document.getElementById(bannerId);
+                if (banner) {
+                    banner.classList.add("show");
+                    setTimeout(() => banner.classList.remove("show"), 30000);
+                }
+                reloadList();
+            });
+
+            // 🔹 DOM ready
+            document.addEventListener("DOMContentLoaded", function () {
+                const banner = document.getElementById(bannerId);
+                if (banner) {
+                    banner.addEventListener("click", function () {
+                        banner.classList.remove("show");
+                        reloadList();
+                    });
+                }
+
+                document.querySelectorAll(".maintenance-card").forEach(card => {
+                    card.classList.add("ready");
+                });
+
+                document.addEventListener("click", function (e) {
+                    const link = e.target.closest("[data-maint-details-link]");
+                    if (!link) return;
+                    const card = link.closest(".maintenance-card");
+                    if (!card) return;
+                    const badge = card.querySelector("[data-comment-badge]");
+                    if (badge) badge.classList.add("d-none");
+                });
+
+                updateLastUpdatedStamp(false);
+            });
+
+            // 🔹 Connection lifecycle
+            connection.onreconnecting(err => {
+                console.warn("SignalR reconnecting (Index):", err);
+                if (window.sentinelUpdateLiveIndicator) {
+                    window.sentinelUpdateLiveIndicator("reconnecting");
+                }
+            });
+
+            connection.onreconnected(id => {
+                console.log("SignalR reconnected (Index). ConnectionId:", id);
+                if (window.sentinelUpdateLiveIndicator) {
+                    window.sentinelUpdateLiveIndicator("ok");
+                }
+            });
+
+            connection.onclose(err => {
+                console.warn("SignalR connection closed (Index):", err);
+                if (window.sentinelUpdateLiveIndicator) {
+                    window.sentinelUpdateLiveIndicator("offline");
+                }
+            });
+
+            connection.start()
+                .then(() => {
+                    console.log("SignalR connection started (Index)");
+                    if (window.sentinelUpdateLiveIndicator) {
+                        window.sentinelUpdateLiveIndicator("ok");
+                    }
+                    updateLastUpdatedStamp(false);
+                })
+                .catch(err => {
+                    console.error("SignalR error starting (Index):", err.toString());
+                    if (window.sentinelUpdateLiveIndicator) {
+                        window.sentinelUpdateLiveIndicator("offline");
+                    }
+                });
+                        connection.on("RequestUpdated", payload => {
+            if (!payload) return;
+
+            const id = payload.requestId ?? payload.id;
+            if (!id) return;
+
+            // Find the card badges
+            const statusBadge = document.querySelector(`[data-role="status"][data-request-id="${id}"]`);
+            const priorityBadge = document.querySelector(`[data-role="priority"][data-request-id="${id}"]`);
+
+            if (statusBadge) {
+                statusBadge.textContent = payload.status;
+            }
+            if (priorityBadge) {
+                priorityBadge.textContent = payload.priority;
+            }
+        });
+
+
+        })(); // ✅ CLOSE THE IIFE
+    </script>
+}
+
+
+
+
+

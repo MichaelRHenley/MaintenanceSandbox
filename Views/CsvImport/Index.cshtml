@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "CSV Import";
+}
+
+<div class="container py-4">
+    <h1 class="h3 mb-3">CSV Import</h1>
+
+    <form asp-action="Import" method="post" enctype="multipart/form-data" class="card p-3 p-md-4">
+        <div class="mb-3">
+            <label class="form-label">Import type</label>
+            <select name="importType" class="form-select" required>
+                <option value="">-- Select --</option>
+                <option value="parts">Parts</option>
+                <option value="inventory">Inventory</option>
+                <option value="bom">BOM</option>
+            </select>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="dryRun" name="dryRun" checked />
+            <label class="form-check-label" for="dryRun">
+                Dry run only (validate but do not save)
+            </label>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">CSV file</label>
+            <input type="file" name="file" class="form-control" accept=".csv" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Upload &amp; Process</button>
+    </form>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger mt-3">
+            @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div>@err.ErrorMessage</div>
+            }
+        </div>
+    }
+</div>
+

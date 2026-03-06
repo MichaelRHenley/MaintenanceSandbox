@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "MaintenanceSandbox.Controllers.Api.AiController",
+    "Method": "GetHelp",
+    "RelativePath": "api/ai/help",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "MaintenanceSandbox.Controllers.Api.AiController\u002BAiHelpRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

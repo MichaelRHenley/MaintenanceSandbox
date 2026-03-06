@@ -1,0 +1,341 @@
+﻿@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Localization
+@inject IStringLocalizer<SharedResource> SR
+
+@{
+    var moduleKey = ViewData["AiModuleKey"] as string ?? "Generic";
+    var errorText = SR["AiHelp_Error"].Value;
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var uiCulture = requestCulture?.RequestCulture.UICulture.Name ?? "en";
+}
+
+<div class="ai-help-container">
+    <button type="button"
+            class="btn btn-sm btn-outline-light ai-help-trigger"
+            data-ai-module="@moduleKey"
+            title="@SR["AiHelp_Tooltip"]">
+        ?
+    </button>
+
+    <div class="ai-help-panel"
+         id="aiHelpPanel"
+         hidden
+         data-ai-error="@errorText"
+         data-ai-culture="@uiCulture">
+        <div class="ai-help-header">
+            <span>@SR["AiHelp_Title"]</span>
+            <button type="button" class="btn-close btn-close-white ai-help-close"></button>
+        </div>
+
+        <div class="ai-help-actions">
+            <button class="btn btn-sm btn-outline-light ai-help-action"
+                    data-ai-intent="ExplainScreen">
+                @SR["AiHelp_ExplainScreen"]
+            </button>
+            <button class="btn btn-sm btn-outline-light ai-help-action"
+                    data-ai-intent="ExplainFields">
+                @SR["AiHelp_ExplainFields"]
+            </button>
+            <button class="btn btn-sm btn-outline-light ai-help-action"
+                    data-ai-intent="ShowExamples">
+                @SR["AiHelp_ShowExamples"]
+            </button>
+            <button class="btn btn-sm btn-outline-light ai-help-action"
+                    data-ai-intent="WhatFirst">
+                @SR["AiHelp_WhatFirst"]
+            </button>
+        </div>
+
+        <div class="ai-help-body">
+            <div class="ai-help-loading" hidden>@SR["AiHelp_Thinking"]</div>
+            <div class="ai-help-content"></div>
+        </div>
+        <!-- Add to _AiHelpLauncher.cshtml after response -->
+        <div class="ai-help-feedback">
+            Was this helpful?
+            <button class="btn-feedback" data-feedback="yes">👍</button>
+            <button class="btn-feedback" data-feedback="no">👎</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .ai-help-container {
+        position: static;
+        display: inline-flex;
+        align-items: center;
+        margin-right: 0.5rem;
+        z-index: 2000;
+    }
+
+    .ai-help-panel {
+        position: fixed;
+        top: 1.5rem;
+        right: 1rem;
+        bottom: 1.5rem;
+        left: auto;
+        width: 380px;
+        max-width: 100%;
+        max-height: calc(50vh - 3rem);
+        margin: 0;
+        border-radius: 1rem 0 0 1rem;
+        overflow: hidden;
+        background: radial-gradient(circle at top left, #2c3358 0, #141a30 45%, #050713 100%);
+        border-left: 1px solid rgba(255,255,255,0.16);
+        box-shadow: -14px 0 32px rgba(0,0,0,0.85);
+        padding: 0.75rem 0.9rem 1rem;
+        display: flex;
+        flex-direction: column;
+        z-index: 3000;
+        animation: fadeSlideIn 0.25s ease-out;
+    }
+
+    .ai-help-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.6rem;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding-bottom: 0.35rem;
+    }
+
+    .ai-help-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .ai-help-body {
+        flex: 1;
+        overflow-y: auto;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        border-radius: 0.75rem;
+        padding: 0.6rem;
+        background: radial-gradient(circle at top left, #1b213f 0, #090f23 50%, #050713 100%);
+    }
+
+        .ai-help-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .ai-help-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .ai-help-body::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.25);
+            border-radius: 4px;
+        }
+
+    .ai-help-loading {
+        font-style: italic;
+        opacity: 0.8;
+    }
+
+    @@keyframes fadeSlideIn {
+        from {
+            opacity: 0;
+            transform: translateX(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const helpPanel = document.getElementById('aiHelpPanel');
+        if (!helpPanel) return;
+
+        const openButtons = document.querySelectorAll('.ai-help-trigger');
+        const closeButton = helpPanel.querySelector('.ai-help-close');
+        const actionButtons = helpPanel.querySelectorAll('.ai-help-action');
+        const loadingEl = helpPanel.querySelector('.ai-help-loading');
+        const contentEl = helpPanel.querySelector('.ai-help-content');
+
+        const errorText = helpPanel.dataset.aiError || 'Error';
+        const aiHelpCulture = helpPanel.dataset.aiCulture || 'en';
+
+        openButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                helpPanel.hidden = false;
+            });
+        });
+
+        if (closeButton) {
+            closeButton.addEventListener('click', () => {
+                helpPanel.hidden = true;
+            });
+        }
+
+        actionButtons.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const intent = btn.getAttribute('data-ai-intent');
+                const moduleKey = document
+                    .querySelector('.ai-help-trigger')
+                    ?.getAttribute('data-ai-module') || 'Generic';
+
+                loadingEl.hidden = false;
+                contentEl.innerHTML = '';
+
+                // Capture current page context
+                const pageContext = capturePageContext(moduleKey);
+
+                try {
+                    const res = await fetch('/api/ai/help', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            moduleKey,
+                            intent,
+                            extraContext: pageContext,
+                            culture: aiHelpCulture
+                        })
+                    });
+
+                    const text = await res.text();
+                    loadingEl.hidden = true;
+                    contentEl.innerText = text;
+                } catch (e) {
+                    loadingEl.hidden = true;
+                    contentEl.innerText = errorText;
+                }
+            });
+        });
+
+        // Capture page context based on module
+        function capturePageContext(moduleKey) {
+            try {
+                switch (moduleKey) {
+                    case 'Maintenance':
+                        return captureMaintenance();
+                    case 'EmergencyMaintenance':
+                        return captureEmergencyMaintenance();
+                    case 'Parts':
+                        return captureParts();
+                    case 'WorkCenter':
+                        return captureWorkCenter();
+                    case 'Assets':
+                        return captureAssets();
+                    default:
+                        return captureGeneric();
+                }
+            } catch (e) {
+                console.warn('Error capturing page context:', e);
+                return null;
+            }
+        }
+
+        function captureMaintenance() {
+            const context = {
+                pageTitle: document.querySelector('.sentinel-page-title')?.innerText || 'Maintenance',
+                counts: {
+                    open: extractNumber(document.querySelector('.tab-button:nth-child(1)')?.innerText),
+                    waiting: extractNumber(document.querySelector('.tab-button:nth-child(2)')?.innerText),
+                    resolved: extractNumber(document.querySelector('.tab-button:nth-child(3)')?.innerText)
+                },
+                filters: {
+                    site: document.querySelector('select[name="site"]')?.value || 'All',
+                    zone: document.querySelector('select[name="zone"]')?.value || 'All',
+                    workCenter: document.querySelector('select[name="workCenter"]')?.value || 'All'
+                },
+                visibleRequests: Array.from(document.querySelectorAll('.maintenance-request-card') || [])
+                    .slice(0, 3)
+                    .map(card => ({
+                        id: card.dataset.requestId || card.querySelector('.request-id')?.innerText,
+                        equipment: card.querySelector('.equipment')?.innerText,
+                        priority: card.querySelector('.priority')?.innerText,
+                        status: card.querySelector('.status')?.innerText
+                    }))
+            };
+            return JSON.stringify(context, null, 2);
+        }
+
+        function captureEmergencyMaintenance() {
+            const context = {
+                pageTitle: document.querySelector('.sentinel-page-title')?.innerText || 'Emergency Maintenance',
+                filters: {
+                    site: document.querySelector('select[name="site"]')?.value || 'All',
+                    zone: document.querySelector('select[name="zone"]')?.value || 'All',
+                    workCenter: document.querySelector('select[name="workCenter"]')?.value || 'All'
+                },
+                counts: {
+                    open: extractNumber(document.querySelector('.em-count-open')?.innerText),
+                    total: document.querySelectorAll('.em-card').length
+                },
+                visibleRequests: Array.from(document.querySelectorAll('.em-card') || [])
+                    .slice(0, 3)
+                    .map(card => ({
+                        id: card.dataset.emId,
+                        equipment: card.querySelector('.equipment')?.innerText,
+                        priority: card.querySelector('.priority')?.innerText,
+                        status: card.querySelector('.status')?.innerText
+                    }))
+            };
+            return JSON.stringify(context, null, 2);
+        }
+
+        function captureParts() {
+            const context = {
+                pageTitle: document.querySelector('.sentinel-page-title')?.innerText || 'Parts',
+                searchQuery: document.querySelector('input[name="search"]')?.value || '',
+                filters: {
+                    category: document.querySelector('select[name="category"]')?.value || 'All',
+                    location: document.querySelector('select[name="location"]')?.value || 'All'
+                },
+                visiblePartsCount: document.querySelectorAll('.part-card').length,
+                visibleParts: Array.from(document.querySelectorAll('.part-card') || [])
+                    .slice(0, 3)
+                    .map(card => ({
+                        partNumber: card.querySelector('.part-number')?.innerText,
+                        description: card.querySelector('.description')?.innerText?.substring(0, 50),
+                        stockLevel: card.querySelector('.stock-level')?.innerText
+                    }))
+            };
+            return JSON.stringify(context, null, 2);
+        }
+
+        function captureWorkCenter() {
+            const context = {
+                pageTitle: document.querySelector('.sentinel-page-title')?.innerText || 'Work Center',
+                workCenterName: document.querySelector('.work-center-name')?.innerText || 'Unknown',
+                currentStatus: document.querySelector('.status-indicator')?.innerText || 'Unknown',
+                metrics: {
+                    throughput: document.querySelector('.throughput')?.innerText,
+                    downtime: document.querySelector('.downtime')?.innerText,
+                    oee: document.querySelector('.oee')?.innerText
+                }
+            };
+            return JSON.stringify(context, null, 2);
+        }
+
+        function captureAssets() {
+            const context = {
+                pageTitle: document.querySelector('.sentinel-page-title')?.innerText || 'Assets',
+                searchQuery: document.querySelector('input[name="search"]')?.value || '',
+                visibleAssetsCount: document.querySelectorAll('.asset-card').length
+            };
+            return JSON.stringify(context, null, 2);
+        }
+
+        function captureGeneric() {
+            const context = {
+                pageTitle: document.querySelector('.sentinel-page-title')?.innerText || 'Unknown',
+                url: window.location.pathname
+            };
+            return JSON.stringify(context, null, 2);
+        }
+
+        function extractNumber(text) {
+            if (!text) return 0;
+            const match = text.match(/\d+/);
+            return match ? parseInt(match[0], 10) : 0;
+        }
+    });
+</script>

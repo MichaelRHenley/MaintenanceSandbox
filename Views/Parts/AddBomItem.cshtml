@@ -1,0 +1,64 @@
+﻿@model MaintenanceSandbox.Models.Parts.AddBomItemViewModel
+
+@{
+    ViewData["Title"] = $"Add BOM Item – {Model.PartNumber}";
+    ViewData["AiModuleKey"] = "Bom_Add";
+}
+
+<div class="container py-4">
+    <div class="mb-3">
+        <a asp-action="Details" asp-route-id="@Model.PartId" class="btn btn-sm btn-outline-light">
+            ← Back to Part
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="h4 mb-0">Link Asset to @Model.PartNumber</h1>
+
+                <div class="d-flex align-items-center gap-2">
+                    @await Html.PartialAsync("_AiHelpLauncher")
+                </div>
+            </div>
+
+
+            <form asp-action="AddBomItem" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="PartId" />
+
+                <div class="mb-3">
+                    <label asp-for="AssetId" class="form-label"></label>
+                    <select asp-for="AssetId"
+                            asp-items="Model.AssetOptions"
+                            class="form-select">
+                        <option value="">-- Select asset --</option>
+                    </select>
+                    <span asp-validation-for="AssetId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 col-md-4">
+                    <label asp-for="QuantityPerAsset" class="form-label"></label>
+                    <input asp-for="QuantityPerAsset" class="form-control" />
+                    <span asp-validation-for="QuantityPerAsset" class="text-danger"></span>
+                </div>
+
+                <div class="mt-4 d-flex justify-content-end gap-2">
+                    <a asp-action="Details" asp-route-id="@Model.PartId"
+                       class="btn btn-outline-secondary">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        Save BOM Item
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

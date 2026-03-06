@@ -1,0 +1,233 @@
+﻿@model List<MaintenanceSandbox.Models.Part>
+@using System.Globalization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = SR["Parts_Index_Title"];
+    ViewData["AiModuleKey"] = "Parts_Index";
+
+    string searchText = ViewBag.SearchText as string ?? "";
+
+    var totalParts = Model.Count;
+    var activeCount = Model.Count(p => p.IsActive);
+    var inactiveCount = totalParts - activeCount;
+}
+
+<div class="container py-4">
+
+    @if (TempData["CreatedPartId"] is int createdId)
+    {
+        var createdPartNumber = TempData["CreatedPartNumber"] as string ?? SR["Parts_Index_Created_NewPartPlaceholder"];
+        <div class="alert alert-success d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <strong>@SR["Parts_Index_Created_Label"]</strong> @createdPartNumber
+            </div>
+            <div class="d-flex gap-2">
+                <a asp-action="Details" asp-route-id="@createdId" class="btn btn-sm btn-outline-light">
+                    @SR["Parts_Index_Button_ViewDetails"]
+                </a>
+                <a asp-action="Create" class="btn btn-sm btn-primary">
+                    @SR["Parts_Index_Button_CreateAnother"]
+                </a>
+            </div>
+        </div>
+    }
+
+    <!-- Header + stats -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <div class="text-uppercase small text-muted mb-1">
+                @SR["Parts_Index_Header"]
+            </div>
+            <h1 class="h3 mb-0">@SR["Parts_Index_Title"]</h1>
+            <div class="mt-1 small text-muted">
+                @SR["Parts_Index_Stats", totalParts, activeCount, inactiveCount]
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+            @await Html.PartialAsync("_AiHelpLauncher")
+
+            <a asp-action="Create" class="btn btn-primary btn-sm">
+                @SR["Parts_Index_Button_NewPart"]
+            </a>
+        </div>
+    </div>
+
+    <!-- Search + filters -->
+    <div class="card mb-3 shadow-sm border-0">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-2 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label small text-uppercase text-muted mb-1">
+                        @SR["Parts_Index_Filter_Search_Label"]
+                    </label>
+                    <input type="text"
+                           name="q"
+                           value="@searchText"
+                           class="form-control"
+                           placeholder="@SR["Parts_Index_Filter_Search_Placeholder"]" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label small text-uppercase text-muted mb-1">
+                        @SR["Parts_Index_Filter_Status_Label"]
+                    </label>
+                    <select id="statusFilter" class="form-select">
+                        <option value="">@SR["Parts_Index_Filter_Status_All"]</option>
+                        <option value="active">@SR["Parts_Index_Filter_Status_ActiveOnly"]</option>
+                        <option value="inactive">@SR["Parts_Index_Filter_Status_InactiveOnly"]</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 d-flex justify-content-end gap-2">
+                    <button type="submit" class="btn btn-outline-light">
+                        @SR["Parts_Index_Filter_Button_Apply"]
+                    </button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        @SR["Parts_Index_Filter_Button_Reset"]
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Parts table -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            @if (!Model.Any())
+            {
+                <div class="p-3">
+                    <div class="alert alert-info mb-0">
+                        <strong>@SR["Parts_Index_Empty_Title"]</strong>
+                        <span>@SR["Parts_Index_Empty_Body"]</span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-dark table-borderless">
+                            <tr>
+                                <th style="width: 12%">@SR["Parts_Index_Table_PartNumber"]</th>
+                                <th style="width: 30%">@SR["Parts_Index_Table_Description"]</th>
+                                <th style="width: 18%">@SR["Parts_Index_Table_Manufacturer"]</th>
+                                <th class="text-end" style="width: 10%">@SR["Parts_Index_Table_OnHand"]</th>
+                                <th class="text-center" style="width: 10%">@SR["Parts_Index_Table_Status"]</th>
+                                <th style="width: 20%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in Model.OrderBy(p => p.PartNumber))
+                            {
+                                var totalOnHand = p.InventoryLevels?.Sum(il => il.QuantityOnHand) ?? 0;
+
+                                var rowClass = "";
+                                if (!p.IsActive)
+                                {
+                                    rowClass = "table-secondary";
+                                }
+                                else if (totalOnHand == 0)
+                                {
+                                    rowClass = "table-danger";
+                                }
+
+                            <tr class="@rowClass"
+                                data-status="@(p.IsActive ? "active" : "inactive")">
+                                <td class="fw-semibold">
+                                    @p.PartNumber
+                                </td>
+                                <td>
+                                    <div class="fw-semibold">
+                                        @(string.IsNullOrWhiteSpace(p.ShortDescription)
+                                                                            ? "-"
+                                                                            : p.ShortDescription)
+                                </div>
+                                @if (!string.IsNullOrWhiteSpace(p.AiCleanDescription))
+                                        {
+                                            <div class="small text-muted text-truncate"
+                                                 style="max-width: 400px;">
+                                                @p.AiCleanDescription
+                                            </div>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div>@(p.Manufacturer ?? "-")</div>
+                                        @if (!string.IsNullOrWhiteSpace(p.ManufacturerPartNumber))
+                                        {
+                                            <div class="small text-muted">
+                                                @SR["Parts_Index_Label_MfgNumber"] @p.ManufacturerPartNumber
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        @if (totalOnHand == 0)
+                                        {
+                                            <span class="badge rounded-pill bg-transparent text-danger border border-danger">
+                                                0 • @SR["Parts_Index_Badge_NoStock"]
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fw-semibold">@totalOnHand</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (p.IsActive)
+                                        {
+                                            <span class="badge bg-success">@SR["Parts_Index_Status_Active"]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@SR["Parts_Index_Status_Inactive"]</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="btn-group btn-group-sm">
+                                            <a asp-action="Details"
+                                               asp-route-id="@p.Id"
+                                               class="btn btn-outline-light">
+                                                @SR["Parts_Index_Button_View"]
+                                            </a>
+                                            <a asp-action="Edit"
+                                               asp-route-id="@p.Id"
+                                               class="btn btn-outline-secondary">
+                                                @SR["Parts_Index_Button_Edit"]
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Simple client-side status filter
+        (function () {
+            const select = document.getElementById('statusFilter');
+            if (!select) return;
+
+            select.addEventListener('change', function () {
+                const value = this.value;
+                document
+                    .querySelectorAll('table tbody tr[data-status]')
+                    .forEach(row => {
+                        const status = row.getAttribute('data-status');
+                        if (!value || value === status) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+            });
+        })();
+    </script>
+}

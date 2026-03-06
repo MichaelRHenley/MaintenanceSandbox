@@ -1,0 +1,37 @@
+﻿@model MaintenanceSandbox.Models.SubscribeStartVm
+@{
+    ViewData["Title"] = "Subscribe";
+}
+
+<h2>Set up your workspace</h2>
+
+<form method="post" action="/subscribe/start">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label">Company name</label>
+        <input class="form-control" asp-for="CompanyName" />
+        <span class="text-danger" asp-validation-for="CompanyName"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Tier</label>
+        <select class="form-select" asp-for="Tier">
+            <option value="Tier1">Tier 1 (Emergency Maintenance)</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Billing cadence</label>
+        <select class="form-select" asp-for="BillingCadence">
+            <option value="Monthly">Monthly</option>
+            <option value="Annual">Annual</option>
+        </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Create workspace</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

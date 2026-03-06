@@ -1,0 +1,98 @@
+﻿@model MaintenanceSandbox.Models.Part
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = SR["Parts_Edit_Title", Model.PartNumber];
+    ViewData["AiModuleKey"] = "Part_Edit";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="h4 mb-0">
+                @SR["Parts_Edit_Heading", Model.PartNumber]
+            </h1>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+            @await Html.PartialAsync("_AiHelpLauncher")
+
+            <a asp-action="Index" class="btn btn-sm btn-outline-secondary">
+                @SR["Parts_Edit_Button_BackToList"]
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label class="form-label" for="PartNumber">
+                        @SR["Parts_Edit_Label_PartNumber"]
+                    </label>
+                    <input asp-for="PartNumber" class="form-control" />
+                    <span asp-validation-for="PartNumber" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="ShortDescription">
+                        @SR["Parts_Edit_Label_ShortDescription"]
+                    </label>
+                    <input asp-for="ShortDescription" class="form-control" />
+                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="LongDescription">
+                        @SR["Parts_Edit_Label_LongDescription"]
+                    </label>
+                    <textarea asp-for="LongDescription" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="LongDescription" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="Manufacturer">
+                                @SR["Parts_Edit_Label_Manufacturer"]
+                            </label>
+                            <input asp-for="Manufacturer" class="form-control" />
+                            <span asp-validation-for="Manufacturer" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label" for="ManufacturerPartNumber">
+                                @SR["Parts_Edit_Label_ManufacturerPartNumber"]
+                            </label>
+                            <input asp-for="ManufacturerPartNumber" class="form-control" />
+                            <span asp-validation-for="ManufacturerPartNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input asp-for="IsActive" class="form-check-input" />
+                    <label class="form-check-label" for="IsActive">
+                        @SR["Parts_Edit_Label_IsActive"]
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    @SR["Parts_Edit_Button_SaveChanges"]
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">
+                    @SR["Parts_Edit_Button_Cancel"]
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

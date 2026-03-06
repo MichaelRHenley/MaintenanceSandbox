@@ -1,0 +1,50 @@
+﻿@model MaintenanceSandbox.Models.LoginViewModel
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = SR["Auth_SignIn"];
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h4>@SR["Auth_SignIn"]</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            @SR["Auth_SignIn"]
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-muted small mt-2">
+                @SR["Auth_Login_Try"]
+                <div>@SR["Auth_Login_DemoSupervisor"]</div>
+                <div>@SR["Auth_Login_DemoOperator"]</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

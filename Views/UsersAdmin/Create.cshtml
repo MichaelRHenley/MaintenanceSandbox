@@ -1,0 +1,65 @@
+﻿@model MaintenanceSandbox.ViewModels.Admin.CreateUserVm
+
+@{
+    ViewData["Title"] = "Add User";
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Add User</div>
+                <div class="sentinel-page-subtitle">Create an account and assign a role.</div>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <form method="post" class="row g-3">
+                @Html.AntiForgeryToken()
+
+                <div class="col-md-6">
+                    <label class="form-label small text-uppercase text-muted mb-1">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small text-uppercase text-muted mb-1">Display Name</label>
+                    <input asp-for="DisplayName" class="form-control" />
+                    <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small text-uppercase text-muted mb-1">Role</label>
+                    <select asp-for="Role" class="form-select">
+                        <option value="">Select…</option>
+                        @foreach (var r in Model.RoleOptions)
+                        {
+                            <option value="@r">@r</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Role" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small text-uppercase text-muted mb-1">Temporary Password (optional)</label>
+                    <input asp-for="TempPassword" class="form-control" />
+                    <small class="text-muted">Leave blank to auto-generate.</small>
+                </div>
+
+                <div class="col-12 d-flex justify-content-between mt-3">
+                    <a asp-action="Index" class="btn btn-sentinel-ghost">Cancel</a>
+                    <button type="submit" class="btn btn-sentinel-primary">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

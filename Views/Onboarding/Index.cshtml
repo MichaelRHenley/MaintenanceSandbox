@@ -1,0 +1,757 @@
+﻿@model MaintenanceSandbox.Models.Onboarding.OnboardingSession
+
+@{
+    ViewData["Title"] = "Onboarding";
+    
+}
+
+<div class="container py-4 onboarding-page">
+    <div class="row g-4">
+        <!-- LEFT: Wizard -->
+        <div class="col-lg-7">
+            <h2 class="mb-3">Onboarding Wizard</h2>
+
+            <!-- Step 0: Site -->
+            <div class="card mb-3 onboarding-card"  id="step-site">
+                <div class="card-header onboarding-head d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="fw-bold">Step 0 — Site</span>
+                        <span id="siteSummary" class="text-muted small ms-2 d-none"></span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-light d-none" id="siteEditBtn"
+                            type="button" onclick="toggleStep('site', true)">
+                        Edit
+                    </button>
+                </div>
+                <div class="card-body onboarding-body step-collapsible" id="siteBody">
+                    <div class="mb-2 text-muted small">Example: Site 22</div>
+                    <input id="siteName" class="form-control" placeholder="Site name" />
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-primary" type="button" onclick="stepSite(this)">Next</button>
+                    </div>
+                    <div id="siteMsg" class="mt-2 small"></div>
+                </div>
+            </div>
+
+            <!-- Step 1: Areas -->
+            <div class="card mb-3 onboarding-card" id="step-areas">
+                <div class="card-header onboarding-head d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="fw-bold">Step 1 — Areas</span>
+                        <span id="areasSummary" class="text-muted small ms-2 d-none"></span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-light d-none" id="areasEditBtn"
+                            type="button" onclick="toggleStep('areas', true)">
+                        Edit
+                    </button>
+                </div>
+                <div class="card-body onboarding-body step-collapsible" id="areasBody">
+
+                    <div class="mb-2 text-muted small">Comma-separated: Packaging, Mixing</div>
+                    <textarea id="areasText" class="form-control" rows="2" placeholder="Packaging, Mixing"></textarea>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-primary" type="button" onclick="stepAreas(this)">Next</button>                       
+
+                    </div>
+                    <div id="areasMsg" class="mt-2 small"></div>
+                </div>
+            </div>
+
+            <!-- Step 2/3: Work Centers (dynamic) -->
+            <div id="workCentersContainer"></div>
+
+            <!-- Review + Apply -->
+            <div class="card mb-3 onboarding-card" id="step-apply">
+                <div class="card-header onboarding-head d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="fw-bold">Review + Apply</span>
+                        <span id="applySummary" class="text-muted small ms-2 d-none"></span>
+                    </div>
+                    <button class="btn btn-edit d-none" id="applyEditBtn"
+                            type="button" onclick="toggleStep('apply', true)">
+                        Edit
+                    </button>
+                </div>
+
+                <div class="card-body onboarding-body step-collapsible" id="applyBody">
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-secondary" type="button" onclick="refreshDraftFromRight()">Refresh draft from right panel</button>
+                        <button class="btn btn-success" type="button" onclick="applyDraft()">Apply</button>
+                        <button class="btn btn-outline-danger" type="button" onclick="resetDraft(this)">Reset</button>
+                    </div>
+                    <div id="applyMsg" class="mt-2 small"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Draft JSON -->
+        <div class="col-lg-5">
+            <div class="card review-card">
+                <div class="card-header review-head">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fw-bold">Review</span>
+                        <span id="draftPill" class="badge rounded-pill text-bg-secondary">Draft</span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <button class="btn btn-sm btn-outline-light" type="button" onclick="toggleAdvanced()">
+                            Advanced
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <!-- Human-readable summary -->
+                    <div id="reviewPanel"></div>
+
+                    <hr class="my-3" style="border-color: rgba(255,255,255,0.08);" />
+
+                    <!-- Advanced JSON (collapsed by default) -->
+                    <div id="advancedPanel" style="display:none;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="text-muted small">Draft JSON (advanced)</div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-outline-light" type="button" onclick="formatDraft()">Format</button>
+                                <button class="btn btn-sm btn-outline-light" type="button" onclick="copyDraft()">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="draft-body">
+                            <div id="draftEditor" class="draft-editor"></div>
+                        </div>
+                    </div>
+
+                    <textarea id="draftJsonSeed" class="d-none">
+@(!string.IsNullOrWhiteSpace(Model?.DraftJson) ? Model.DraftJson : "{ }")
+</textarea>
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs/loader.min.js"></script>
+    <script>
+        // ----------------------------
+        // GLOBAL UI STATE
+        // ----------------------------
+        let draftEditor = null;
+
+        const uiState = {
+          collapsed: {},          // stepKey -> true when collapsed
+          lastAreasSig: ""        // used to avoid rebuilding WC cards unnecessarily
+        };
+
+        // ----------------------------
+        // DRAFT GET/SET
+        // ----------------------------
+        function getDraftText() {
+          if (draftEditor) return draftEditor.getValue() || "{ }";
+          return document.getElementById('draftJsonSeed')?.value || "{ }";
+        }
+
+        function parseDraft() {
+          const raw = getDraftText();
+          try { return JSON.parse(raw); } catch { return {}; }
+        }
+
+        function getAreasSig(d) {
+          const site = (d.Sites && d.Sites.length) ? d.Sites[0] : null;
+          const areas = site?.Areas || [];
+          return areas.map(a => (a.Name || "").trim().toLowerCase()).join("|");
+        }
+
+        function setDraft(jsonText) {
+          const value = (jsonText && jsonText.trim().length) ? jsonText : "{ }";
+
+          if (draftEditor) draftEditor.setValue(value);
+          else {
+            const seed = document.getElementById('draftJsonSeed');
+            if (seed) seed.value = value;
+          }
+
+          // only rebuild WC cards when areas list changes (big perf win)
+          const d = parseDraft();
+          const sig = getAreasSig(d);
+          if (sig !== uiState.lastAreasSig) {
+            uiState.lastAreasSig = sig;
+            rebuildWorkCenterCards();
+          }
+
+          renderReview();
+        }
+                async function resetDraft(btn) {
+          if (!confirm("Reset onboarding draft? This will clear the site, areas, and work centers.")) return;
+
+          setBusy(btn, true, "Reset");
+
+          try {
+            const data = await postJson('/onboarding/reset', {}); // returns { draftJson: "{ }" } or similar
+            setDraft(data.draftJson);
+
+            // clear user inputs (optional but recommended)
+            const siteInput = document.getElementById('siteName');
+            const areasInput = document.getElementById('areasText');
+            if (siteInput) siteInput.value = "";
+            if (areasInput) areasInput.value = "";
+
+            // clear step UI state if you use it
+            if (window.uiState?.collapsed) window.uiState.collapsed = {};
+
+            // rebuild left side from empty draft
+            rebuildWorkCenterCards();
+            renderReview();
+
+            // reset step visuals (optional)
+            setMsg('siteMsg', '', true);
+            setMsg('areasMsg', '', true);
+            setMsg('applyMsg', 'Draft reset.', true);
+
+            // reopen the first steps so user can start again
+            toggleStep('site', true);
+            toggleStep('areas', true);
+          } catch (e) {
+            setMsg('applyMsg', e.message || 'Reset failed.', false);
+          } finally {
+            setBusy(btn, false, "Reset");
+          }
+        }
+                async function deleteJson(url, body) {
+          const res = await fetch(url, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+
+          const text = await res.text();
+          let data = null;
+          try { data = text ? JSON.parse(text) : null; } catch {}
+
+          if (!res.ok) {
+            const msg = (data && (data.error || data.message)) ? (data.error || data.message) : text;
+            throw new Error(msg || ('HTTP ' + res.status));
+          }
+
+          return data;
+        }
+
+
+        // ----------------------------
+        // SMALL HELPERS
+        // ----------------------------
+        function escapeHtml(s) {
+          return (s || '').replace(/[&<>"']/g, c =>
+            ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+        }
+        function escapeJs(s) {
+          return (s || '').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        }
+
+        function setMsg(id, text, ok) {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.textContent = text || '';
+          el.className = ok ? 'mt-2 small text-success' : 'mt-2 small text-danger';
+        }
+
+        function setBusy(buttonEl, isBusy, label = "Next") {
+          if (!buttonEl) return;
+          buttonEl.disabled = isBusy;
+          if (isBusy) {
+            buttonEl.dataset.origText = buttonEl.innerHTML;
+            buttonEl.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status"></span>Working...`;
+          } else {
+            buttonEl.innerHTML = buttonEl.dataset.origText || label;
+          }
+        }
+
+        async function postJson(url, body) {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+
+          const text = await res.text();
+          let data = null;
+          try { data = text ? JSON.parse(text) : null; } catch {}
+
+          if (!res.ok) {
+            const msg = (data && (data.error || data.message)) ? (data.error || data.message) : text;
+            throw new Error(msg || ('HTTP ' + res.status));
+          }
+
+          return data;
+        }
+
+        function getSiteName() {
+          return (document.getElementById('siteName')?.value || '').trim();
+        }
+
+                let didInitialHydrate = false;
+
+        function hydrateLeftFromDraft() {
+          const d = parseDraft();
+          const site = d?.Sites?.[0] || null;
+
+          // If draft is empty, nothing to hydrate
+          if (!site) return;
+
+          // --- Step 0: Site ---
+          const siteName = (site.Name || "").trim();
+          if (siteName) {
+            const siteInput = document.getElementById("siteName");
+            if (siteInput && !siteInput.value) siteInput.value = siteName;
+
+            completeStep("site", `Site: ${siteName}`);
+          } else {
+            toggleStep("site", true);
+          }
+
+          // --- Step 1: Areas ---
+          const areas = site.Areas || [];
+          if (areas.length) {
+            // optional: show areas as CSV in the textarea when returning
+            const areasText = areas.map(a => a.Name).filter(Boolean).join(", ");
+            const areasInput = document.getElementById("areasText");
+            if (areasInput && !areasInput.value) areasInput.value = areasText;
+
+            completeStep("areas", `Areas: ${areas.length}`);
+          } else {
+            toggleStep("areas", true);
+          }
+
+          // --- Work center cards ---
+          // Make sure cards exist before we try to collapse them
+          rebuildWorkCenterCards();
+
+          areas.forEach((a, idx) => {
+            const stepKey = `wc_${idx}`;
+            const wcCount = (a.WorkCenters || []).length;
+
+            if (wcCount > 0) {
+              completeStep(stepKey, `${wcCount} work centers`);
+            } else {
+              // Keep open if no WCs yet
+              toggleStep(stepKey, true);
+            }
+          });
+
+          // Apply step can stay open; you can choose to collapse it if you want.
+        }
+
+
+        // ----------------------------
+        // COLLAPSE/EXPAND
+        // ----------------------------
+        function completeStep(stepKey, summaryText) {
+          uiState.collapsed[stepKey] = true;
+
+          const body = document.getElementById(`${stepKey}Body`);
+          const summary = document.getElementById(`${stepKey}Summary`);
+          const editBtn = document.getElementById(`${stepKey}EditBtn`);
+
+          if (body) body.style.display = 'none';
+
+          if (summary) {
+            summary.textContent = summaryText || '';
+            summary.classList.remove('d-none');
+          }
+
+          if (editBtn) editBtn.classList.remove('d-none');
+        }
+
+        function toggleStep(stepKey, open) {
+          uiState.collapsed[stepKey] = !open;
+
+          const body = document.getElementById(`${stepKey}Body`);
+          const editBtn = document.getElementById(`${stepKey}EditBtn`);
+
+          if (body) body.style.display = open ? 'block' : 'none';
+          if (editBtn) editBtn.classList.toggle('d-none', open); // hide Edit while open
+        }
+
+        // ----------------------------
+        // STEPS
+        // ----------------------------
+        async function stepSite(btn) {
+          setBusy(btn, true);
+          toggleStep('site', false);
+          try {
+            const siteName = getSiteName();
+            if (!siteName) { setMsg('siteMsg', 'Site name required.', false); return; }
+
+            const data = await postJson('/onboarding/site', { siteName });
+            setDraft(data.draftJson);
+
+            setMsg('siteMsg', 'Saved site.', true);
+            completeStep('site', `Site: ${siteName}`);
+          } catch (e) {
+            setMsg('siteMsg', e.message, false);
+            toggleStep('site', true);
+
+          } finally {
+            setBusy(btn, false);
+          }
+        }
+
+        async function stepAreas(btn) {
+          setBusy(btn, true);
+          toggleStep('site', false);
+          try {
+            const siteName = getSiteName();
+            const userText = (document.getElementById('areasText')?.value || '').trim();
+
+            if (!siteName) { setMsg('areasMsg', 'Set site first.', false); return; }
+            if (!userText) { setMsg('areasMsg', 'Enter areas text.', false); return; }
+
+            const data = await postJson('/onboarding/areas', { siteName, userText });
+            setDraft(data.draftJson);
+
+            setMsg('areasMsg', 'Areas generated and merged.', true);
+
+            const d = parseDraft();
+            const site = (d.Sites && d.Sites.length) ? d.Sites[0] : null;
+            const areas = site?.Areas || [];
+            completeStep('areas', `Areas: ${areas.length}`);
+          } catch (e) {
+            setMsg('areasMsg', e.message, false);
+            toggleStep('site', true);
+
+          } finally {
+            setBusy(btn, false);
+          }
+        }
+
+        async function stepWorkCenters(btn, idx, areaName) {
+          setBusy(btn, true);
+          toggleStep('site', false);
+          try {
+            const siteName = getSiteName();
+            const userText = (document.getElementById('wcText_' + idx)?.value || '').trim();
+
+            if (!siteName) { setMsg('wcMsg_' + idx, 'Set site first.', false); return; }
+            if (!areaName) { setMsg('wcMsg_' + idx, 'Area missing.', false); return; }
+            if (!userText) { setMsg('wcMsg_' + idx, 'Enter work centers.', false); return; }
+
+            const data = await postJson('/onboarding/workcenters', { siteName, areaName, userText });
+            setDraft(data.draftJson);
+
+            setMsg('wcMsg_' + idx, 'Work centers generated and merged.', true);
+
+            // Collapse ONLY this area's WC card
+            const d = parseDraft();
+            const site = d.Sites?.[0];
+            const areas = site?.Areas || [];
+            const area = areas.find(x => (x.Name || '').toLowerCase() === (areaName || '').toLowerCase());
+            const wcCount = area?.WorkCenters?.length || 0;
+
+            completeStep(`wc_${idx}`, `${wcCount} work centers`);
+          } catch (e) {
+            setMsg('wcMsg_' + idx, e.message, false);
+            toggleStep('site', true);
+          } finally {
+            setBusy(btn, false);
+          }
+        }
+                async function deleteAreaDraft(siteName, areaName) {
+          if (!confirm(`Delete area "${areaName}" and all its work centers?`)) return;
+
+          try {
+            await deleteJson('/onboarding/draft/area', { siteName, areaName });
+
+            // Update the editor + UI from the server? We don't have server-return draft here,
+            // so remove locally then re-render (fast and works).
+            const d = parseDraft();
+            const site = d.Sites?.[0];
+            if (site?.Areas) {
+              site.Areas = site.Areas.filter(a => (a.Name || '').toLowerCase() !== (areaName || '').toLowerCase());
+              setDraft(JSON.stringify(d, null, 2));
+            }
+          } catch (e) {
+            alert(e.message || 'Delete failed.');
+          }
+        }
+
+        async function deleteWorkCenterDraft(siteName, areaName, workCenterCode) {
+          if (!confirm(`Delete work center "${workCenterCode}"?`)) return;
+
+          try {
+            await deleteJson('/onboarding/draft/workcenter', { siteName, areaName, workCenterCode });
+
+            const d = parseDraft();
+            const site = d.Sites?.[0];
+            const area = site?.Areas?.find(a => (a.Name || '').toLowerCase() === (areaName || '').toLowerCase());
+            if (area?.WorkCenters) {
+              area.WorkCenters = area.WorkCenters.filter(wc => (wc.Code || '').toLowerCase() !== (workCenterCode || '').toLowerCase());
+              setDraft(JSON.stringify(d, null, 2));
+            }
+          } catch (e) {
+            alert(e.message || 'Delete failed.');
+          }
+        }
+
+        // ----------------------------
+        // WORK CENTER CARDS (DYNAMIC)
+        // ----------------------------
+        function rebuildWorkCenterCards() {
+          const container = document.getElementById('workCentersContainer');
+          if (!container) return;
+
+          container.innerHTML = '';
+
+          const d = parseDraft();
+          const site = (d.Sites && d.Sites.length) ? d.Sites[0] : null;
+          const areas = site?.Areas || [];
+
+          if (!areas.length) return;
+
+          areas.forEach((a, idx) => {
+            const areaName = a.Name || ('Area ' + (idx + 1));
+            const stepKey = `wc_${idx}`;
+            const collapsed = uiState.collapsed[stepKey] === true;
+
+            const card = document.createElement('div');
+            card.className = 'card mb-3 onboarding-card';
+            card.id = `step-${stepKey}`;
+
+                    card.innerHTML = `
+          <div class="card-header onboarding-head d-flex justify-content-between align-items-center">
+            <div>
+              <span class="fw-bold">Work centers — ${escapeHtml(areaName)}</span>
+              <span id="${stepKey}Summary" class="text-muted small ms-2 ${collapsed ? '' : 'd-none'}"></span>
+            </div>
+
+            <button class="btn btn-sm btn-outline-light ${collapsed ? '' : 'd-none'}"
+                    id="${stepKey}EditBtn"
+                    type="button"
+                    onclick="toggleStep('${stepKey}', true)">
+              Edit
+            </button>
+          </div>
+
+          <div class="card-body onboarding-body step-collapsible"
+               id="${stepKey}Body"
+               style="display:${collapsed ? 'none' : 'block'}">
+            <div class="mb-2 text-muted small">Comma-separated: Bulk loader, hand packer, palletizer</div>
+
+            <textarea class="form-control" rows="2"
+                      id="wcText_${idx}"
+                      placeholder="Work centers for ${escapeHtml(areaName)}"></textarea>
+
+            <div class="mt-3 d-flex gap-2">
+              <button class="btn btn-primary" type="button"
+                      onclick="stepWorkCenters(this, ${idx}, '${escapeJs(areaName)}')">Next</button>
+            </div>
+
+            <div id="wcMsg_${idx}" class="mt-2 small"></div>
+          </div>
+        `;
+
+
+            container.appendChild(card);
+          });
+        }
+
+        // ----------------------------
+        // APPLY + RIGHT PANEL
+        // ----------------------------
+               async function applyDraft() {
+          try {
+            const res = await fetch('/onboarding/apply', { method: 'POST' });
+            const text = await res.text();
+            let data = null;
+            try { data = text ? JSON.parse(text) : null; } catch {}
+
+            if (!res.ok) throw new Error(text || ('HTTP ' + res.status));
+
+            setMsg('applyMsg', data?.note || 'Applied.', true);
+
+            // redirect (Home)
+            window.location.assign('/');
+            // or: window.location.href = '/';
+            // or: window.location.assign('@Url.Action("Index", "Home")'); in Razor
+          } catch (e) {
+            setMsg('applyMsg', e.message, false);
+          }
+        }
+
+
+        function refreshDraftFromRight() {
+          rebuildWorkCenterCards();
+          renderReview();
+        }
+
+        function copyDraft() {
+          const txt = getDraftText();
+          navigator.clipboard.writeText(txt);
+        }
+
+        function formatDraft() {
+          try {
+            const obj = JSON.parse(getDraftText());
+            const pretty = JSON.stringify(obj, null, 2);
+            if (draftEditor) draftEditor.setValue(pretty);
+          } catch { }
+        }
+
+        function toggleAdvanced() {
+          const p = document.getElementById('advancedPanel');
+          if (!p) return;
+          p.style.display = (p.style.display === 'none' || !p.style.display) ? 'block' : 'none';
+        }
+
+        function renderReview() {
+          const host = document.getElementById('reviewPanel');
+          if (!host) return;
+
+          const d = parseDraft();
+          const site = (d.Sites && d.Sites.length) ? d.Sites[0] : null;
+          const siteName = site?.Name || '—';
+          const areas = site?.Areas || [];
+
+          let wcCount = 0;
+          areas.forEach(a => wcCount += (a.WorkCenters ? a.WorkCenters.length : 0));
+
+          let html = `
+            <div class="mb-3">
+              <div class="text-muted small">Site</div>
+              <div class="fs-5 fw-semibold">${escapeHtml(siteName)}</div>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <div class="p-3 rounded" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);">
+                  <div class="text-muted small">Areas</div>
+                  <div class="fs-4 fw-bold">${areas.length}</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="p-3 rounded" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);">
+                  <div class="text-muted small">Work Centers</div>
+                  <div class="fs-4 fw-bold">${wcCount}</div>
+                </div>
+              </div>
+            </div>
+          `;
+
+                  if (areas.length) {
+          html += `<div class="text-muted small mb-2">Areas & Work Centers</div>`;
+          areas.forEach(a => {
+            const areaName = a.Name || '—';
+            const wcs = a.WorkCenters || [];
+
+            html += `
+              <div class="mb-2 p-3 rounded" style="background:rgba(0,0,0,0.20); border:1px solid rgba(255,255,255,0.06);">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="fw-semibold">${escapeHtml(areaName)}</div>
+
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="badge rounded-pill text-bg-dark">${wcs.length} WC</span>
+
+                        <button type="button"
+                class="btn btn-sm btn-outline-danger"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Deletes this Area and all Work Centers under it."
+                onclick="deleteAreaDraft('${escapeJs(siteName)}','${escapeJs(areaName)}')">
+          Delete
+        </button>
+
+
+                  </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                  ${wcs.slice(0, 8).map(wc => `
+                    <span class="badge rounded-pill"
+                          style="background:rgba(59,130,246,0.18); border:1px solid rgba(59,130,246,0.25); color:#d7e7ff;">
+                      ${escapeHtml(wc.DisplayName || wc.Code || 'WC')}
+
+                      <button type="button"
+                              class="btn btn-sm btn-link text-white p-0 ms-2"
+                              style="text-decoration:none; line-height:1;"
+                              title="Delete work center"
+                              onclick="deleteWorkCenterDraft('${escapeJs(siteName)}','${escapeJs(areaName)}','${escapeJs(wc.Code || '')}'); event.stopPropagation();">
+                        ×
+                      </button>
+                    </span>
+                  `).join('')}
+
+                  ${wcs.length > 8 ? `<span class="text-muted small">+${wcs.length - 8} more</span>` : ``}
+                </div>
+              </div>
+            `;
+          });
+        } else {
+          html += `<div class="text-muted">No areas yet.</div>`;
+        }
+
+
+
+          host.innerHTML = html;
+                  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+
+
+          const pill = document.getElementById('draftPill');
+          if (pill) {
+            pill.className = 'badge rounded-pill text-bg-success';
+            pill.textContent = 'Ready';
+          }
+        }
+
+        // ----------------------------
+        // MONACO INIT + INITIAL RENDER
+        // ----------------------------
+        (function initMonaco() {
+          const seed = (document.getElementById('draftJsonSeed')?.value || "{ }").trim() || "{ }";
+
+          require.config({
+            paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs" }
+          });
+
+          require(["vs/editor/editor.main"], function () {
+            draftEditor = monaco.editor.create(document.getElementById("draftEditor"), {
+              value: seed,
+              language: "json",
+              theme: "vs-dark",
+              readOnly: true,
+              minimap: { enabled: false },
+              automaticLayout: true,
+              scrollBeyondLastLine: false,
+              fontSize: 13,
+              lineNumbers: "on",
+              folding: true,
+              wordWrap: "on",
+              renderLineHighlight: "line"
+            });
+
+            // initial render
+            setDraft(seed);
+                    if (!didInitialHydrate) {
+          didInitialHydrate = true;
+          hydrateLeftFromDraft();
+        }
+
+          });
+        })();
+
+        // If monaco doesn't load for some reason, still show review/cards
+                (function initialFallbackRender() {
+          const d = parseDraft();
+          uiState.lastAreasSig = getAreasSig(d);
+          rebuildWorkCenterCards();
+          renderReview();
+
+          if (!didInitialHydrate) {
+            didInitialHydrate = true;
+            hydrateLeftFromDraft();
+          }
+        })();
+    </script>
+
+}

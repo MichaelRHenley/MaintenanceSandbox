@@ -1,0 +1,59 @@
+﻿@model MaintenanceSandbox.Models.MaintenanceRequest
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+
+@functions {
+    string LocalizeSender(string? sender)
+    {
+        if (string.IsNullOrWhiteSpace(sender))
+            return "";
+
+        var trimmed = sender.Trim();
+
+        // Strip "Role_" if it’s baked into the sender
+        if (trimmed.StartsWith("Role_", StringComparison.OrdinalIgnoreCase))
+        {
+            trimmed = trimmed.Substring("Role_".Length);
+        }
+
+        switch (trimmed.ToLowerInvariant())
+        {
+            case "operator":
+                return SR["Role_Operator"];
+            case "technician":
+                return SR["Role_Technician"];
+            case "supervisor":
+                return SR["Role_Supervisor"];
+            case "manager":
+                return SR["Role_MaintenanceManager"];
+            case "system":
+                return SR["Maint_Comments_SystemLabel"]; // or just "System"
+            default:
+                return trimmed; // fallback to whatever it is
+        }
+    }
+
+    bool IsSystemMessage(MaintenanceSandbox.Models.MaintenanceMessage m) =>
+        string.Equals(m.Sender, "System", StringComparison.OrdinalIgnoreCase);
+}
+
+<div class="sentinel-comments-panel">
+    @foreach (var m in Model.Messages.OrderByDescending(x => x.SentAt))
+    {
+        var senderLabel = LocalizeSender(m.Sender);
+        var rowClass = IsSystemMessage(m)
+        ? "sentinel-comment-row sentinel-comment-row--system"
+        : "sentinel-comment-row";
+
+        <div class="@rowClass">
+            <div class="sentinel-comment-meta text-muted">
+                @senderLabel
+                <span class="mx-1">·</span>
+                @m.SentAt.ToString("yyyy-MM-dd h:mm tt")
+            </div>
+            <div class="sentinel-comment-body">
+                @m.Message
+            </div>
+        </div>
+    }
+</div>

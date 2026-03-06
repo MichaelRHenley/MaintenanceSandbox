@@ -1,0 +1,38 @@
+﻿@model MaintenanceSandbox.Controllers.DemoUserViewModel
+
+@{
+    ViewData["Title"] = "Demo User";
+}
+
+<div class="container mt-4">
+    <h2>Demo User</h2>
+    <hr />
+
+    <form method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label class="form-label fw-bold" for="Name">Name</label>
+            <input asp-for="Name" class="form-control" placeholder="e.g., Alex (Supervisor)" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label fw-bold" for="Role">Role</label>
+            <select asp-for="Role" class="form-select">
+                <option>Operator</option>
+                <option>Technician</option>
+                <option>Supervisor</option>
+                <option>Manager</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-controller="Maintenance" asp-action="Index" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

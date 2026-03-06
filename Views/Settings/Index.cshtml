@@ -1,0 +1,300 @@
+﻿@using Microsoft.AspNetCore.Localization
+@using System.Globalization
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = SR["Settings_Title"];
+
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var currentCulture = requestCulture?.RequestCulture.UICulture.Name ?? "en-CA";
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
+
+<div class="container py-4">
+    <div class="sentinel-card sentinel-settings-card">
+        <!-- Header -->
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">
+                    @SR["Settings_Title"]
+                </div>
+                <div class="sentinel-page-subtitle">
+                    @SR["App_Title"]
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <span id="live-indicator"
+                      class="sentinel-live-indicator sentinel-live-indicator--offline">
+                    <span class="dot"></span>
+                    <span class="label">Connecting…</span>
+                </span>
+            </div>
+        </div>
+
+        @if (User.IsInRole("MaintenanceAdmin") || User.IsInRole("Supervisor"))
+        {
+            <div class="mb-4">
+                <div class="sentinel-settings-section-title">
+                    Admin
+                </div>
+                <div class="sentinel-settings-section-subtitle mb-2">
+                    Master data and approvals.
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-sentinel-ghost btn-sm"
+                       asp-controller="EquipmentAdmin"
+                       asp-action="Index">
+                        Equipment Admin
+                    </a>
+
+                    <a class="btn btn-sentinel-ghost btn-sm"
+                       asp-controller="EquipmentRequestsAdmin"
+                       asp-action="Index">
+                        Equipment Requests
+                    </a>
+
+                    <a class="btn btn-sentinel-ghost btn-sm"
+                       asp-controller="UsersAdmin"
+                       asp-action="Index">
+                        User Admin
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="sentinel-settings-divider"></div>
+        }
+
+
+
+            <!-- 🔔 Notifications & alerts -->
+            <div class="mb-4">
+                <div class="sentinel-settings-section-title">
+                    @SR["Settings_Section_Notifications_Title"]
+                </div>
+                <div class="sentinel-settings-section-subtitle mb-2">
+                    @SR["Settings_Section_Notifications_Description"]
+                </div>
+
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
+                            <button type="button"
+                                    id="sound-toggle-btn-settings"
+                                    class="btn btn-outline-light btn-sm"
+                                    data-sound-on="@SR["Nav_SoundOn"]"
+                                    data-sound-off="@SR["Nav_SoundOff"]">
+                                🔊 @SR["Nav_SoundOn"]
+                            </button>
+                            <small class="text-muted">
+                                @SR["Settings_Notifications_Toggle_Help"]
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="d-flex flex-wrap gap-2">
+                            <button type="button"
+                                    id="test-siren-btn"
+                                    class="btn btn-sentinel-primary btn-sm">
+                                🚨 @SR["Settings_Notifications_TestSiren"]
+                            </button>
+
+                            <button type="button"
+                                    id="test-chime-btn"
+                                    class="btn btn-sentinel-ghost btn-sm">
+                                🔔 @SR["Settings_Notifications_TestChime"]
+                            </button>
+                        </div>
+                        <small class="text-muted d-block mt-1">
+                            @SR["Settings_Notifications_Test_Help"]
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentinel-settings-divider"></div>
+
+            <!-- 🌐 Language section -->
+            <div class="mb-4">
+                <div class="sentinel-settings-section-title">
+                    @SR["Settings_Section_Language_Title"]
+                </div>
+                <div class="sentinel-settings-section-subtitle mb-2">
+                    @SR["Settings_Section_Language_Description"]
+                </div>
+
+                <form asp-controller="Language" asp-action="Set" method="post" class="row g-2 align-items-center">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="returnUrl" value="@returnUrl" />
+
+                    <div class="col-12 col-md-4">
+                        <select class="form-select" name="culture" onchange="this.form.submit()">
+                            <option value="en-CA" selected="@(currentCulture == "en-CA" ? "selected" : null)">
+                                English (Canada)
+                            </option>
+                            <option value="fr-CA" selected="@(currentCulture == "fr-CA" ? "selected" : null)">
+                                Français (Canada)
+                            </option>
+                            <option value="es-MX" selected="@(currentCulture == "es-MX" ? "selected" : null)">
+                                Español (México)
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <div class="sentinel-settings-divider"></div>
+
+            <!-- 🧱 Tier section -->
+            <form method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <div class="sentinel-settings-section-title">
+                        @SR["Settings_Section_Tier_Label"]
+                    </div>
+                    <div class="sentinel-settings-section-subtitle mb-2">
+                        @SR["Settings_Section_Tier_HelpText"]
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <select class="form-select" name="SelectedTier" id="SelectedTier">
+                            <option value="Standard">@SR["Tier_Label_Standard"]</option>
+                            <option value="Enhanced">@SR["Tier_Label_Enhanced"]</option>
+                            <option value="Premium">@SR["Tier_Label_Premium"]</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-sentinel-primary">
+                        @SR["Settings_Button_Save"]
+                    </button>
+                    <a asp-controller="Maintenance" asp-action="Index" class="btn btn-sentinel-ghost">
+                        @SR["Settings_Button_Cancel"]
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+@section Scripts {
+    <script>
+        (function () {
+            // Make sure the global live indicator looks sane on this page
+            document.addEventListener("DOMContentLoaded", function () {
+                if (window.sentinelUpdateLiveIndicator) {
+                    // first load, no toast spam
+                    window.sentinelUpdateLiveIndicator("ok", { suppressToast: true });
+                }
+            });
+
+            // Use the same storage key as _Layout
+            const STORAGE_KEY = "sentinel.maintenance.sound.enabled";
+
+            function getSoundEnabled() {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw === null) return true; // default: ON
+                return raw === "true";
+            }
+
+            function setSoundEnabled(value) {
+                localStorage.setItem(STORAGE_KEY, value ? "true" : "false");
+            }
+
+                    function updateSettingsToggleUi() {
+            const btn = document.getElementById("sound-toggle-btn-settings");
+            if (!btn) return;
+
+            const enabled = getSoundEnabled();
+            const labelOn = btn.getAttribute("data-sound-on") || "Sound on";
+            const labelOff = btn.getAttribute("data-sound-off") || "Sound off";
+
+            btn.dataset.enabled = enabled ? "true" : "false";
+            btn.textContent = enabled ? `🔊 ${labelOn}` : `🔈 ${labelOff}`;
+            btn.classList.toggle("btn-outline-light", enabled);
+            btn.classList.toggle("btn-outline-secondary", !enabled);
+        }
+
+        function syncNavbarToggle() {
+            const navBtn = document.getElementById("sound-toggle-btn");
+            if (!navBtn) return;
+
+            const enabled = getSoundEnabled();
+            const labelOn = navBtn.getAttribute("data-sound-on") || "Sound on";
+            const labelOff = navBtn.getAttribute("data-sound-off") || "Sound off";
+
+            navBtn.dataset.enabled = enabled ? "true" : "false";
+            navBtn.textContent = enabled ? `🔊 ${labelOn}` : `🔈 ${labelOff}`;
+            navBtn.classList.toggle("btn-outline-light", enabled);
+            navBtn.classList.toggle("btn-outline-secondary", !enabled);
+        }
+
+
+            function playSirenTest() {
+                if (window.sentinelSoundEnabled && !window.sentinelSoundEnabled()) return;
+
+                const audio = document.getElementById("maintenance-alert-sound");
+                if (audio) {
+                    try {
+                        audio.currentTime = 0;
+                        audio.play().catch(err => console.warn("Test siren error:", err));
+                    } catch (e) {
+                        console.warn("Test siren error:", e);
+                    }
+                }
+                if (window.sentinelHapticAlert) {
+                    window.sentinelHapticAlert();
+                }
+            }
+
+            function playChimeTest() {
+                if (window.sentinelSoundEnabled && !window.sentinelSoundEnabled()) return;
+
+                const audio = document.getElementById("maintenance-comment-sound");
+                if (audio) {
+                    try {
+                        audio.currentTime = 0;
+                        audio.play().catch(err => console.warn("Test chime error:", err));
+                    } catch (e) {
+                        console.warn("Test chime error:", e);
+                    }
+                }
+                if (window.sentinelHapticAlert) {
+                    window.sentinelHapticAlert();
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                // Init toggle UI from current setting
+                updateSettingsToggleUi();
+
+                // Wire settings toggle
+                const toggleBtn = document.getElementById("sound-toggle-btn-settings");
+                if (toggleBtn) {
+                    toggleBtn.addEventListener("click", function () {
+                        const current = getSoundEnabled();
+                        setSoundEnabled(!current);
+                        updateSettingsToggleUi();
+                        syncNavbarToggle();
+                    });
+                }
+
+                // Wire test buttons
+                const sirenBtn = document.getElementById("test-siren-btn");
+                if (sirenBtn) {
+                    sirenBtn.addEventListener("click", playSirenTest);
+                }
+
+                const chimeBtn = document.getElementById("test-chime-btn");
+                if (chimeBtn) {
+                    chimeBtn.addEventListener("click", playChimeTest);
+                }
+            });
+        })();
+    </script>
+}

@@ -1,0 +1,188 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+
+@model MaintenanceSandbox.ViewModels.CreateMaintenanceRequestViewModel
+
+@{
+    ViewData["Title"] = SR["Maint_Create_Title"];
+    ViewData["AiModuleKey"] = "EM_Create";
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <!-- Header -->
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">
+                    @SR["Maint_Create_Title"]
+                </div>
+                <div class="sentinel-page-subtitle">
+                    @SR["App_Title"]
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                @await Html.PartialAsync("_AiHelpLauncher")
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+            <div class="alert alert-info mb-4">
+                @SR["Maint_Create_Notice_RealTime"]
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <form id="createForm" method="get" class="row g-3">
+                <input type="hidden" asp-for="SiteId" />
+
+                <div class="col-md-6">
+                    <label class="form-label small text-uppercase text-muted mb-1" for="AreaId">
+                        @SR["Maint_Create_Label_Area"]
+                    </label>
+                    <select asp-for="AreaId" class="form-select" id="AreaId">
+                        <option value="">@SR["Maint_Index_Filter_All"]</option>
+                        @foreach (var opt in Model.AreaOptions)
+                        {
+                            <option value="@opt.Value" selected="@(opt.Selected ? "selected" : null)">@opt.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AreaId" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+    <label class="form-label small text-uppercase text-muted mb-1" for="WorkCenterId">
+        @SR["Maint_Create_Label_WorkCenter"]
+    </label>
+
+                    @if (Model.AreaId.HasValue)
+                    {
+                        <select asp-for="WorkCenterId" class="form-select" id="WorkCenterId">
+                            <option value="">@SR["Maint_Index_Filter_All"]</option>
+                            @foreach (var opt in Model.WorkCenterOptions)
+                            {
+                                <option value="@opt.Value" selected="@(opt.Selected ? "selected" : null)">@opt.Text</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select class="form-select" id="WorkCenterId" disabled="disabled">
+                            <option value="">@SR["Maint_Index_Filter_All"]</option>
+                        </select>
+
+                        @* Keep model binding stable *@
+                        <input type="hidden" asp-for="WorkCenterId" />
+                    }
+                    <span asp-validation-for="WorkCenterId" class="text-danger small"></span>
+
+</div>
+
+<div class="col-md-6">
+    <label class="form-label small text-uppercase text-muted mb-1" for="EquipmentId">
+        @SR["Maint_Create_Label_Equipment"]
+    </label>
+
+                    @if (Model.WorkCenterId.HasValue)
+                    {
+                        <select asp-for="EquipmentId" class="form-select" id="EquipmentId">
+                            <option value="">@SR["Maint_Index_Filter_All"]</option>
+                            @foreach (var opt in Model.EquipmentOptions)
+                            {
+                                <option value="@opt.Value" selected="@(opt.Selected ? "selected" : null)">@opt.Text</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select class="form-select" id="EquipmentId" disabled="disabled">
+                            <option value="">@SR["Maint_Index_Filter_All"]</option>
+                        </select>
+
+                        <input type="hidden" asp-for="EquipmentId" />
+                    }
+                    <span asp-validation-for="EquipmentId" class="text-danger small"></span>
+
+</div>
+
+
+
+
+                <div class="col-md-6">
+                    <label class="form-label small text-uppercase text-muted mb-1" for="Priority">
+                        @SR["Maint_Create_Label_Priority"]
+                    </label>
+                    <select asp-for="Priority" class="form-select" id="Priority">
+                        <option>@SR["Maint_Create_Priority_Low"]</option>
+                        <option>@SR["Maint_Create_Priority_Medium"]</option>
+                        <option>@SR["Maint_Create_Priority_High"]</option>
+                    </select>
+                    <span asp-validation-for="Priority" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label small text-uppercase text-muted mb-1">
+                        @SR["Maint_Create_Label_RequestedBy"]
+                    </label>
+                    <div class="form-control-plaintext text-light">
+                        @Model.RequestedBy
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label small text-uppercase text-muted mb-1" for="Description">
+                        @SR["Maint_Create_Label_Description"]
+                    </label>
+                    <textarea asp-for="Description"
+                              class="form-control"
+                              id="Description"
+                              rows="4"
+                              placeholder="@SR["Maint_Create_Placeholder_Description"]"></textarea>
+                    <span asp-validation-for="Description" class="text-danger small">*</span>
+                </div>
+
+                <div class="col-12 d-flex justify-content-between mt-3">
+                    <a asp-action="Index" class="btn btn-sentinel-ghost">
+                        @SR["Maint_Create_Button_Cancel"]
+                    </a>
+                    <button type="submit" class="btn btn-sentinel-primary">
+                        @SR["Maint_Create_Button_Submit"]
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Make sure the global live indicator isn't stuck on Offline when on Create
+        document.addEventListener("DOMContentLoaded", function () {
+            if (window.sentinelUpdateLiveIndicator) {
+                // Mark as OK but don't spam a toast just for visiting this page
+                window.sentinelUpdateLiveIndicator("ok", { suppressToast: true });
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const area = document.getElementById("AreaId");
+          const wc   = document.getElementById("WorkCenterId");
+          const eq   = document.getElementById("EquipmentId");
+
+          function nav(resetLevel) {
+            const p = new URLSearchParams();
+
+            if (area && area.value) p.set("areaId", area.value);
+            if (wc && wc.value && resetLevel !== "wc") p.set("workCenterId", wc.value);
+            if (eq && eq.value && resetLevel !== "eq") p.set("equipmentId", eq.value);
+
+            window.location = "@Url.Action("Create", "Maintenance")" + (p.toString() ? "?" + p.toString() : "");
+          }
+
+          if (area) area.addEventListener("change", () => nav("wc")); // reset WC+EQ
+          if (wc)   wc.addEventListener("change", () => nav("eq"));   // reset EQ
+        });
+    </script>
+}

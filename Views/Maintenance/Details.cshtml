@@ -1,0 +1,517 @@
+﻿@model MaintenanceSandbox.Models.MaintenanceRequest
+@using Microsoft.Extensions.Localization
+@using System.Globalization
+@using System.Linq
+@using MaintenanceSandbox.Services
+@inject IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = SR["Maint_Details_Title"];
+
+    // 🔹 Localized status text + CSS class
+    var rawStatus = Model.Status ?? "";
+    var statusKey = rawStatus.ToLowerInvariant() switch
+    {
+        "new" => "Maint_Status_New",
+        "in progress" => "Maint_Status_InProgress",
+        "waiting on parts" => "Maint_Status_WaitingOnParts",
+        "resolved" => "Maint_Status_Resolved",
+        _ => null
+    };
+    var localizedStatus = statusKey is null ? rawStatus : SR[statusKey];
+
+    var statusClass = rawStatus.ToLowerInvariant() switch
+    {
+        "resolved" => "badge-status-closed",
+        _ => "badge-status-open"
+    };
+
+    // 🔹 Localized priority text + CSS class
+    var rawPriority = Model.Priority ?? "";
+    var priorityKey = rawPriority.ToLowerInvariant() switch
+    {
+        "high" => "Maint_Create_Priority_High",
+        "medium" => "Maint_Create_Priority_Medium",
+        "low" => "Maint_Create_Priority_Low",
+        _ => null
+    };
+    var localizedPriority = priorityKey is null ? rawPriority : SR[priorityKey];
+
+    var priorityClass = rawPriority.ToLowerInvariant() switch
+    {
+        "high" => "badge-priority-high",
+        "medium" => "badge-priority-medium",
+        _ => "badge-priority-low"
+    };
+
+    string FormatDate(DateTime dt) =>
+        dt.ToString("f", CultureInfo.CurrentUICulture);
+
+    var role = ViewBag.DemoUserRole as string ?? "";
+    bool canEditStatus = !string.Equals(role, "Operator", StringComparison.OrdinalIgnoreCase);
+}
+@{
+    ViewData["AiModuleKey"] = "EM_Details";
+}
+
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2 position-relative">
+
+            <div class="d-flex gap-2">
+                <span class="badge-status @statusClass" data-role="status-badge">@localizedStatus</span>
+                <span class="badge-status @priorityClass" data-role="priority-badge">@localizedPriority</span>
+            </div>
+
+            <div class="d-flex gap-2 align-items-center">
+                @await Html.PartialAsync("_AiHelpLauncher")
+                <!-- existing live indicator + buttons -->
+                <span id="live-indicator"
+                      class="sentinel-live-indicator sentinel-live-indicator--offline">
+                    <span class="dot"></span>
+                    <span class="label">@SR["LiveIndicator_Label_Connecting"]</span>
+                </span>
+
+                <a asp-action="Index" class="btn btn-sentinel-ghost btn-sm">
+                    @SR["Maint_Details_Button_BackToList"]
+                </a>
+
+                <form asp-action="MarkResolved"
+                      asp-route-id="@Model.Id"
+                      method="post"
+                      class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit"
+                            class="btn btn-sentinel-primary btn-sm">
+                        @SR["Maint_Details_Button_MarkResolved"]
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+            <!-- RESPONDERS -->
+            <div class="mb-4 small">
+                <span class="text-muted">@SR["Maint_Details_Label_RespondersPresent"]</span>
+                <div id="presence-list" class="mt-1">
+                    <span class="text-muted">
+                        @SR["Maint_Details_Label_RespondersConnecting"]
+                    </span>
+                </div>
+            </div>
+
+            <!-- MAIN CONTENT: LEFT / RIGHT COLUMNS -->
+            <div class="row gx-4 gy-4">
+
+                <!-- LEFT COLUMN -->
+                <div class="col-lg-6">
+
+                    <dl class="row small">
+                        <dt class="col-4">@SR["Maint_Details_Label_Site"]</dt>
+                        <dd class="col-8">@Model.Site</dd>
+
+                        <dt class="col-4">@SR["Maint_Details_Label_Area"]</dt>
+                        <dd class="col-8">@Model.Area</dd>
+
+                        <dt class="col-4">@SR["Maint_Details_Label_WorkCenter"]</dt>
+                        <dd class="col-8">@Model.WorkCenter</dd>
+
+                        <dt class="col-4">@SR["Maint_Details_Label_Equipment"]</dt>
+                        <dd class="col-8">@Model.Equipment</dd>
+
+                        <dt class="col-4">@SR["Maint_Details_Label_Status"]</dt>
+                        <dd class="col-8" data-role="status-value">@localizedStatus</dd>
+
+                        <dt class="col-4">@SR["Maint_Details_Label_Priority"]</dt>
+                        <dd class="col-8" data-role="priority-value">@localizedPriority</dd>
+
+                        <dt class="col-4">@SR["Maint_Details_Label_RequestedBy"]</dt>
+                        <dd class="col-8">@Model.RequestedBy</dd>
+
+                        <dt class="col-4">@SR["Maint_Details_Label_CreatedAt"]</dt>
+                        <dd class="col-8">@FormatDate(Model.CreatedAt)</dd>
+
+                        @if (Model.ResolvedAt.HasValue)
+                        {
+                            <dt class="col-4">@SR["Maint_Details_Label_ResolvedAt"]</dt>
+                            <dd class="col-8">@FormatDate(Model.ResolvedAt.Value)</dd>
+                        }
+                    </dl>
+
+                    <!-- WORKFLOW EDIT -->
+                @if (canEditStatus)
+                {
+                    var statusOptions = ViewBag.StatusOptions as IEnumerable<SelectListItem>
+                    ?? Enumerable.Empty<SelectListItem>();
+                    var priorityOptions = ViewBag.PriorityOptions as IEnumerable<SelectListItem>
+                    ?? Enumerable.Empty<SelectListItem>();
+
+
+                        <div class="border-top border-secondary pt-3 mt-2">
+                            <div class="mb-2">
+                                <h6 class="text-uppercase small text-muted mb-1">
+                                    @SR["Maint_Details_Section_UpdateWorkflow"]
+                                </h6>
+                                <div class="small text-muted">
+                                    @SR["Maint_Details_Hint_WorkflowForLeads"]
+                                </div>
+                            </div>
+
+                            <form asp-action="UpdateRequest" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@Model.Id" />
+
+                                <div class="row g-2 align-items-end">
+                                    <div class="col-sm-6">
+                                        <label class="form-label small mb-1">
+                                            @SR["Maint_Details_Label_Status"]
+                                        </label>
+                                    <select name="status" class="form-select form-select-sm">
+                                        @foreach (var s in statusOptions)
+                                        {
+                                            <option value="@s.Value" selected="@(Model.Status == s.Value)">
+                                                @s.Text
+                                            </option>
+                                        }
+                                    </select>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label class="form-label small mb-1">
+                                            @SR["Maint_Details_Label_Priority"]
+                                        </label>
+                                    <select name="priority" class="form-select form-select-sm">
+                                        @foreach (var p in priorityOptions)
+                                        {
+                                            <option value="@p.Value" selected="@(Model.Priority == p.Value)">
+                                                @p.Text
+                                            </option>
+                                        }
+                                    </select>
+                                    </div>
+                                </div>
+
+                                <div class="text-end mt-2">
+                                    <button type="submit"
+                                            class="btn btn-sentinel-primary btn-sm px-3">
+                                        @SR["Maint_Details_Button_UpdateStatus"]
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    }
+
+
+                    <!-- DESCRIPTION -->
+                    <h6 class="text-uppercase small text-muted mt-4">@SR["Maint_Details_Label_Description"]</h6>
+                    <p class="small">@Model.Description</p>
+                    <form asp-controller="Maintenance"
+                          asp-action="SuggestFix"
+                          method="post"
+                          class="mb-3">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-outline-info btn-sm">
+                        @SR["Maint_Details_Button_AskAiFix"]
+                    </button>
+                    </form>
+                    @if (TempData["AiFixSuggestion"] is string aiFix && !string.IsNullOrWhiteSpace(aiFix))
+                    {
+                        <div class="card mt-2 border-warning">
+                            <div class="card-header bg-warning text-dark">
+                                AI Fix Suggestions (Sentinel)
+                            </div>
+                            <div class="card-body small">
+                                @Html.Raw(Html.Encode(aiFix).Replace("\n", "<br />"))
+
+                                <p class="mt-3 mb-0 text-muted">
+                                    These are AI-generated suggestions based on the ticket description and comments.
+                                    Always follow your plant's safety procedures and lockout/tagout policies.
+                                </p>
+                            </div>
+                        </div>
+                    }
+
+                    @{
+                        // Suggestions provided by controller: ViewBag.Suggestions
+                        var suggestions = ViewBag.Suggestions as IEnumerable<SuggestionItem>
+                        ?? Enumerable.Empty<SuggestionItem>();
+                    }
+
+                    @if (suggestions.Any())
+                    {
+                        <hr class="mt-4" />
+
+                        <h6 class="text-uppercase small text-muted mb-1">
+                            @SR["Maint_Details_Section_Suggestions"]
+                        </h6>
+                        <div class="small text-muted mb-2">
+                            @SR["Maint_Details_Hint_Suggestions"]
+                        </div>
+
+                        <div class="d-flex flex-column gap-2">
+                            @foreach (var s in suggestions)
+                            {
+                                <div class="sentinel-suggestion-tile">
+                                    <div class="sentinel-suggestion-header">
+                                        <span class="sentinel-suggestion-icon">🛠</span>
+                                        <span class="sentinel-suggestion-text">
+                                            @s.Text
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="col-lg-6">
+
+                    <h6 class="text-uppercase small text-muted">
+                        @SR["Maint_Details_Section_Comments"]
+                    </h6>
+
+                    <div id="typing-indicator-@Model.Id"
+                         class="typing-indicator small text-muted d-none mb-2">
+                    </div>
+
+                    <div id="comments-container" class="mb-3">
+                        @await Html.PartialAsync("_CommentsList", Model)
+                    </div>
+
+                    <h6 class="text-uppercase small text-muted mb-1">
+                        @SR["Maint_Details_Label_NewComment"]
+                    </h6>
+
+                    <form asp-action="AddMessage" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="maintenanceRequestId" value="@Model.Id" />
+
+                        <textarea id="CommentText"
+                                  name="text"
+                                  class="form-control mb-2"
+                                  rows="3"
+                                  required></textarea>
+
+                        <input type="hidden" name="sender" value="@ViewBag.DemoUserName" />
+
+                        <button type="submit" class="btn btn-primary btn-sm px-3">
+                            @SR["Maint_Details_Button_AddComment"]
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+@section Scripts {
+    <script>
+        (function () {
+            const requestId = parseInt('@Model.Id', 10);
+            const userName = "@(ViewBag.DemoUserName ?? "Unknown")";
+            const userRole = "@(ViewBag.DemoUserRole ?? "")";
+
+            const presenceContainer = document.getElementById("presence-list");
+            const liveIndicator = document.getElementById("live-indicator");
+            const liveLabel = liveIndicator ? liveIndicator.querySelector(".label") : null;
+
+            function setLiveState(mode) {
+                if (!liveIndicator || !liveLabel) return;
+
+                liveIndicator.classList.remove(
+                    "sentinel-live-indicator--offline",
+                    "sentinel-live-indicator--online",
+                    "sentinel-live-indicator--connecting"
+                );
+
+                switch (mode) {
+                    case "online":
+                        liveIndicator.classList.add("sentinel-live-indicator--online");
+                        liveLabel.textContent = "@SR["LiveIndicator_Label_Live"]";
+                        break;
+                    case "connecting":
+                        liveIndicator.classList.add("sentinel-live-indicator--connecting");
+                        liveLabel.textContent = "@SR["LiveIndicator_Label_Connecting"]";
+                        break;
+                    default:
+                        liveIndicator.classList.add("sentinel-live-indicator--offline");
+                        liveLabel.textContent = "@SR["LiveIndicator_Label_Offline"]";
+                        break;
+                }
+
+                // Keep global footer pill in sync, if present
+                if (window.sentinelUpdateLiveIndicator) {
+                    const state = mode === "online" ? "ok" : "offline";
+                    window.sentinelUpdateLiveIndicator(state, { suppressToast: true });
+                }
+            }
+
+            function renderPresence(names) {
+                if (!presenceContainer) return;
+
+                if (!names || names.length === 0) {
+                    presenceContainer.innerHTML =
+                        '<span class="text-muted small">@SR["Maint_Details_Label_NoResponders"]</span>';
+                    return;
+                }
+
+                const html = names
+                    .map(x => `<span class="badge bg-info text-dark me-1 mb-1">${x}</span>`)
+                    .join("");
+
+                presenceContainer.innerHTML = html;
+            }
+
+            // SignalR connection
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/hubs/maintenance")
+                .withAutomaticReconnect()
+                .build();
+
+            setLiveState("connecting");
+
+            // Presence updates
+            connection.on("ResponderPresenceChanged", function (reqId, list) {
+                if (reqId !== requestId) return;
+                renderPresence(list);
+            });
+
+            connection.onreconnecting(() => {
+                setLiveState("connecting");
+            });
+
+            connection.onreconnected(() => {
+                setLiveState("online");
+                connection.invoke("JoinRequestGroup", requestId, userName)
+                    .catch(err => console.error(err.toString()));
+            });
+
+            connection.onclose(() => {
+                setLiveState("offline");
+            });
+
+            connection.start()
+                .then(function () {
+                    setLiveState("online");
+                    return connection.invoke("JoinRequestGroup", requestId, userName);
+                })
+                .catch(function (err) {
+                    console.error(err.toString());
+                    setLiveState("offline");
+                });
+
+            // Leave group when navigating away
+            window.addEventListener("beforeunload", function () {
+                if (connection.state === signalR.HubConnectionState.Connected) {
+                    connection.invoke("LeaveRequestGroup", requestId, userName)
+                        .catch(function () { /* ignore */ });
+                }
+            });
+
+            // 🔹 Typing indicator wiring
+            const typingIndicator = document.getElementById("typing-indicator-" + requestId);
+            const chatInput = document.getElementById("CommentText");
+
+            let typingTimeout = null;
+            let lastTypingSent = 0;
+            const TYPING_DEBOUNCE_MS = 800;
+            const TYPING_IDLE_MS = 2000;
+
+            const displayName = userName;
+            const role = userRole;
+
+            function sendStartTyping() {
+                const now = Date.now();
+                if (now - lastTypingSent < TYPING_DEBOUNCE_MS) return;
+                lastTypingSent = now;
+
+                connection.invoke("StartTyping", requestId, displayName, role)
+                    .catch(err => console.error("StartTyping error:", err));
+            }
+
+            function sendStopTyping() {
+                connection.invoke("StopTyping", requestId, displayName, role)
+                    .catch(err => console.error("StopTyping error:", err));
+            }
+
+            if (chatInput) {
+                chatInput.addEventListener("input", () => {
+                    if (!chatInput.value.trim()) {
+                        sendStopTyping();
+                        return;
+                    }
+
+                    sendStartTyping();
+
+                    if (typingTimeout) clearTimeout(typingTimeout);
+                    typingTimeout = setTimeout(() => {
+                        sendStopTyping();
+                    }, TYPING_IDLE_MS);
+                });
+
+                chatInput.addEventListener("blur", () => {
+                    sendStopTyping();
+                });
+            }
+
+            // Listen for typing events from others
+            connection.on("UserTyping", payload => {
+                if (!payload || payload.requestId !== requestId) return;
+
+                if (payload.isTyping) {
+                    typingIndicator.textContent = `${payload.label} is typing…`;
+                    typingIndicator.classList.remove("d-none");
+                    typingIndicator.classList.add("dotting");
+                } else {
+                    typingIndicator.textContent = "";
+                    typingIndicator.classList.add("d-none");
+                    typingIndicator.classList.remove("dotting");
+                }
+            });
+
+            // 🔹 Live status/priority updates
+            connection.on("RequestUpdated", payload => {
+                if (!payload) return;
+
+                const changedId = payload.requestId ?? payload.id;
+                if (changedId !== requestId) return;
+
+                const statusBadge = document.querySelector("[data-role='status-badge']");
+                const priorityBadge = document.querySelector("[data-role='priority-badge']");
+                const statusValue = document.querySelector("[data-role='status-value']");
+                const priorityValue = document.querySelector("[data-role='priority-value']");
+
+                if (statusBadge) statusBadge.textContent = payload.status;
+                if (priorityBadge) priorityBadge.textContent = payload.priority;
+                if (statusValue) statusValue.textContent = payload.status;
+                if (priorityValue) priorityValue.textContent = payload.priority;
+            });
+
+            // 🔹 Reload comments list when server says comments changed
+            connection.on("CommentsChanged", id => {
+                if (id !== requestId) return;
+
+                const container = document.getElementById("comments-container");
+                if (!container) return;
+
+                fetch(`/Maintenance/CommentsPartial/${requestId}`)
+                    .then(r => r.text())
+                            .then(html => {
+            container.innerHTML = html;
+
+            // 🔔 Soft chime for new comment
+            if (window.sentinelPlayCommentChime) {
+                window.sentinelPlayCommentChime();
+            }
+        })
+
+                    .catch(err => console.error("CommentsPartial load error:", err));
+            });
+
+        })();
+    </script>
+}

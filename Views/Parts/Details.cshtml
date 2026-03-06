@@ -1,0 +1,512 @@
+﻿@model MaintenanceSandbox.Models.Part
+@using MaintenanceSandbox.Models
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["AiModuleKey"] = "Part_Details";
+    ViewData["Title"] = SR["Parts_Details_Title", Model.PartNumber];
+
+    var total = Model.InventoryLevels?.Sum(il => il.QuantityOnHand) ?? 0;
+
+    var similarParts = ViewBag.SimilarParts as List<Part> ?? new List<Part>();
+
+    var bomItems = Model.BomItems ?? new List<MaintenanceSandbox.Models.BomItem>();
+
+    var assetCount = bomItems
+        .Select(b => b.AssetId)
+        .Distinct()
+        .Count();
+
+    var totalBomQuantity = bomItems.Sum(b => b.QuantityPerAsset);
+
+    var workCenterSummary = bomItems
+        .Where(b => b.Asset != null && !string.IsNullOrWhiteSpace(b.Asset.WorkCenter))
+        .GroupBy(b => b.Asset!.WorkCenter!)
+        .Select(g => new
+        {
+            WorkCenter = g.Key,
+            AssetCount = g.Select(b => b.AssetId).Distinct().Count()
+        })
+        .OrderByDescending(x => x.AssetCount)
+        .Take(3)
+        .ToList();
+}
+
+<div class="container py-4">
+
+    <!-- Top header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <div class="text-uppercase small text-muted mb-1">
+                @SR["Parts_Details_Label_Header"]
+            </div>
+            <h1 class="h3 mb-0">
+                @Model.PartNumber
+                @if (Model.IsActive)
+                {
+                    <span class="badge bg-success ms-2">
+                        @SR["Parts_Status_Active"]
+                    </span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary ms-2">
+                        @SR["Parts_Status_Inactive"]
+                    </span>
+                }
+            </h1>
+            @if (!string.IsNullOrWhiteSpace(Model.ShortDescription))
+            {
+                <div class="mt-1 text-muted">
+                    @Model.ShortDescription
+                </div>
+            }
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+            @await Html.PartialAsync("_AiHelpLauncher")
+
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-primary">
+                @SR["Parts_Details_Button_Edit"]
+            </a>
+            <a asp-action="Index" class="btn btn-sm btn-outline-light">
+                @SR["Parts_Details_Button_BackToList"]
+            </a>
+        </div>
+    </div>
+
+    <!-- Main card with descriptions + quick stats -->
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-body">
+            <div class="row g-4 align-items-start">
+                <!-- Descriptions -->
+                <div class="col-lg-8">
+                    <div class="mb-3">
+                        <div class="text-uppercase small text-muted fw-semibold mb-1">
+                            @SR["Parts_Details_Section_Descriptions"]
+                        </div>
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4 text-muted">
+                                @SR["Parts_Details_Label_ShortDescription"]
+                            </dt>
+                            <dd class="col-sm-8">@Model.ShortDescription</dd>
+
+                            <dt class="col-sm-4 text-muted">
+                                @SR["Parts_Details_Label_LongDescription"]
+                            </dt>
+                            <dd class="col-sm-8">@Model.LongDescription</dd>
+
+                            <dt class="col-sm-4 text-muted">
+                                @SR["Parts_Details_Label_AiDescription"]
+                            </dt>
+                            <dd class="col-sm-8">
+                                <div class="d-flex align-items-start gap-2">
+                                    <div class="flex-grow-1">
+                                        @if (string.IsNullOrWhiteSpace(Model.AiCleanDescription))
+                                        {
+                                            <span class="text-muted fst-italic">
+                                                @SR["Parts_AiDescription_Empty"]
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            @Model.AiCleanDescription
+                                        }
+                                    </div>
+
+                                    <form asp-controller="Parts"
+                                          asp-action="EnhanceDescription"
+                                          method="post"
+                                          class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@Model.Id" />
+                                        <button type="submit" class="btn btn-outline-success btn-sm">
+                                            @SR["Parts_AiDescription_Button_Enhance"]
+                                        </button>
+                                    </form>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="mt-3">
+                        <div class="text-uppercase small text-muted fw-semibold mb-1">
+                            @SR["Parts_Details_Section_Manufacturer"]
+                        </div>
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4 text-muted">
+                                @SR["Parts_Details_Label_ManufacturerName"]
+                            </dt>
+                            <dd class="col-sm-8">@Model.Manufacturer</dd>
+
+                            <dt class="col-sm-4 text-muted">
+                                @SR["Parts_Details_Label_ManufacturerPartNumber"]
+                            </dt>
+                            <dd class="col-sm-8">@Model.ManufacturerPartNumber</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Quick stats -->
+                <div class="col-lg-4">
+                    <div class="bg-dark bg-opacity-75 rounded-3 p-3 h-100">
+                        <div class="text-uppercase small text-muted fw-semibold mb-2">
+                            @SR["Parts_Details_Section_InventorySummary"]
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="small text-muted">
+                                @SR["Parts_Details_Label_TotalOnHand"]
+                            </div>
+                            <div class="display-6 fw-bold">@total</div>
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="badge bg-light text-dark">
+                                @((Model.InventoryLevels?.Count ?? 0))
+                                @SR["Parts_Details_Badge_Locations"]
+                            </span>
+                            <span class="badge bg-light text-dark">
+                                @((Model.BomItems?.Count ?? 0))
+                                @SR["Parts_Details_Badge_Assets"]
+                            </span>
+                            <span class="badge bg-light text-dark">
+                                @(Model.IsActive? SR["Parts_Status_Active"] : SR["Parts_Status_Inactive"])
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (bomItems.Any())
+    {
+        <div class="card mb-4 shadow-sm border-0">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <div class="text-uppercase small text-muted fw-semibold">
+                            @SR["Parts_Details_Section_AssetUsageSummary"]
+                        </div>
+                        <div class="text-muted small">
+                            @SR["Parts_Details_AssetUsageSummary_Subtitle"]
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span class="badge bg-light text-dark">
+                            @assetCount @SR["Parts_Details_Label_Assets"]
+                        </span>
+                        <span class="badge bg-light text-dark">
+                            @totalBomQuantity @SR["Parts_Details_Label_TotalUnitsAcrossBoms"]
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="border rounded-3 p-3 h-100">
+                            <div class="small text-muted text-uppercase fw-semibold mb-1">
+                                @SR["Parts_Details_Card_AssetsUsing_Title"]
+                            </div>
+                            <div class="fs-4 fw-bold mb-1">
+                                @assetCount
+                            </div>
+                            <div class="small text-muted">
+                                @SR["Parts_Details_Card_AssetsUsing_Subtitle"]
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="border rounded-3 p-3 h-100">
+                            <div class="small text-muted text-uppercase fw-semibold mb-1">
+                                @SR["Parts_Details_Card_TotalBomQty_Title"]
+                            </div>
+                            <div class="fs-4 fw-bold mb-1">
+                                @totalBomQuantity
+                            </div>
+                            <div class="small text-muted">
+                                @SR["Parts_Details_Card_TotalBomQty_Subtitle"]
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="border rounded-3 p-3 h-100">
+                            <div class="small text-muted text-uppercase fw-semibold mb-1">
+                                @SR["Parts_Details_Card_TopWorkCenters_Title"]
+                            </div>
+
+                            @if (!workCenterSummary.Any())
+                            {
+                                <div class="small text-muted">
+                                    @SR["Parts_Details_Card_TopWorkCenters_None"]
+                                </div>
+                            }
+                            else
+                            {
+                                <ul class="list-unstyled mb-0">
+                                    @foreach (var wc in workCenterSummary)
+                                    {
+                                        <li class="d-flex justify-content-between align-items-center mb-1">
+                                            <span>@wc.WorkCenter</span>
+                                            <span class="badge bg-secondary bg-opacity-75">
+                                                @wc.AssetCount @SR["Parts_Details_Label_Assets"]
+                                            </span>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Lower section: Inventory + BOM side-by-side -->
+    <div class="row g-4">
+        <!-- Inventory -->
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-transparent border-0 pb-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-uppercase small text-muted fw-semibold">
+                                @SR["Parts_Details_Section_InventoryByLocation"]
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-secondary bg-opacity-25 text-light">
+                                @((Model.InventoryLevels?.Count ?? 0))
+                                @SR["Parts_Details_Badge_Records"]
+                            </span>
+                            <a asp-action="AddInventory"
+                               asp-route-partId="@Model.Id"
+                               class="btn btn-sm btn-outline-light">
+                                @SR["Parts_Details_Button_AddInventory"]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body pt-2 pb-3">
+                    @if (Model.InventoryLevels == null || !Model.InventoryLevels.Any())
+                    {
+                        <div class="alert alert-info mb-0">
+                            @SR["Parts_Details_Inventory_Empty"]
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle mb-0">
+                                <thead class="table-dark table-borderless">
+                                    <tr>
+                                        <th>@SR["Parts_Details_Inventory_Col_Location"]</th>
+                                        <th>@SR["Parts_Details_Inventory_Col_Site"]</th>
+                                        <th class="text-end">@SR["Parts_Details_Inventory_Col_OnHand"]</th>
+                                        <th class="text-end">@SR["Parts_Details_Inventory_Col_ReorderPoint"]</th>
+                                        <th class="text-end">@SR["Parts_Details_Inventory_Col_TargetQty"]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var lvl in Model.InventoryLevels
+                                                                    .OrderByDescending(l => l.QuantityOnHand))
+                                    {
+                                        var rowClass = "";
+                                        if (lvl.QuantityOnHand == 0)
+                                        {
+                                            rowClass = "table-danger";
+                                        }
+                                        else if (lvl.ReorderPoint.HasValue &&
+                                        lvl.QuantityOnHand <= lvl.ReorderPoint.Value)
+                                        {
+                                            rowClass = "table-warning";
+                                        }
+
+                                        <tr class="@rowClass">
+                                            <td>@lvl.LocationBin?.Code</td>
+                                            <td>@lvl.LocationBin?.Site</td>
+                                            <td class="text-end">@lvl.QuantityOnHand</td>
+                                            <td class="text-end">@lvl.ReorderPoint</td>
+                                            <td class="text-end">@lvl.TargetQuantity</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- BOM -->
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-transparent border-0 pb-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-uppercase small text-muted fw-semibold">
+                                @SR["Parts_Details_Section_UsedOnAssets"]
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-secondary bg-opacity-25 text-light">
+                                @((Model.BomItems?.Count ?? 0))
+                                @SR["Parts_Details_Label_Assets"]
+                            </span>
+                            <a asp-action="AddBomItem"
+                               asp-route-partId="@Model.Id"
+                               class="btn btn-sm btn-outline-light">
+                                @SR["Parts_Details_Button_AddBomItem"]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body pt-2 pb-3">
+                    @if (Model.BomItems == null || !Model.BomItems.Any())
+                    {
+                        <div class="alert alert-secondary mb-0">
+                            @SR["Parts_Details_Bom_Empty"]
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle mb-0">
+                                <thead class="table-dark table-borderless">
+                                    <tr>
+                                        <th>@SR["Parts_Details_Bom_Col_AssetCode"]</th>
+                                        <th>@SR["Parts_Details_Bom_Col_AssetName"]</th>
+                                        <th>@SR["Parts_Details_Bom_Col_WorkCenter"]</th>
+                                        <th class="text-end">@SR["Parts_Details_Bom_Col_QtyPerAsset"]</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var bom in Model.BomItems
+                                                                    .OrderBy(b => b.Asset!.WorkCenter)
+                                                                    .ThenBy(b => b.Asset!.AssetCode))
+                                    {
+                                        <tr>
+                                            <td>@bom.Asset?.AssetCode</td>
+                                            <td>@bom.Asset?.Name</td>
+                                            <td>@bom.Asset?.WorkCenter</td>
+                                            <td class="text-end">@bom.QuantityPerAsset</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (similarParts.Any())
+        {
+            <div class="mt-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <div class="text-uppercase small text-muted fw-semibold">
+                                    @SR["Parts_Details_Similar_Title"]
+                                </div>
+                                <div class="small text-muted">
+                                    @SR["Parts_Details_Similar_Subtitle"]
+                                </div>
+                            </div>
+                            <span class="badge bg-light text-dark">
+                                @similarParts.Count @SR["Parts_Details_Similar_Badge_Suggestions"]
+                            </span>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle mb-0">
+                                <thead class="table-dark table-borderless">
+                                    <tr>
+                                        <th style="width: 15%">
+                                            @SR["Parts_Details_Similar_Col_PartNumber"]
+                                        </th>
+                                        <th style="width: 40%">
+                                            @SR["Parts_Details_Similar_Col_Description"]
+                                        </th>
+                                        <th style="width: 20%">
+                                            @SR["Parts_Details_Similar_Col_Manufacturer"]
+                                        </th>
+                                        <th class="text-center" style="width: 10%">
+                                            @SR["Parts_Details_Similar_Col_Status"]
+                                        </th>
+                                        <th class="text-end" style="width: 15%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var sp in similarParts)
+                                    {
+                                        var onHand = sp.InventoryLevels?.Sum(il => il.QuantityOnHand) ?? 0;
+
+                                        <tr>
+                                            <td class="fw-semibold">@sp.PartNumber</td>
+                                            <td>
+                                                <div>
+                                                    @(string.IsNullOrWhiteSpace(sp.ShortDescription)
+                                                                                                ? "-"
+                                                                                                : sp.ShortDescription)
+                                        </div>
+                                        @if (string.IsNullOrWhiteSpace(sp.AiCleanDescription))
+                                                {
+                                                    <span class="text-muted">
+                                                        @SR["Parts_AiDescription_Empty"]
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    @Html.Raw(Html.Encode(sp.AiCleanDescription).Replace("\n", "<br />"))
+                                                }
+                                            </td>
+                                            <td>
+                                                @(sp.Manufacturer ?? "-")
+                                            </td>
+                                            <td class="text-center">
+                                                @if (sp.IsActive)
+                                                {
+                                                    <span class="badge bg-success">
+                                                        @SR["Parts_Status_Active"]
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">
+                                                        @SR["Parts_Status_Inactive"]
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td class="text-end">
+                                                <div class="btn-group btn-group-sm">
+                                                    <a asp-action="Details"
+                                                       asp-route-id="@sp.Id"
+                                                       class="btn btn-outline-light">
+                                                        @SR["Parts_Common_Button_View"]
+                                                    </a>
+                                                    <a asp-action="Edit"
+                                                       asp-route-id="@sp.Id"
+                                                       class="btn btn-outline-secondary">
+                                                        @SR["Parts_Common_Button_Edit"]
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

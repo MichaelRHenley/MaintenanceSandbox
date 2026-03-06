@@ -1,0 +1,1072 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+
+	<!-- Basic shared strings -->
+
+	<data name="App_Title" xml:space="preserve">
+    <value>Mantenimiento de Emergencia</value>
+  </data>
+	<data name="Nav_Home" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+	<data name="Nav_ActiveEMs" xml:space="preserve">
+    <value>Solicitudes EM activas</value>
+  </data>
+	<data name="Button_Submit" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+	<data name="Button_Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+	<data name="Nav_Privacy" xml:space="preserve">
+    <value>Privacidad</value>
+  </data>
+	<data name="Nav_Maintenance" xml:space="preserve">
+    <value>Mantenimiento</value>
+  </data>
+	<data name="Nav_Settings" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+
+	<!-- Maintenance Index page -->
+
+	<data name="Maint_Index_Title" xml:space="preserve">
+    <value>Solicitudes de mantenimiento</value>
+  </data>
+	<data name="Maint_Index_Badge_Tier" xml:space="preserve">
+    <value>Nivel:</value>
+  </data>
+	<data name="Maint_Index_Button_NewRequest" xml:space="preserve">
+    <value>+ Nueva solicitud</value>
+  </data>
+
+	<data name="Maint_Index_Filter_Site" xml:space="preserve">
+    <value>Sitio</value>
+  </data>
+	<data name="Maint_Index_Filter_Area" xml:space="preserve">
+    <value>Área</value>
+  </data>
+	<data name="Maint_Index_Filter_WorkCenter" xml:space="preserve">
+    <value>Centro de trabajo</value>
+  </data>
+	<data name="Maint_Index_Filter_Search" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+	<data name="Maint_Index_Filter_All" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+	<data name="Maint_Index_Filter_SearchPlaceholder" xml:space="preserve">
+    <value>Equipo, centro de trabajo o texto</value>
+  </data>
+	<data name="Maint_Index_Filter_IncludeClosed" xml:space="preserve">
+    <value>Incluir solicitudes cerradas</value>
+  </data>
+
+	<data name="Maint_Index_Button_ApplyFilters" xml:space="preserve">
+    <value>Aplicar filtros</value>
+  </data>
+
+	<data name="Maint_Index_NoResults" xml:space="preserve">
+    <value>No se encontraron solicitudes de mantenimiento.</value>
+  </data>
+
+	<data name="Maint_Index_Label_Status" xml:space="preserve">
+    <value>Estado:</value>
+  </data>
+	<data name="Maint_Index_Label_Priority" xml:space="preserve">
+    <value>Prioridad:</value>
+  </data>
+	<data name="Maint_Index_Label_RequestedBy" xml:space="preserve">
+    <value>Solicitado por:</value>
+  </data>
+	<data name="Maint_Index_Label_Description" xml:space="preserve">
+    <value>Descripción:</value>
+  </data>
+	<data name="Maint_Index_Label_LatestComment" xml:space="preserve">
+    <value>Último comentario</value>
+  </data>
+
+	<data name="Maint_Index_Button_ViewDetails" xml:space="preserve">
+    <value>Ver detalles</value>
+  </data>
+	<data name="Maint_Index_KPI_Open" xml:space="preserve">
+    <value>Abiertas</value>
+  </data>
+	<data name="Maint_Index_KPI_Waiting" xml:space="preserve">
+    <value>En espera de refacciones</value>
+  </data>
+	<data name="Maint_Index_KPI_ResolvedToday" xml:space="preserve">
+    <value>Resueltas hoy</value>
+  </data>
+	<data name="Maint_Index_Badge_NewComment" xml:space="preserve">
+    <value>Nuevo comentario</value>
+  </data>
+
+	<data name="Maint_Index_LastUpdated_Label" xml:space="preserve">
+    <value>Última actualización:</value>
+  </data>
+
+	<!-- Maintenance Details page -->
+
+	<data name="Maint_Details_Title" xml:space="preserve">
+    <value>Solicitud de mantenimiento</value>
+  </data>
+	<data name="Maint_Details_Header_Request" xml:space="preserve">
+    <value>Solicitud #{0}</value>
+  </data>
+
+	<data name="Maint_Details_Label_Site" xml:space="preserve">
+    <value>Sitio</value>
+  </data>
+	<data name="Maint_Details_Label_Area" xml:space="preserve">
+    <value>Área</value>
+  </data>
+	<data name="Maint_Details_Label_WorkCenter" xml:space="preserve">
+    <value>Centro de trabajo</value>
+  </data>
+	<data name="Maint_Details_Label_Equipment" xml:space="preserve">
+    <value>Equipo</value>
+  </data>
+	<data name="Maint_Details_Label_Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+	<data name="Maint_Details_Label_Priority" xml:space="preserve">
+    <value>Prioridad</value>
+  </data>
+	<data name="Maint_Details_Label_RequestedBy" xml:space="preserve">
+    <value>Solicitado por</value>
+  </data>
+	<data name="Maint_Details_Label_CreatedAt" xml:space="preserve">
+    <value>Creado el</value>
+  </data>
+	<data name="Maint_Details_Label_ResolvedAt" xml:space="preserve">
+    <value>Resuelto el</value>
+  </data>
+	<data name="Maint_Details_Label_Description" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+
+	<data name="Maint_Details_Section_Activity" xml:space="preserve">
+    <value>Actividad</value>
+  </data>
+	<data name="Maint_Details_Section_Comments" xml:space="preserve">
+    <value>Comentarios</value>
+  </data>
+	<data name="Maint_Details_Section_NoComments" xml:space="preserve">
+    <value>Todavía no hay comentarios.</value>
+  </data>
+	<data name="Maint_Details_Label_CommentAt" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+
+	<data name="Maint_Details_Label_NewComment" xml:space="preserve">
+    <value>Nuevo comentario</value>
+  </data>
+	<data name="Maint_Details_Placeholder_NewComment" xml:space="preserve">
+    <value>Escriba su comentario aquí…</value>
+  </data>
+
+	<data name="Maint_Details_Button_AddComment" xml:space="preserve">
+    <value>Agregar comentario</value>
+  </data>
+	<data name="Maint_Details_Button_MarkResolved" xml:space="preserve">
+    <value>Marcar como resuelta</value>
+  </data>
+	<data name="Maint_Details_Button_BackToList" xml:space="preserve">
+    <value>Volver a la lista</value>
+  </data>
+	<data name="Maint_Details_Section_UpdateWorkflow" xml:space="preserve">
+  <value>Actualizar flujo de trabajo</value>
+</data>
+
+	<data name="Maint_Details_Hint_WorkflowForLeads" xml:space="preserve">
+  <value>Los supervisores y técnicos pueden ajustar el estado y la prioridad aquí.</value>
+</data>
+
+	<data name="Maint_Details_Button_UpdateStatus" xml:space="preserve">
+  <value>Actualizar</value>
+</data>
+	<data name="Maint_Details_Label_RespondersPresent" xml:space="preserve">
+  <value>Respondedores presentes</value>
+</data>
+	<data name="Maint_Details_Label_RespondersConnecting" xml:space="preserve">
+  <value>Verificando respondedores activos…</value>
+</data>
+	<data name="Maint_Details_Label_NoResponders" xml:space="preserve">
+  <value>No hay respondedores viendo esta solicitud en este momento.</value>
+</data>
+
+	<!-- Suggestions section heading -->
+	<data name="Maint_Details_Section_Suggestions" xml:space="preserve">
+  <value>Sugerencias del playbook</value>
+</data>
+	
+
+	<!-- Parts Index -->
+	<data name="Parts_Index_Title" xml:space="preserve">
+  <value>Repuestos</value>
+</data>
+	<data name="Parts_Index_Header" xml:space="preserve">
+  <value>Catálogo de repuestos</value>
+</data>
+	<data name="Parts_Index_Stats" xml:space="preserve">
+  <value>{0} en total • {1} activos • {2} inactivos</value>
+</data>
+
+	<data name="Parts_Index_Created_Label" xml:space="preserve">
+  <value>Repuesto creado:</value>
+</data>
+	<data name="Parts_Index_Created_NewPartPlaceholder" xml:space="preserve">
+  <value>(nuevo repuesto)</value>
+</data>
+	<data name="Parts_Index_Button_ViewDetails" xml:space="preserve">
+  <value>Ver detalles</value>
+</data>
+	<data name="Parts_Index_Button_CreateAnother" xml:space="preserve">
+  <value>+ Crear otro repuesto</value>
+</data>
+
+	<data name="Parts_Index_Button_NewPart" xml:space="preserve">
+  <value>+ Nuevo repuesto</value>
+</data>
+
+	<data name="Parts_Index_Filter_Search_Label" xml:space="preserve">
+  <value>Búsqueda</value>
+</data>
+	<data name="Parts_Index_Filter_Search_Placeholder" xml:space="preserve">
+  <value>N.º de pieza, descripción, descripción IA...</value>
+</data>
+	<data name="Parts_Index_Filter_Status_Label" xml:space="preserve">
+  <value>Estado</value>
+</data>
+	<data name="Parts_Index_Filter_Status_All" xml:space="preserve">
+  <value>Todos los repuestos</value>
+</data>
+	<data name="Parts_Index_Filter_Status_ActiveOnly" xml:space="preserve">
+  <value>Solo activos</value>
+</data>
+	<data name="Parts_Index_Filter_Status_InactiveOnly" xml:space="preserve">
+  <value>Solo inactivos</value>
+</data>
+	<data name="Parts_Index_Filter_Button_Apply" xml:space="preserve">
+  <value>Aplicar</value>
+</data>
+	<data name="Parts_Index_Filter_Button_Reset" xml:space="preserve">
+  <value>Restablecer</value>
+</data>
+
+	<data name="Parts_Index_Empty_Title" xml:space="preserve">
+  <value>No se encontraron repuestos.</value>
+</data>
+	<data name="Parts_Index_Empty_Body" xml:space="preserve">
+  <value>Pruebe ajustando la búsqueda o cree un nuevo repuesto.</value>
+</data>
+
+	<data name="Parts_Index_Table_PartNumber" xml:space="preserve">
+  <value>N.º de pieza</value>
+</data>
+	<data name="Parts_Index_Table_Description" xml:space="preserve">
+  <value>Descripción</value>
+</data>
+	<data name="Parts_Index_Table_Manufacturer" xml:space="preserve">
+  <value>Fabricante</value>
+</data>
+	<data name="Parts_Index_Table_OnHand" xml:space="preserve">
+  <value>En existencia</value>
+</data>
+	<data name="Parts_Index_Table_Status" xml:space="preserve">
+  <value>Estado</value>
+</data>
+
+	<data name="Parts_Index_Label_MfgNumber" xml:space="preserve">
+  <value>N.º de fabricante :</value>
+</data>
+
+	<data name="Parts_Index_Badge_NoStock" xml:space="preserve">
+  <value>Sin stock</value>
+</data>
+	<data name="Parts_Index_Status_Active" xml:space="preserve">
+  <value>Activo</value>
+</data>
+	<data name="Parts_Index_Status_Inactive" xml:space="preserve">
+  <value>Inactivo</value>
+</data>
+
+	<data name="Parts_Index_Button_View" xml:space="preserve">
+  <value>Ver</value>
+</data>
+	<data name="Parts_Index_Button_Edit" xml:space="preserve">
+  <value>Editar</value>
+</data>
+
+	<!-- Field labels -->
+	<data name="Parts_Field_PartNumber" xml:space="preserve">
+  <value>Número de pieza</value>
+</data>
+	<data name="Parts_Field_ShortDescription" xml:space="preserve">
+  <value>Descripción corta</value>
+</data>
+	<data name="Parts_Field_LongDescription" xml:space="preserve">
+  <value>Descripción larga</value>
+</data>
+	<data name="Parts_Field_AiCleanDescription" xml:space="preserve">
+  <value>Descripción IA</value>
+</data>
+	<data name="Parts_Field_Manufacturer" xml:space="preserve">
+  <value>Fabricante</value>
+</data>
+	<data name="Parts_Field_ManufacturerPartNumber" xml:space="preserve">
+  <value>N.º de parte del fabricante</value>
+</data>
+	<data name="Parts_Field_IsActive" xml:space="preserve">
+  <value>Activo</value>
+</data>
+	<data name="Parts_Field_EnhancedDescription" xml:space="preserve">
+  <value>Descripción mejorada</value>
+</data>
+
+	<!-- Validation -->
+	<data name="Parts_Validation_PartNumber_Required" xml:space="preserve">
+  <value>El número de pieza es obligatorio.</value>
+</data>
+	<data name="Parts_Validation_PartNumber_MaxLength" xml:space="preserve">
+  <value>El número de pieza debe tener como máximo 64 caracteres.</value>
+</data>
+
+	<data name="Parts_Validation_ShortDescription_MaxLength" xml:space="preserve">
+  <value>La descripción corta debe tener como máximo 128 caracteres.</value>
+</data>
+
+	<data name="Parts_Validation_LongDescription_MaxLength" xml:space="preserve">
+  <value>La descripción larga debe tener como máximo 512 caracteres.</value>
+</data>
+
+	<data name="Parts_Validation_AiCleanDescription_MaxLength" xml:space="preserve">
+  <value>La descripción IA debe tener como máximo 512 caracteres.</value>
+</data>
+
+	<data name="Parts_Validation_Manufacturer_MaxLength" xml:space="preserve">
+  <value>El fabricante debe tener como máximo 128 caracteres.</value>
+</data>
+
+	<data name="Parts_Validation_ManufacturerPartNumber_MaxLength" xml:space="preserve">
+  <value>El número de parte del fabricante debe tener como máximo 128 caracteres.</value>
+</data>
+	<data name="Parts_Edit_Title" xml:space="preserve">
+  <value>Editar repuesto {0}</value>
+</data>
+	<data name="Parts_Edit_Heading" xml:space="preserve">
+  <value>Editar repuesto {0}</value>
+</data>
+
+	<data name="Parts_Edit_Label_PartNumber" xml:space="preserve">
+  <value>Número de pieza</value>
+</data>
+	<data name="Parts_Edit_Label_ShortDescription" xml:space="preserve">
+  <value>Descripción corta</value>
+</data>
+	<data name="Parts_Edit_Label_LongDescription" xml:space="preserve">
+  <value>Descripción larga</value>
+</data>
+	<data name="Parts_Edit_Label_Manufacturer" xml:space="preserve">
+  <value>Fabricante</value>
+</data>
+	<data name="Parts_Edit_Label_ManufacturerPartNumber" xml:space="preserve">
+  <value>N.º de parte del fabricante</value>
+</data>
+	<data name="Parts_Edit_Label_IsActive" xml:space="preserve">
+  <value>Activo</value>
+</data>
+
+	<data name="Parts_Edit_Button_BackToList" xml:space="preserve">
+  <value>Volver a la lista</value>
+</data>
+	<data name="Parts_Edit_Button_SaveChanges" xml:space="preserve">
+  <value>Guardar cambios</value>
+</data>
+	<data name="Parts_Edit_Button_Cancel" xml:space="preserve">
+  <value>Cancelar</value>
+</data>
+
+
+	
+
+
+	<!-- Small helper text under heading -->
+	<data name="Maint_Details_Hint_Suggestions" xml:space="preserve">
+  <value>Basado en problemas similares, aquí tienes algunas acciones rápidas para intentar.</value>
+</data>
+
+	<!-- Label in confidence pill -->
+	<data name="Maint_Details_Label_Confidence" xml:space="preserve">
+  <value>Confianza</value>
+</data>
+
+	<!-- Settings page -->
+
+	<data name="Settings_Title" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+
+	<!-- Settings: Notifications &amp; alerts -->
+
+	<data name="Settings_Section_Notifications_Title" xml:space="preserve">
+    <value>Notificaciones y alertas</value>
+  </data>
+	<data name="Settings_Section_Notifications_Description" xml:space="preserve">
+    <value>Controle la sirena, el timbre y las vibraciones utilizadas para las actualizaciones de mantenimiento.</value>
+  </data>
+	<data name="Settings_Notifications_Toggle_Help" xml:space="preserve">
+    <value>Usa la misma configuración que el interruptor en la barra superior.</value>
+  </data>
+	<data name="Settings_Notifications_TestSiren" xml:space="preserve">
+    <value>Probar sirena EM</value>
+  </data>
+	<data name="Settings_Notifications_TestChime" xml:space="preserve">
+    <value>Probar timbre de comentario</value>
+  </data>
+	<data name="Settings_Notifications_Test_Help" xml:space="preserve">
+    <value>Asegúrese de que el volumen del dispositivo esté a un nivel cómodo antes de probar.</value>
+  </data>
+
+	<!-- Settings: Language & tier -->
+
+	<data name="Settings_Section_Language_Title" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+	<data name="Settings_Section_Language_Description" xml:space="preserve">
+    <value>Elija su idioma preferido para la aplicación.</value>
+  </data>
+
+	<data name="Settings_Section_Tier_Label" xml:space="preserve">
+    <value>Nivel del producto</value>
+  </data>
+	<data name="Settings_Section_Tier_HelpText" xml:space="preserve">
+    <value>Controla qué nivel está activo para esta instancia sandbox.</value>
+  </data>
+
+	<data name="Settings_Button_Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+	<data name="Settings_Button_Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+
+	<!-- Maintenance Create page -->
+
+	<data name="Maint_Create_Title" xml:space="preserve">
+    <value>Crear solicitud de mantenimiento</value>
+  </data>
+
+	<data name="Maint_Create_Label_Site" xml:space="preserve">
+    <value>Sitio</value>
+  </data>
+	<data name="Maint_Create_Placeholder_Site" xml:space="preserve">
+    <value>p. ej., Sitio Alfa</value>
+  </data>
+
+	<data name="Maint_Create_Label_Area" xml:space="preserve">
+    <value>Área</value>
+  </data>
+	<data name="Maint_Create_Placeholder_Area" xml:space="preserve">
+    <value>p. ej., Área 2</value>
+  </data>
+
+	<data name="Maint_Create_Label_WorkCenter" xml:space="preserve">
+    <value>Centro de trabajo</value>
+  </data>
+	<data name="Maint_Create_Placeholder_WorkCenter" xml:space="preserve">
+    <value>p. ej., CT-03</value>
+  </data>
+
+	<data name="Maint_Create_Label_Equipment" xml:space="preserve">
+    <value>Equipo</value>
+  </data>
+	<data name="Maint_Create_Placeholder_Equipment" xml:space="preserve">
+    <value>p. ej., EQ-2001</value>
+  </data>
+
+	<data name="Maint_Create_Label_Priority" xml:space="preserve">
+    <value>Prioridad</value>
+  </data>
+	<data name="Maint_Create_Priority_Low" xml:space="preserve">
+    <value>Baja</value>
+  </data>
+	<data name="Maint_Create_Priority_Medium" xml:space="preserve">
+    <value>Media</value>
+  </data>
+	<data name="Maint_Create_Priority_High" xml:space="preserve">
+    <value>Alta</value>
+  </data>
+
+	<data name="Maint_Create_Label_RequestedBy" xml:space="preserve">
+    <value>Solicitado por</value>
+  </data>
+
+	<data name="Maint_Create_Label_Description" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+	<data name="Maint_Create_Placeholder_Description" xml:space="preserve">
+    <value>Describa el problema</value>
+  </data>
+
+	<data name="Maint_Create_Button_Submit" xml:space="preserve">
+    <value>Enviar solicitud</value>
+  </data>
+	<data name="Maint_Create_Button_Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+
+	<!-- Home page -->
+
+	<data name="Home_Title" xml:space="preserve">
+    <value>Inicio de mantenimiento Sentinel</value>
+  </data>
+	<data name="Home_Hero_Title" xml:space="preserve">
+    <value>Sistema de mantenimiento en vivo</value>
+  </data>
+	<data name="Home_Hero_Subtitle" xml:space="preserve">
+    <value>Solicitudes de mantenimiento, alertas y colaboración en una sola vista en vivo.</value>
+  </data>
+
+	<data name="Home_Hero_Button_GoToMaintenance" xml:space="preserve">
+    <value>Abrir panel de mantenimiento</value>
+  </data>
+	<data name="Home_Hero_Button_Settings" xml:space="preserve">
+    <value>Configurar alertas e idioma</value>
+  </data>
+
+	<data name="Home_Hero_Feature_LiveFeed" xml:space="preserve">
+    <value>Flujo EM / mantenimiento en tiempo real</value>
+  </data>
+	<data name="Home_Hero_Feature_RealTimeComments" xml:space="preserve">
+    <value>Comentarios operador ↔ técnico en tiempo real</value>
+  </data>
+	<data name="Home_Hero_Feature_TierAwareAI" xml:space="preserve">
+    <value>Sugerencias de IA según el nivel (hoja de ruta)</value>
+  </data>
+	<data name="Home_Hero_Feature_MultiLanguage" xml:space="preserve">
+    <value>Fundamento multilenguaje (en / fr / es)</value>
+  </data>
+	<data name="Home_Hero_Feature_AlertsHaptics" xml:space="preserve">
+    <value>Alertas y vibraciones configurables</value>
+  </data>
+	<data name="Home_Hero_Feature_MultiTenant" xml:space="preserve">
+    <value>Listo para implementación SaaS multi-tenant</value>
+  </data>
+
+	<data name="Home_Telemetry_Title" xml:space="preserve">
+    <value>Telemetría en vivo</value>
+  </data>
+	<data name="Home_Telemetry_Description" xml:space="preserve">
+    <value>Cuando el panel EM está abierto, este indicador y la insignia del pie de página permanecen sincronizados.</value>
+  </data>
+	<data name="Home_Telemetry_Item_Live" xml:space="preserve">
+    <value>Verde « En línea » = conectado al concentrador SignalR</value>
+  </data>
+	<data name="Home_Telemetry_Item_Reconnecting" xml:space="preserve">
+    <value>Ámbar « Reconectando… » = reintentando la conexión</value>
+  </data>
+	<data name="Home_Telemetry_Item_Offline" xml:space="preserve">
+    <value>Rojo « Sin conexión » = sin actualizaciones en vivo (modo seguro)</value>
+  </data>
+
+	<data name="Home_Alerts_Title" xml:space="preserve">
+    <value>Revisión de alertas</value>
+  </data>
+	<data name="Home_Alerts_Description" xml:space="preserve">
+    <value>Use Configuración para probar la sirena y el timbre antes de salir a piso.</value>
+  </data>
+	<data name="Home_Alerts_Button_OpenSettings" xml:space="preserve">
+    <value>Abrir configuración de alertas</value>
+  </data>
+
+	<!-- Tier pill -->
+
+	<data name="Tier_Label_Standard" xml:space="preserve">
+    <value>Estándar</value>
+  </data>
+	<data name="Tier_Label_Enhanced" xml:space="preserve">
+    <value>Mejorado</value>
+  </data>
+	<data name="Tier_Label_Premium" xml:space="preserve">
+    <value>Premium</value>
+  </data>
+	<data name="Tier_Label_TierSuffix" xml:space="preserve">
+    <value>nivel</value>
+  </data>
+
+	<!-- Layout / auth / tenant -->
+
+	<data name="Auth_SignIn" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+	<data name="Auth_SignOut" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+	<data name="Layout_TenantLabel" xml:space="preserve">
+    <value>Inquilino</value>
+  </data>
+
+	<!-- Live indicator labels -->
+
+	<data name="LiveIndicator_Label_Connecting" xml:space="preserve">
+    <value>Conectando…</value>
+  </data>
+	<data name="LiveIndicator_Label_Live" xml:space="preserve">
+    <value>En línea</value>
+  </data>
+	<data name="LiveIndicator_Label_Reconnecting" xml:space="preserve">
+    <value>Reconectando…</value>
+  </data>
+	<data name="LiveIndicator_Label_Offline" xml:space="preserve">
+    <value>Sin conexión</value>
+  </data>
+
+	<!-- Toast messages -->
+
+	<data name="Toast_Reconnected" xml:space="preserve">
+    <value>Reconectado a las actualizaciones en vivo.</value>
+  </data>
+	<data name="Toast_Reconnecting" xml:space="preserve">
+    <value>Conexión interrumpida. Intentando reconectar…</value>
+  </data>
+	<data name="Toast_Offline" xml:space="preserve">
+    <value>Las actualizaciones en vivo están desconectadas. Es posible que los cambios no aparezcan en tiempo real.</value>
+  </data>
+
+	<!-- Sound toggle -->
+
+	<data name="Nav_SoundOn" xml:space="preserve">
+    <value>Sonido activado</value>
+  </data>
+	<data name="Nav_SoundOff" xml:space="preserve">
+    <value>Sonido desactivado</value>
+  </data>
+
+	<!-- Maintenance index: banner + last updated helpers -->
+
+	<data name="Maint_Index_UpdatesBanner_Main" xml:space="preserve">
+    <value>Se detectó nueva actividad de mantenimiento.</value>
+  </data>
+	<data name="Maint_Index_UpdatesBanner_Click" xml:space="preserve">
+    <value>Haga clic para actualizar.</value>
+  </data>
+	<data name="Maint_Index_LastUpdated_JustNow" xml:space="preserve">
+    <value>Última actualización: hace un momento</value>
+  </data>
+
+	<!-- Localized status values -->
+
+	<data name="Maint_Status_New" xml:space="preserve">
+    <value>Nuevo</value>
+  </data>
+	<data name="Maint_Status_InProgress" xml:space="preserve">
+    <value>En progreso</value>
+  </data>
+	<data name="Maint_Status_WaitingOnParts" xml:space="preserve">
+    <value>En espera de refacciones</value>
+  </data>
+	<data name="Maint_Status_Resolved" xml:space="preserve">
+    <value>Resuelta</value>
+  </data>
+
+	<!-- Tier changed toast -->
+
+	<data name="Settings_TierChanged_Message" xml:space="preserve">
+    <value>Nivel cambiado a {0}.</value>
+  </data>
+	<data name="Maint_Create_Notice_RealTime" xml:space="preserve">
+  <value>Al enviar esta solicitud se notificará al equipo de mantenimiento en tiempo real.</value>
+</data>
+
+	<!-- Etiquetas de rol -->
+	<data name="Role_Operator" xml:space="preserve">
+    <value>Operador</value>
+  </data>
+	<data name="Role_Technician" xml:space="preserve">
+    <value>Técnico</value>
+  </data>
+	<data name="Role_Supervisor" xml:space="preserve">
+    <value>Supervisor</value>
+  </data>
+	<data name="Role_Manager" xml:space="preserve">
+    <value>Gerente</value>
+  </data>
+
+	<data name="Auth_Login_Try" xml:space="preserve">
+  <value>Pruebe estas cuentas de demostración:</value>
+</data>
+	<data name="Auth_Login_DemoSupervisor" xml:space="preserve">
+  <value>Supervisor · supervisor@sentinel-demo.local / demo</value>
+</data>
+	<data name="Auth_Login_DemoOperator" xml:space="preserve">
+  <value>Operador · operator@sentinel-demo.local / demo</value>
+</data>
+
+
+	<data name="Role_MaintenanceManager" xml:space="preserve">
+  <value>Jefe de mantenimiento</value>
+</data>
+
+	<data name="Parts_Details_Title" xml:space="preserve">
+  <value>Detalles del repuesto – {0}</value>
+</data>
+	<data name="Parts_Details_Label_Header" xml:space="preserve">
+  <value>Detalles del repuesto</value>
+</data>
+
+	<data name="Parts_Status_Active" xml:space="preserve">
+  <value>Activo</value>
+</data>
+	<data name="Parts_Status_Inactive" xml:space="preserve">
+  <value>Inactivo</value>
+</data>
+
+	<data name="Parts_Details_Button_Edit" xml:space="preserve">
+  <value>Editar</value>
+</data>
+	<data name="Parts_Details_Button_BackToList" xml:space="preserve">
+  <value>Volver a la lista</value>
+</data>
+
+	<data name="Parts_Details_Section_Descriptions" xml:space="preserve">
+  <value>Descripciones</value>
+</data>
+	<data name="Parts_Details_Label_ShortDescription" xml:space="preserve">
+  <value>Descripción corta</value>
+</data>
+	<data name="Parts_Details_Label_LongDescription" xml:space="preserve">
+  <value>Descripción larga</value>
+</data>
+	<data name="Parts_Details_Label_AiDescription" xml:space="preserve">
+  <value>Descripción con IA</value>
+</data>
+
+	<data name="Parts_AiDescription_Empty" xml:space="preserve">
+  <value>Todavía no hay una descripción mejorada.</value>
+</data>
+	<data name="Parts_AiDescription_Button_Enhance" xml:space="preserve">
+  <value>Mejorar</value>
+</data>
+
+	<data name="Parts_Details_Section_Manufacturer" xml:space="preserve">
+  <value>Fabricante</value>
+</data>
+	<data name="Parts_Details_Label_ManufacturerName" xml:space="preserve">
+  <value>Nombre</value>
+</data>
+	<data name="Parts_Details_Label_ManufacturerPartNumber" xml:space="preserve">
+  <value>N.º de parte del fabricante</value>
+</data>
+
+	<data name="Parts_Details_Section_InventorySummary" xml:space="preserve">
+  <value>Resumen de inventario</value>
+</data>
+	<data name="Parts_Details_Label_TotalOnHand" xml:space="preserve">
+  <value>Total en existencia</value>
+</data>
+	<data name="Parts_Details_Badge_Locations" xml:space="preserve">
+  <value>ubicaciones</value>
+</data>
+	<data name="Parts_Details_Badge_Assets" xml:space="preserve">
+  <value>activos</value>
+</data>
+
+	<data name="Parts_Details_Section_AssetUsageSummary" xml:space="preserve">
+  <value>Resumen de uso en activos</value>
+</data>
+	<data name="Parts_Details_AssetUsageSummary_Subtitle" xml:space="preserve">
+  <value>Dónde se utiliza este repuesto en sus activos.</value>
+</data>
+	<data name="Parts_Details_Label_Assets" xml:space="preserve">
+  <value>activos</value>
+</data>
+	<data name="Parts_Details_Label_TotalUnitsAcrossBoms" xml:space="preserve">
+  <value>unidades totales en las listas de materiales</value>
+</data>
+
+	<data name="Parts_Details_Card_AssetsUsing_Title" xml:space="preserve">
+  <value>Activos que usan este repuesto</value>
+</data>
+	<data name="Parts_Details_Card_AssetsUsing_Subtitle" xml:space="preserve">
+  <value>Activos únicos que requieren este repuesto en su lista de materiales.</value>
+</data>
+	<data name="Parts_Details_Card_TotalBomQty_Title" xml:space="preserve">
+  <value>Cantidad total en listas de materiales</value>
+</data>
+	<data name="Parts_Details_Card_TotalBomQty_Subtitle" xml:space="preserve">
+  <value>Suma de la cantidad por activo en todos los vínculos de BOM.</value>
+</data>
+	<data name="Parts_Details_Card_TopWorkCenters_Title" xml:space="preserve">
+  <value>Centros de trabajo principales</value>
+</data>
+	<data name="Parts_Details_Card_TopWorkCenters_None" xml:space="preserve">
+  <value>No hay información de centro de trabajo disponible.</value>
+</data>
+
+	<data name="Parts_Details_Section_InventoryByLocation" xml:space="preserve">
+  <value>Inventario por ubicación</value>
+</data>
+	<data name="Parts_Details_Badge_Records" xml:space="preserve">
+  <value>registros</value>
+</data>
+	<data name="Parts_Details_Button_AddInventory" xml:space="preserve">
+  <value>Agregar inventario</value>
+</data>
+	<data name="Parts_Details_Inventory_Empty" xml:space="preserve">
+  <value>No hay registros de inventario para este repuesto.</value>
+</data>
+	<data name="Parts_Details_Inventory_Col_Location" xml:space="preserve">
+  <value>Ubicación</value>
+</data>
+	<data name="Parts_Details_Inventory_Col_Site" xml:space="preserve">
+  <value>Sitio</value>
+</data>
+	<data name="Parts_Details_Inventory_Col_OnHand" xml:space="preserve">
+  <value>En existencia</value>
+</data>
+	<data name="Parts_Details_Inventory_Col_ReorderPoint" xml:space="preserve">
+  <value>Punto de reorden</value>
+</data>
+	<data name="Parts_Details_Inventory_Col_TargetQty" xml:space="preserve">
+  <value>Cantidad objetivo</value>
+</data>
+
+	<data name="Parts_Details_Section_UsedOnAssets" xml:space="preserve">
+  <value>Usado en activos (BOM)</value>
+</data>
+	<data name="Parts_Details_Button_AddBomItem" xml:space="preserve">
+  <value>Agregar elemento de BOM</value>
+</data>
+	<data name="Parts_Details_Bom_Empty" xml:space="preserve">
+  <value>Este repuesto aún no está vinculado a ningún activo.</value>
+</data>
+	<data name="Parts_Details_Bom_Col_AssetCode" xml:space="preserve">
+  <value>Código de activo</value>
+</data>
+	<data name="Parts_Details_Bom_Col_AssetName" xml:space="preserve">
+  <value>Nombre del activo</value>
+</data>
+	<data name="Parts_Details_Bom_Col_WorkCenter" xml:space="preserve">
+  <value>Centro de trabajo</value>
+</data>
+	<data name="Parts_Details_Bom_Col_QtyPerAsset" xml:space="preserve">
+  <value>Cant. por activo</value>
+</data>
+
+	<data name="Parts_Details_Similar_Title" xml:space="preserve">
+  <value>Repuestos similares</value>
+</data>
+	<data name="Parts_Details_Similar_Subtitle" xml:space="preserve">
+  <value>Otros repuestos con fabricante o descripción similar.</value>
+</data>
+	<data name="Parts_Details_Similar_Badge_Suggestions" xml:space="preserve">
+  <value>sugerencias</value>
+</data>
+	<data name="Parts_Details_Similar_Col_PartNumber" xml:space="preserve">
+  <value>N.º de pieza</value>
+</data>
+	<data name="Parts_Details_Similar_Col_Description" xml:space="preserve">
+  <value>Descripción</value>
+</data>
+	<data name="Parts_Details_Similar_Col_Manufacturer" xml:space="preserve">
+  <value>Fabricante</value>
+</data>
+	<data name="Parts_Details_Similar_Col_Status" xml:space="preserve">
+  <value>Estado</value>
+</data>
+
+	<data name="Parts_Common_Button_View" xml:space="preserve">
+  <value>Ver</value>
+</data>
+	<data name="Parts_Common_Button_Edit" xml:space="preserve">
+  <value>Editar</value>
+</data>
+
+
+	<data name="Parts_Create_Title" xml:space="preserve">
+  <value>Nuevo repuesto</value>
+</data>
+	<data name="Parts_Create_Breadcrumb_BackToParts" xml:space="preserve">
+  <value>Volver a repuestos</value>
+</data>
+	<data name="Parts_Create_Header_WizardTitle" xml:space="preserve">
+  <value>Asistente de creación de repuestos</value>
+</data>
+	<data name="Parts_Create_Header_NewPart" xml:space="preserve">
+  <value>Nuevo repuesto</value>
+</data>
+
+	<data name="Parts_Create_Step1_Label" xml:space="preserve">
+  <value>1. Información básica</value>
+</data>
+	<data name="Parts_Create_Step2_Label" xml:space="preserve">
+  <value>2. Fabricante</value>
+</data>
+	<data name="Parts_Create_Step3_Label" xml:space="preserve">
+  <value>3. Revisar y guardar</value>
+</data>
+
+	<data name="Parts_Create_Step1_Title" xml:space="preserve">
+  <value>Paso 1 – Información básica</value>
+</data>
+	<data name="Parts_Create_Step1_Intro" xml:space="preserve">
+  <value>Empiece definiendo la identidad principal de este repuesto.</value>
+</data>
+
+	<data name="Parts_Create_Step2_Title" xml:space="preserve">
+  <value>Paso 2 – Detalles del fabricante</value>
+</data>
+	<data name="Parts_Create_Step2_Intro" xml:space="preserve">
+  <value>Capture de dónde proviene este repuesto y si está activo en su catálogo.</value>
+</data>
+	<data name="Parts_Create_IsActive_Label" xml:space="preserve">
+  <value>Activo en el catálogo</value>
+</data>
+
+	<data name="Parts_Create_Step3_Title" xml:space="preserve">
+  <value>Paso 3 – Revisar y guardar</value>
+</data>
+	<data name="Parts_Create_Step3_Intro" xml:space="preserve">
+  <value>Confirme los detalles antes de crear este repuesto. Podrá agregar inventario y vínculos de BOM desde la pantalla de detalles del repuesto.</value>
+</data>
+
+	<data name="Parts_Create_Review_BasicInfo" xml:space="preserve">
+  <value>Información básica</value>
+</data>
+	<data name="Parts_Create_Review_PartNumber" xml:space="preserve">
+  <value>N.º de pieza</value>
+</data>
+	<data name="Parts_Create_Review_ShortDescription" xml:space="preserve">
+  <value>Descripción corta</value>
+</data>
+	<data name="Parts_Create_Review_LongDescription" xml:space="preserve">
+  <value>Descripción larga</value>
+</data>
+
+	<data name="Parts_Create_Review_ManufacturerSection" xml:space="preserve">
+  <value>Fabricante</value>
+</data>
+	<data name="Parts_Create_Review_Manufacturer" xml:space="preserve">
+  <value>Fabricante</value>
+</data>
+	<data name="Parts_Create_Review_MfgPart" xml:space="preserve">
+  <value>N.º de parte del fabricante</value>
+</data>
+	<data name="Parts_Create_Review_Status" xml:space="preserve">
+  <value>Estado</value>
+</data>
+
+	<data name="Parts_Create_InfoPanel_Intro" xml:space="preserve">
+  <value>Después de guardar, podrá:</value>
+</data>
+	<data name="Parts_Create_InfoPanel_Item_AddInventory" xml:space="preserve">
+  <value>Agregar ubicaciones de inventario y niveles de stock.</value>
+</data>
+	<data name="Parts_Create_InfoPanel_Item_LinkBom" xml:space="preserve">
+  <value>Vincular este repuesto a activos mediante la BOM.</value>
+</data>
+	<data name="Parts_Create_InfoPanel_Item_Enhance" xml:space="preserve">
+  <value>Usar el botón Mejorar para generar una descripción con IA.</value>
+</data>
+
+	<data name="Parts_Create_Button_Back" xml:space="preserve">
+  <value>Atrás</value>
+</data>
+	<data name="Parts_Create_Button_Next" xml:space="preserve">
+  <value>Siguiente</value>
+</data>
+	<data name="Parts_Create_Button_CreatePart" xml:space="preserve">
+  <value>Crear repuesto</value>
+</data>
+
+	<data name="Parts_Create_Review_NotSet" xml:space="preserve">
+  <value>(sin definir)</value>
+</data>
+	<data name="Parts_Create_Validation_PartNumberRequired" xml:space="preserve">
+  <value>El número de pieza es obligatorio.</value>
+</data>
+	<data name="Maint_Details_Button_AskAiFix" xml:space="preserve">
+  <value>Pedir a la IA sugerencias de reparación</value>
+</data>
+
+
+	<data name="Maint_System_StatusChanged">
+		<value>Estado cambiado de {0} a {1} por {2}</value>
+	</data>
+
+	<data name="Maint_System_PriorityChanged">
+		<value>Prioridad cambiada de {0} a {1} por {2}</value>
+	</data>
+
+	<data name="Maint_System_Resolved">
+		<value>Estado cambiado de {0} a Resuelto por {1}</value>
+	</data>
+	<data name="Maint_Suggestion_StopIfUnsafe" xml:space="preserve">
+  <value>Detén el equipo si no es seguro operarlo y comunica el problema de inmediato.</value>
+</data>
+	<data name="Maint_Suggestion_ConfirmSymptoms" xml:space="preserve">
+  <value>Confirma los síntomas (sonidos, olores, mensajes de error) y actualiza la descripción si es necesario.</value>
+</data>
+	<data name="Maint_Suggestion_VerifyParts" xml:space="preserve">
+  <value>Verifica que las piezas necesarias estén correctamente especificadas y pedidas, y planifica la ventana de reparación.</value>
+</data>
+	<data name="Maint_Suggestion_ReviewHistory" xml:space="preserve">
+  <value>Revisa el historial reciente de mantenimiento en este centro de trabajo para detectar patrones repetitivos.</value>
+</data>
+	<data name="Maint_Suggestion_CheckElectrical" xml:space="preserve">
+  <value>Inspecciona la alimentación y los sensores para encontrar cables flojos o dañados antes de realizar diagnósticos más profundos.</value>
+</data>
+	<data name="Maint_Suggestion_FallbackChecklist" xml:space="preserve">
+  <value>Sigue la lista básica de comprobaciones de este equipo y registra los hallazgos.</value>
+</data>
+
+
+	<data name="AiHelp_Tooltip" xml:space="preserve">
+    <value>Ayuda de IA</value>
+  </data>
+	<data name="AiHelp_Title" xml:space="preserve">
+    <value>¿Necesitas ayuda?</value>
+  </data>
+	<data name="AiHelp_ExplainScreen" xml:space="preserve">
+    <value>Explicar esta pantalla</value>
+  </data>
+	<data name="AiHelp_ExplainFields" xml:space="preserve">
+    <value>Explicar cada campo</value>
+  </data>
+	<data name="AiHelp_ShowExamples" xml:space="preserve">
+    <value>Muéstrame ejemplos</value>
+  </data>
+	<data name="AiHelp_WhatFirst" xml:space="preserve">
+    <value>¿Qué hago primero?</value>
+  </data>
+	<data name="AiHelp_Thinking" xml:space="preserve">
+    <value>Pensando…</value>
+  </data>
+	<data name="AiHelp_Error" xml:space="preserve">
+    <value>Lo siento, no pude generar ayuda en este momento.</value>
+  </data>
+
+	<data name="Maint_Priority_Low" xml:space="preserve">
+  <value>Baja</value>
+</data>
+	<data name="Maint_Priority_Medium" xml:space="preserve">
+  <value>Media</value>
+</data>
+	<data name="Maint_Priority_High" xml:space="preserve">
+  <value>Alta</value>
+</data>
+</root>
