@@ -52,19 +52,17 @@ public class DemoUserController : Controller
 
 
 
-    // Helper to switch into a demo account without typing the password
-    // /DemoUser/Switch?email=supervisor@sentinel-demo.local
+    // POST /DemoUser/Switch  — fresh session (called from login page or marketing site)
     [HttpPost]
-    public async Task<IActionResult> Switch(string email, string? returnUrl = null)
+    public async Task<IActionResult> Switch(string role, string? returnUrl = null)
     {
-        if (string.IsNullOrWhiteSpace(email))
+        if (string.IsNullOrWhiteSpace(role))
             return RedirectToAction("Login", "Account");
 
-        // All demo accounts currently use password "demo"
-        var user = _demoUserProvider.ValidateUser(email, "sentineldemo");
+        var user = _demoUserProvider.GetByRole(role);
         if (user is null)
         {
-            TempData["Error"] = "Unknown demo user.";
+            TempData["Error"] = "Unknown demo role.";
             return RedirectToAction("Login", "Account");
         }
 
@@ -72,27 +70,47 @@ public class DemoUserController : Controller
         await DbInitializer.PurgeExpiredDemoTenantsAsync(_db, TimeSpan.FromHours(2));
         var tenantId = await DbInitializer.SeedDemoSessionAsync(_db);
 
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.Email),
-            new Claim(ClaimTypes.Role, user.Role),
-            new Claim("tenant_id", tenantId.ToString())
-        };
-
-        var identity = new ClaimsIdentity(
-            claims,
-            IdentityConstants.ApplicationScheme);
-
-        var principal = new ClaimsPrincipal(identity);
-
-        await HttpContext.SignInAsync(
-            IdentityConstants.ApplicationScheme,
-            principal);
+        await SignInDemoUser(user, tenantId.ToString());
 
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             return Redirect(returnUrl);
 
-        // Default: bounce to Maintenance dashboard
         return RedirectToAction("Index", "Maintenance");
+    }
+
+    // POST /DemoUser/SwitchRole — changes role within the same demo tenant (no reseed)
+    [HttpPost]
+    public async Task<IActionResult> SwitchRole(string role, string? returnUrl = null)
+    {
+        // Must already be an active demo session
+        var tenantIdRaw = User.FindFirstValue("tenant_id");
+        if (!User.HasClaim("is_demo", "true") || string.IsNullOrEmpty(tenantIdRaw))
+            return RedirectToAction("Login", "Account");
+
+        var user = _demoUserProvider.GetByRole(role);
+        if (user is null)
+            return RedirectToAction("Index", "Maintenance");
+
+        await SignInDemoUser(user, tenantIdRaw);
+
+        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            return Redirect(returnUrl);
+
+        return RedirectToAction("Index", "Maintenance");
+    }
+
+    private async Task SignInDemoUser(DemoUser user, string tenantId)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.Email),
+            new Claim(ClaimTypes.Role, user.Role),
+            new Claim("tenant_id", tenantId),
+            new Claim("is_demo", "true")
+        };
+
+        await HttpContext.SignInAsync(
+            IdentityConstants.ApplicationScheme,
+            new ClaimsPrincipal(new ClaimsIdentity(claims, IdentityConstants.ApplicationScheme)));
     }
 }

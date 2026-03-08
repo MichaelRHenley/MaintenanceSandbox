@@ -36,10 +36,14 @@
                 </div>
             </div>
 
-            <div class="text-muted small mt-2">
-                @SR["Auth_Login_Try"]
-                <div>@SR["Auth_Login_DemoSupervisor"]</div>
-                <div>@SR["Auth_Login_DemoOperator"]</div>
+            <div class="text-center mt-3">
+                <form method="post" asp-controller="DemoUser" asp-action="Switch">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="role" value="Supervisor" />
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">
+                        Try Demo
+                    </button>
+                </form>
             </div>
         </div>
     </div>

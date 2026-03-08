@@ -1824,3 +1824,10 @@ body > .container-fluid:first-of-type {
         border-color: rgba(255, 255, 255, 0.25);
         color: #e5e7eb;
     }
+
+    .sentinel-signout-btn.active {
+        background: rgba(56, 189, 248, 0.15);
+        border-color: rgba(56, 189, 248, 0.5);
+        color: #7dd3fc;
+        font-weight: 600;
+    }

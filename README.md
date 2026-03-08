@@ -89,10 +89,10 @@ Point a "Try the Demo" button on your marketing site at:
 
 ```
 POST https://<app-url>/DemoUser/Switch
-email=supervisor@sentinel-demo.local
+role=Supervisor
 ```
 
-This endpoint is `[AllowAnonymous]` and signs the visitor directly into the Maintenance dashboard as a Supervisor with a fresh isolated tenant. No registration or password required.
+This endpoint is `[AllowAnonymous]` and signs the visitor directly into the Maintenance dashboard with a fresh isolated tenant. No registration or password required. Use `role=Operator` for the operator perspective.
 
 ### Demo Accounts
 Both accounts are defined in `Services/DemoUserProvider.cs` and bypass Identity completely.

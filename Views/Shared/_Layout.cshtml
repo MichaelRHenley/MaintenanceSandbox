@@ -124,6 +124,7 @@
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
                             var roleClaim = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? "User";
+                            var isDemo = User.HasClaim("is_demo", "true");
 
                             string? roleKey = roleClaim switch
                             {
@@ -136,14 +137,35 @@
 
                             var localizedRole = roleKey is null ? roleClaim : SR[roleKey];
 
-                            <div class="sentinel-user-pill d-flex align-items-center gap-2">
-                                <span class="sentinel-user-name">@User.Identity!.Name</span>
-                                <span class="sentinel-role-badge">@localizedRole</span>
-                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="sentinel-signout-btn">Sign out</button>
-                                </form>
-                            </div>
+                            @if (isDemo)
+                            {
+                                <div class="sentinel-user-pill d-flex align-items-center gap-2">
+                                    <span class="sentinel-role-badge">Demo</span>
+                                    <form asp-controller="DemoUser" asp-action="SwitchRole" method="post" class="d-flex gap-1">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                                        <button type="submit" name="role" value="Supervisor"
+                                                class="sentinel-signout-btn @(roleClaim == "Supervisor" ? "active" : "")">
+                                            Supervisor
+                                        </button>
+                                        <button type="submit" name="role" value="Operator"
+                                                class="sentinel-signout-btn @(roleClaim == "Operator" ? "active" : "")">
+                                            Operator
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="sentinel-user-pill d-flex align-items-center gap-2">
+                                    <span class="sentinel-user-name">@User.Identity!.Name</span>
+                                    <span class="sentinel-role-badge">@localizedRole</span>
+                                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="sentinel-signout-btn">Sign out</button>
+                                    </form>
+                                </div>
+                            }
                         }
                         else
                         {

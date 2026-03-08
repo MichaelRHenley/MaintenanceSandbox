@@ -41,6 +41,9 @@ namespace MaintenanceSandbox.Services
                 u.Password == password);
         }
 
+        public DemoUser? GetByRole(string role) =>
+            _users.FirstOrDefault(u => string.Equals(u.Role, role, StringComparison.OrdinalIgnoreCase));
+
         public DemoUser CurrentUser
         {
             get
