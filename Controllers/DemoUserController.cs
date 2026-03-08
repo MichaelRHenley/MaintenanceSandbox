@@ -68,8 +68,9 @@ public class DemoUserController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        var tenant = await _db.Tenants.FirstOrDefaultAsync(t => t.Name == DbInitializer.SandboxTenantName);
-        var tenantId = tenant?.Id ?? DbInitializer.SandboxTenantId;
+        // Purge stale sessions then spin up a fresh isolated tenant for this visitor.
+        await DbInitializer.PurgeExpiredDemoTenantsAsync(_db, TimeSpan.FromHours(2));
+        var tenantId = await DbInitializer.SeedDemoSessionAsync(_db);
 
         var claims = new List<Claim>
         {

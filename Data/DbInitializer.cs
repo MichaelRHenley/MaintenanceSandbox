@@ -15,29 +15,112 @@ public static class DbInitializer
     internal const string SandboxTenantName = "Sandbox Tenant";
     private const string SandboxDomain = "sandbox.sentinel.local";
     private const string SandboxPlanTier = "Standard";
+    public const string DemoPlanTier = "Demo";
 
     public static async Task SeedAsync(AppDbContext db)
     {
-        // 1) Tenant is the source of truth (Tenant is NOT tenant-filtered)
+        // 1) Tenant
         var tenant = await GetOrCreateTenantAsync(db, SandboxTenantName, SandboxDomain, SandboxPlanTier);
         var tenantId = tenant.Id;
 
-        // 2) Master data (tenant-scoped; idempotent)
+        // 2) Master data (idempotent)
         await EnsureMasterDataAsync(db, tenantId);
 
-        // 3) Reset sandbox operational data only (tenant-scoped)
+        // 3) Reset + regenerate operational data
         await ResetSandboxRequestsAsync(db, tenantId);
+        await SeedRequestsAsync(db, tenantId, randomSeed: 12345);
+    }
 
-        // 4) Tenant-scoped lists for faker
+    // Creates a fully isolated tenant + data for one demo session.
+    // Returns the new tenant ID to embed in the session claims.
+    public static async Task<Guid> SeedDemoSessionAsync(AppDbContext db)
+    {
+        var tenantId = Guid.NewGuid();
+        // Encode creation time in the name so we can age-check without a schema change.
+        var epochSecs = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        var tenantName = $"demo-{epochSecs}-{tenantId:N}";
+
+        db.Tenants.Add(new Tenant
+        {
+            Id = tenantId,
+            Name = tenantName,
+            Domain = null,
+            PlanTier = DemoPlanTier,
+            IsActive = true
+        });
+        await db.SaveChangesAsync();
+
+        await EnsureMasterDataAsync(db, tenantId);
+        await SeedRequestsAsync(db, tenantId, randomSeed: Math.Abs(tenantId.GetHashCode()));
+
+        return tenantId;
+    }
+
+    // Deletes demo tenants (and all their data) older than maxAge.
+    public static async Task PurgeExpiredDemoTenantsAsync(AppDbContext db, TimeSpan maxAge)
+    {
+        var cutoffSecs = DateTimeOffset.UtcNow.Subtract(maxAge).ToUnixTimeSeconds();
+
+        var demoTenants = await db.Tenants
+            .Where(t => t.PlanTier == DemoPlanTier)
+            .ToListAsync();
+
+        var expiredIds = demoTenants
+            .Where(t =>
+            {
+                var parts = t.Name.Split('-');
+                return parts.Length >= 2 && long.TryParse(parts[1], out var secs) && secs < cutoffSecs;
+            })
+            .Select(t => t.Id)
+            .ToList();
+
+        if (expiredIds.Count == 0) return;
+
+        foreach (var tid in expiredIds)
+        {
+            var reqIds = await db.MaintenanceRequests
+                .IgnoreQueryFilters()
+                .Where(r => r.TenantId == tid)
+                .Select(r => r.Id)
+                .ToListAsync();
+
+            if (reqIds.Count > 0)
+            {
+                db.MaintenanceMessages.RemoveRange(
+                    db.MaintenanceMessages.IgnoreQueryFilters()
+                        .Where(m => reqIds.Contains(m.MaintenanceRequestId)));
+                db.MaintenanceRequests.RemoveRange(
+                    db.MaintenanceRequests.IgnoreQueryFilters()
+                        .Where(r => reqIds.Contains(r.Id)));
+                await db.SaveChangesAsync();
+            }
+
+            db.Equipment.RemoveRange(db.Equipment.IgnoreQueryFilters().Where(e => e.TenantId == tid));
+            db.WorkCenters.RemoveRange(db.WorkCenters.IgnoreQueryFilters().Where(w => w.TenantId == tid));
+            db.Areas.RemoveRange(db.Areas.IgnoreQueryFilters().Where(a => a.TenantId == tid));
+            db.Sites.RemoveRange(db.Sites.IgnoreQueryFilters().Where(s => s.TenantId == tid));
+            await db.SaveChangesAsync();
+
+            var tenant = await db.Tenants.FindAsync(tid);
+            if (tenant != null) db.Tenants.Remove(tenant);
+            await db.SaveChangesAsync();
+        }
+    }
+
+    // ============================================================
+    // REQUEST GENERATION (shared by SeedAsync and SeedDemoSessionAsync)
+    // ============================================================
+    private static async Task SeedRequestsAsync(AppDbContext db, Guid tenantId, int randomSeed)
+    {
         var workCenters = await db.WorkCenters
             .AsNoTracking()
-            .IgnoreQueryFilters() // explicit because seeding often runs without tenant provider being set
+            .IgnoreQueryFilters()
             .Where(wc => wc.TenantId == tenantId)
             .Select(wc => new { wc.Id, wc.Code })
             .ToListAsync();
 
         if (workCenters.Count == 0)
-            throw new Exception("No WorkCenters found for sandbox tenant. Ensure master data seeding ran.");
+            throw new Exception($"No WorkCenters found for tenant {tenantId}. Ensure master data seeding ran.");
 
         var equipments = await db.Equipment
             .AsNoTracking()
@@ -47,14 +130,13 @@ public static class DbInitializer
             .ToListAsync();
 
         if (equipments.Count == 0)
-            throw new Exception("No Equipment found for sandbox tenant. Ensure master data seeding ran.");
+            throw new Exception($"No Equipment found for tenant {tenantId}. Ensure master data seeding ran.");
 
-        // 5) Generate demo requests/messages
         var statuses = new[] { "New", "In Progress", "Waiting on Parts", "Resolved", "Closed" };
         var priorities = new[] { "Low", "Medium", "High" };
 
-        Randomizer.Seed = new Random(12345);
-        var rand = new Random(12345);
+        Randomizer.Seed = new Random(randomSeed);
+        var rand = new Random(randomSeed);
 
         var requestFaker = new Faker<MaintenanceRequest>("en")
             .RuleFor(r => r.TenantId, _ => tenantId)
@@ -80,14 +162,11 @@ public static class DbInitializer
 
         foreach (var req in requests)
         {
-            var count = rand.Next(0, 4); // 0–3 messages
+            var count = rand.Next(0, 4);
             for (int i = 0; i < count; i++)
             {
                 var msg = messageFaker.Generate();
-
-                // If your MaintenanceMessage inherits TenantEntity or has TenantId, set it.
                 TrySetTenantId(msg, tenantId);
-
                 req.Messages.Add(msg);
             }
         }

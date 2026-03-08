@@ -3,6 +3,7 @@ using MaintenanceSandbox.Directory.Models;
 using MaintenanceSandbox.Directory.Models.Tenants;
 using MaintenanceSandbox.Directory.Models.ViewModels;
 using MaintenanceSandbox.Directory.Services;
+using MaintenanceSandbox.Filters;
 using MaintenanceSandbox.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -49,6 +50,7 @@ public sealed class TenantUserInvitesController : Controller
     // POST: /TenantUserInvites/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [ServiceFilter(typeof(BlockDemoFilter))]
     public async Task<IActionResult> Create(string email, string role)
 
     {

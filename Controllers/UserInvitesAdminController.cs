@@ -2,6 +2,7 @@
 using MaintenanceSandbox.Directory.Models;
 using MaintenanceSandbox.Directory.Models.Tenants;
 using MaintenanceSandbox.Directory.Services;
+using MaintenanceSandbox.Filters;
 using MaintenanceSandbox.Services;
 using MaintenanceSandbox.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
@@ -41,6 +42,7 @@ public sealed class UserInvitesAdminController : Controller
     }
 
     [HttpGet]
+    [ServiceFilter(typeof(BlockDemoFilter))]
     public async Task<IActionResult> Invite()
     {
         var vm = new InviteUserVm
@@ -52,6 +54,7 @@ public sealed class UserInvitesAdminController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [ServiceFilter(typeof(BlockDemoFilter))]
     public async Task<IActionResult> Invite(InviteUserVm vm)
     {
         vm.RoleOptions = await GetRoleOptionsAsync();

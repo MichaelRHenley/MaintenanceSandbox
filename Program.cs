@@ -114,6 +114,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 builder.Services.AddScoped<RequireTenantFilter>();
+builder.Services.AddScoped<MaintenanceSandbox.Filters.BlockDemoFilter>();
 
 
 
@@ -176,6 +177,7 @@ using (var scope = app.Services.CreateScope())
     // Business DB - skip migration, database already exists on Azure
     var businessDb = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     // businessDb.Database.Migrate(); // Commented out - Azure DB already exists
+    DbInitializer.PurgeExpiredDemoTenantsAsync(businessDb, TimeSpan.FromHours(2)).GetAwaiter().GetResult();
     DbInitializer.SeedAsync(businessDb).GetAwaiter().GetResult();
 
     // Directory DB - skip migration, database already exists on Azure

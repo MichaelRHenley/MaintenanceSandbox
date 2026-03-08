@@ -1,4 +1,5 @@
 ﻿using MaintenanceSandbox.Directory.Models;
+using MaintenanceSandbox.Filters;
 using MaintenanceSandbox.Services;
 using MaintenanceSandbox.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
@@ -53,6 +54,7 @@ public sealed class UsersAdminController : Controller
     }
 
     [HttpGet]
+    [ServiceFilter(typeof(BlockDemoFilter))]
     public async Task<IActionResult> Create()
     {
         var vm = new CreateUserVm
@@ -64,6 +66,7 @@ public sealed class UsersAdminController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [ServiceFilter(typeof(BlockDemoFilter))]
     public async Task<IActionResult> Create(CreateUserVm vm)
     {
         vm.RoleOptions = await GetRoleOptionsAsync();

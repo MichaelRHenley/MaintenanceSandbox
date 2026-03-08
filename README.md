@@ -1,6 +1,6 @@
 # Maintenance Sandbox - Multi-Tenant SaaS Application
 
-ASP.NET Core 8 Razor Pages application for managing maintenance requests with multi-tenant support, Azure SQL integration, and AI-powered assistance.
+ASP.NET Core 8 MVC application for managing maintenance requests with multi-tenant support, Azure SQL integration, AI-powered assistance, and a fully isolated demo mode.
 
 ## Architecture
 
@@ -22,12 +22,13 @@ ASP.NET Core 8 Razor Pages application for managing maintenance requests with mu
 - **AI Integration**: Claude AI for maintenance suggestions
 - **Onboarding Flow**: Guided tenant provisioning and user setup
 - **Subscription Management**: Stripe integration (pilot mode available)
+- **Demo Mode**: Per-session isolated tenants with auto-seeded data and auto-purge
 
 ## Prerequisites
 - .NET 8 SDK
 - Azure SQL Database access
 - Azure Entra ID authentication
-- Visual Studio 2022 or VS Code
+- Visual Studio 2022+ or VS Code
 - Azure CLI (optional, for management)
 
 ## Setup
@@ -57,11 +58,6 @@ dotnet user-secrets set "Ai:ApiKey" "<your-anthropic-api-key>"
 dotnet restore
 ```
 
-**Required for Azure AD Authentication:**
-```bash
-dotnet add package Azure.Identity
-```
-
 ### 4. Database Setup
 
 #### Azure SQL Firewall
@@ -69,18 +65,8 @@ dotnet add package Azure.Identity
 2. Click **Add your client IPv4 address**
 3. Save changes
 
-#### Sync Tenant Across Databases
-The demo data uses tenant `5EFA6386-80F0-4565-87D2-5170079B6BE0`. Ensure this exists in both databases:
-
-**On SentinelMfgSuite_Identity:**
-```sql
--- Add Sandbox Tenant
-INSERT INTO dbo.Tenants (Id, Name, Status, CreatedUtc)
-VALUES ('5EFA6386-80F0-4565-87D2-5170079B6BE0', 'Sandbox Tenant', 1, GETUTCDATE());
-```
-
-**On SentinelMfgSuite_Core:**
-The tenant is auto-created by `DbInitializer.SeedAsync()` on first run.
+#### Sandbox Tenant
+The sandbox tenant (`5EFA6386-80F0-4565-87D2-5170079B6BE0`) is auto-created and seeded with demo data by `DbInitializer.SeedAsync()` on every app startup. No manual SQL required.
 
 ### 5. Run Application
 ```bash
@@ -89,29 +75,46 @@ dotnet run
 
 Or press **F5** in Visual Studio.
 
-## Demo Data Access
+## Demo Mode
 
-### Create a User
-1. Navigate to `/Identity/Account/Register`
-2. Create an account with any email/password
+### How It Works
+The app ships with a demo mode designed for public "Try Me" flows from a marketing site.
 
-### Link User to Demo Tenant
-Run this SQL on **SentinelMfgSuite_Identity**:
+- Every demo login creates a **brand-new isolated tenant** with its own fresh copy of seed data (40 maintenance requests, messages, master data).
+- No two demo sessions share data — concurrent visitors cannot interfere with each other.
+- Demo tenants are **auto-purged after 2 hours** (triggered on the next demo login and on app startup).
 
-```sql
-UPDATE AspNetUsers 
-SET TenantId = '5EFA6386-80F0-4565-87D2-5170079B6BE0'
-WHERE Email = 'your-email@example.com';
+### Marketing Site Integration
+Point a "Try the Demo" button on your marketing site at:
+
+```
+POST https://<app-url>/DemoUser/Switch
+email=supervisor@sentinel-demo.local
 ```
 
-### Login
-- Go to `/Identity/Account/Login`
-- Use your credentials
-- You'll now see demo data:
-  - 2 Sites (Site Alpha, Site Beta)
-  - 2 Work Centers (WC-001, WC-002)
-  - 4 Equipment items
-  - 40 Bogus maintenance requests with messages
+This endpoint is `[AllowAnonymous]` and signs the visitor directly into the Maintenance dashboard as a Supervisor with a fresh isolated tenant. No registration or password required.
+
+### Demo Accounts
+Both accounts are defined in `Services/DemoUserProvider.cs` and bypass Identity completely.
+
+| Email | Password | Role |
+|-------|----------|------|
+| `supervisor@sentinel-demo.local` | `sentineldemo` | Supervisor |
+| `operator@sentinel-demo.local` | `sentineldemo` | Operator |
+
+### Demo Restrictions
+Demo tenants are blocked from mutating user management via `Filters/BlockDemoFilter`:
+- `UsersAdmin/Create` (GET + POST)
+- `TenantUserInvites/Create` (POST)
+- `UserInvitesAdmin/Invite` (GET + POST)
+
+Any attempt redirects back to the Index with a `TempData["err"]` message.
+
+### Seeded Demo Data (per session)
+- 2 Sites (Site Alpha, Site Beta)
+- 2 Work Centers (WC-001, WC-002) under Area 1
+- 4 Equipment items
+- 40 randomised maintenance requests with 0–3 messages each
 
 ## Configuration
 
@@ -138,13 +141,6 @@ WHERE Email = 'your-email@example.com';
 }
 ```
 
-### Demo Users (Hardcoded - Dev Only)
-Located in `Services/DemoUserProvider.cs`:
-- **supervisor@sentinel-demo.local** / `demo`
-- **operator@sentinel-demo.local** / `demo`
-
-*Note: These do NOT use Identity database.*
-
 ## Project Structure
 
 ```
@@ -152,25 +148,28 @@ MaintenanceSandbox/
 ├── Areas/
 │   └── Identity/          # Scaffolded Identity pages
 ├── Controllers/           # MVC controllers
+│   ├── DemoUserController.cs   # Demo login + session switching
+│   └── UsersAdminController.cs # Blocked for demo tenants
 ├── Data/                  # Business DbContext
 │   ├── AppDbContext.cs
-│   └── DbInitializer.cs   # Seeds demo data
+│   └── DbInitializer.cs   # Seeds sandbox + per-session demo tenants
 ├── Directory/
 │   ├── Data/              # DirectoryDbContext
 │   ├── Models/            # ApplicationUser, Tenant
 │   └── Services/          # Tenant provisioning
+├── Filters/
+│   └── BlockDemoFilter.cs # Blocks mutating actions for demo tenants
 ├── Middleware/            # Subscription gate, etc.
 ├── Models/                # Business entities
 │   ├── MasterData/        # Sites, Equipment, WorkCenters
 │   └── MaintenanceRequest.cs
-├── Pages/                 # Razor Pages
 ├── Security/              # Tenant claims transformation
-├── Services/              # AI, Demo providers
+├── Services/              # AI, Demo providers, TenantProvider
 └── Program.cs             # App configuration
 ```
 
 ## Key Technologies
-- ASP.NET Core 8 (Razor Pages)
+- ASP.NET Core 8 (MVC + Razor Views)
 - Entity Framework Core 9
 - ASP.NET Core Identity
 - Azure SQL Database
@@ -186,15 +185,10 @@ MaintenanceSandbox/
 
 **Fix:** Use `Authentication=Active Directory Default` in connection strings (see Setup step 2).
 
-### "No data visible after login"
-**Cause:** User's `TenantId` doesn't match the demo tenant.
-
-**Fix:** Run SQL update command in "Link User to Demo Tenant" section.
-
 ### "Migrations conflict" on startup
 **Cause:** EF Core migration history out of sync with existing Azure SQL tables.
 
-**Fix:** In `Program.cs`, migrations are commented out:
+**Fix:** In `Program.cs`, migrations are intentionally commented out — the Azure databases already exist:
 ```csharp
 // businessDb.Database.Migrate(); // Commented out - Azure DB already exists
 ```
