@@ -107,37 +107,39 @@
                 <!-- LEFT COLUMN -->
                 <div class="col-lg-6">
 
-                    <dl class="row small">
-                        <dt class="col-4">@SR["Maint_Details_Label_Site"]</dt>
-                        <dd class="col-8">@Model.Site</dd>
+                    <div class="glass-card mb-3">
+                        <dl class="row small mb-0">
+                            <dt class="col-4">@SR["Maint_Details_Label_Site"]</dt>
+                            <dd class="col-8">@Model.Site</dd>
 
-                        <dt class="col-4">@SR["Maint_Details_Label_Area"]</dt>
-                        <dd class="col-8">@Model.Area</dd>
+                            <dt class="col-4">@SR["Maint_Details_Label_Area"]</dt>
+                            <dd class="col-8">@Model.Area</dd>
 
-                        <dt class="col-4">@SR["Maint_Details_Label_WorkCenter"]</dt>
-                        <dd class="col-8">@Model.WorkCenter</dd>
+                            <dt class="col-4">@SR["Maint_Details_Label_WorkCenter"]</dt>
+                            <dd class="col-8">@(Model.WorkCenter?.DisplayName ?? "-")</dd>
 
-                        <dt class="col-4">@SR["Maint_Details_Label_Equipment"]</dt>
-                        <dd class="col-8">@Model.Equipment</dd>
+                            <dt class="col-4">@SR["Maint_Details_Label_Equipment"]</dt>
+                            <dd class="col-8">@(Model.Equipment?.DisplayName ?? "-")</dd>
 
-                        <dt class="col-4">@SR["Maint_Details_Label_Status"]</dt>
-                        <dd class="col-8" data-role="status-value">@localizedStatus</dd>
+                            <dt class="col-4">@SR["Maint_Details_Label_Status"]</dt>
+                            <dd class="col-8" data-role="status-value">@localizedStatus</dd>
 
-                        <dt class="col-4">@SR["Maint_Details_Label_Priority"]</dt>
-                        <dd class="col-8" data-role="priority-value">@localizedPriority</dd>
+                            <dt class="col-4">@SR["Maint_Details_Label_Priority"]</dt>
+                            <dd class="col-8" data-role="priority-value">@localizedPriority</dd>
 
-                        <dt class="col-4">@SR["Maint_Details_Label_RequestedBy"]</dt>
-                        <dd class="col-8">@Model.RequestedBy</dd>
+                            <dt class="col-4">@SR["Maint_Details_Label_RequestedBy"]</dt>
+                            <dd class="col-8">@Model.RequestedBy</dd>
 
-                        <dt class="col-4">@SR["Maint_Details_Label_CreatedAt"]</dt>
-                        <dd class="col-8">@FormatDate(Model.CreatedAt)</dd>
+                            <dt class="col-4">@SR["Maint_Details_Label_CreatedAt"]</dt>
+                            <dd class="col-8">@FormatDate(Model.CreatedAt)</dd>
 
-                        @if (Model.ResolvedAt.HasValue)
-                        {
-                            <dt class="col-4">@SR["Maint_Details_Label_ResolvedAt"]</dt>
-                            <dd class="col-8">@FormatDate(Model.ResolvedAt.Value)</dd>
-                        }
-                    </dl>
+                            @if (Model.ResolvedAt.HasValue)
+                            {
+                                <dt class="col-4">@SR["Maint_Details_Label_ResolvedAt"]</dt>
+                                <dd class="col-8">@FormatDate(Model.ResolvedAt.Value)</dd>
+                            }
+                        </dl>
+                    </div>
 
                     <!-- WORKFLOW EDIT -->
                 @if (canEditStatus)
@@ -148,9 +150,9 @@
                     ?? Enumerable.Empty<SelectListItem>();
 
 
-                        <div class="border-top border-secondary pt-3 mt-2">
+                        <div class="glass-card glass-card--accent mt-3">
                             <div class="mb-2">
-                                <h6 class="text-uppercase small text-muted mb-1">
+                                <h6 class="glass-card-label mb-1">
                                     @SR["Maint_Details_Section_UpdateWorkflow"]
                                 </h6>
                                 <div class="small text-muted">
@@ -204,18 +206,20 @@
 
 
                     <!-- DESCRIPTION -->
-                    <h6 class="text-uppercase small text-muted mt-4">@SR["Maint_Details_Label_Description"]</h6>
-                    <p class="small">@Model.Description</p>
-                    <form asp-controller="Maintenance"
-                          asp-action="SuggestFix"
-                          method="post"
-                          class="mb-3">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="id" value="@Model.Id" />
-                    <button type="submit" class="btn btn-outline-info btn-sm">
-                        @SR["Maint_Details_Button_AskAiFix"]
-                    </button>
-                    </form>
+                    <div class="glass-card mt-3">
+                        <h6 class="glass-card-label">@SR["Maint_Details_Label_Description"]</h6>
+                        <p class="small mb-2">@Model.Description</p>
+                        <form asp-controller="Maintenance"
+                              asp-action="SuggestFix"
+                              method="post"
+                              class="mb-0">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@Model.Id" />
+                            <button type="submit" class="btn btn-outline-info btn-sm">
+                                @SR["Maint_Details_Button_AskAiFix"]
+                            </button>
+                        </form>
+                    </div>
                     @if (TempData["AiFixSuggestion"] is string aiFix && !string.IsNullOrWhiteSpace(aiFix))
                     {
                         <div class="card mt-2 border-warning">
@@ -268,39 +272,40 @@
 
                 <!-- RIGHT COLUMN -->
                 <div class="col-lg-6">
+                    <div class="glass-card d-flex flex-column">
+                        <h6 class="glass-card-label mb-2">
+                            @SR["Maint_Details_Section_Comments"]
+                        </h6>
 
-                    <h6 class="text-uppercase small text-muted">
-                        @SR["Maint_Details_Section_Comments"]
-                    </h6>
+                        <div id="typing-indicator-@Model.Id"
+                             class="typing-indicator small text-muted d-none mb-2">
+                        </div>
 
-                    <div id="typing-indicator-@Model.Id"
-                         class="typing-indicator small text-muted d-none mb-2">
+                        <div id="comments-container" class="mb-3 flex-grow-1">
+                            @await Html.PartialAsync("_CommentsList", Model)
+                        </div>
+
+                        <h6 class="glass-card-label mt-2 mb-1">
+                            @SR["Maint_Details_Label_NewComment"]
+                        </h6>
+
+                        <form asp-action="AddMessage" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="maintenanceRequestId" value="@Model.Id" />
+
+                            <textarea id="CommentText"
+                                      name="text"
+                                      class="form-control mb-2"
+                                      rows="3"
+                                      required></textarea>
+
+                            <input type="hidden" name="sender" value="@ViewBag.DemoUserName" />
+
+                            <button type="submit" class="btn btn-sentinel-primary btn-sm px-3">
+                                @SR["Maint_Details_Button_AddComment"]
+                            </button>
+                        </form>
                     </div>
-
-                    <div id="comments-container" class="mb-3">
-                        @await Html.PartialAsync("_CommentsList", Model)
-                    </div>
-
-                    <h6 class="text-uppercase small text-muted mb-1">
-                        @SR["Maint_Details_Label_NewComment"]
-                    </h6>
-
-                    <form asp-action="AddMessage" method="post">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="maintenanceRequestId" value="@Model.Id" />
-
-                        <textarea id="CommentText"
-                                  name="text"
-                                  class="form-control mb-2"
-                                  rows="3"
-                                  required></textarea>
-
-                        <input type="hidden" name="sender" value="@ViewBag.DemoUserName" />
-
-                        <button type="submit" class="btn btn-primary btn-sm px-3">
-                            @SR["Maint_Details_Button_AddComment"]
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>

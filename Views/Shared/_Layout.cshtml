@@ -113,62 +113,42 @@
                         </div>
 
                         <!-- 🔔 Sound toggle -->
-                        <div class="sentinel-user-pill" id="sound-toggle-pill">
-                            <button type="button"
-                                    id="sound-toggle-btn"
-                                    class="btn btn-outline-light btn-sm"
-                                    data-text-on="@SR["Nav_SoundOn"]"
-                                    data-text-off="@SR["Nav_SoundOff"]">
-                                🔊 @SR["Nav_SoundOn"]
-                            </button>
-                        </div>
-
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <div style="font-size:12px; opacity:.6">
-                                tenant_id claim: @User.FindFirst("tenant_id")?.Value
-                            </div>
-                        }
-
+                        <button type="button"
+                                id="sound-toggle-btn"
+                                class="sentinel-sound-btn"
+                                data-text-on="@SR["Nav_SoundOn"]"
+                                data-text-off="@SR["Nav_SoundOff"]">
+                            🔊 @SR["Nav_SoundOn"]
+                        </button>
 
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
                             var roleClaim = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? "User";
-                            var tenantId = User.FindFirst("TenantId")?.Value;
 
-                            // Map raw role claim → resource key
                             string? roleKey = roleClaim switch
                             {
                                 "Supervisor" => "Role_Supervisor",
                                 "Operator" => "Role_Operator",
                                 "MaintenanceManager" => "Role_MaintenanceManager",
-                                "Manager" => "Role_MaintenanceManager", // safety alias
+                                "Manager" => "Role_MaintenanceManager",
                                 _ => null
                             };
 
                             var localizedRole = roleKey is null ? roleClaim : SR[roleKey];
 
-                            <div class="sentinel-user-pill">
-                                <span>
-                                    @User.Identity!.Name (@localizedRole)
-                                    @if (!string.IsNullOrEmpty(tenantId))
-                                    {
-                                        <small class="ms-2 text-muted">
-                                            @SR["Layout_TenantLabel"] @tenantId
-                                        </small>
-                                    }
-                                </span>
-
-                                <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-outline-light">Sign out</button>
+                            <div class="sentinel-user-pill d-flex align-items-center gap-2">
+                                <span class="sentinel-user-name">@User.Identity!.Name</span>
+                                <span class="sentinel-role-badge">@localizedRole</span>
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="sentinel-signout-btn">Sign out</button>
                                 </form>
                             </div>
                         }
                         else
                         {
                             <div class="sentinel-user-pill">
-                                <a href="/Identity/Account/Login" class="btn btn-outline-light">Sign in</a>
-
+                                <a href="/Account/Login" class="sentinel-signout-btn">Sign in</a>
                             </div>
                         }
                     </div>

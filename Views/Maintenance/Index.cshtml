@@ -275,8 +275,8 @@
                             <div class="em-card-header mb-2">
                                 <div>
                                     <div class="em-card-title">
-                                        @r.WorkCenter · @r.Equipment
-                                    </div>
+                                                @(r.WorkCenter?.DisplayName ?? r.WorkCenter?.Code ?? "-") · @(r.Equipment?.DisplayName ?? r.Equipment?.Code ?? "-")
+                                            </div>
                                     <div class="em-card-meta">
                                         @r.Site · @r.Area · @r.CreatedAt.ToString("f", CultureInfo.CurrentUICulture)
                                     </div>
