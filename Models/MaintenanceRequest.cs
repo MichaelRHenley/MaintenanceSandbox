@@ -1,5 +1,7 @@
 ﻿using MaintenanceSandbox.Models.Base;
 using MaintenanceSandbox.Models.MasterData;
+using WorkCenter = MaintenanceSandbox.Models.MasterData.WorkCenter;
+using Equipment = MaintenanceSandbox.Models.MasterData.Equipment;
 
 namespace MaintenanceSandbox.Models;
 

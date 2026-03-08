@@ -1,10 +1,12 @@
 ﻿using System.Security.Claims;
+using MaintenanceSandbox.Data;
 using MaintenanceSandbox.Models;
 using MaintenanceSandbox.Services;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MaintenanceSandbox.Controllers;
 
@@ -12,10 +14,12 @@ namespace MaintenanceSandbox.Controllers;
 public class DemoUserController : Controller
 {
     private readonly IDemoUserProvider _demoUserProvider;
+    private readonly AppDbContext _db;
 
-    public DemoUserController(IDemoUserProvider demoUserProvider)
+    public DemoUserController(IDemoUserProvider demoUserProvider, AppDbContext db)
     {
         _demoUserProvider = demoUserProvider;
+        _db = db;
     }
 
     // Simple page that tells people what demo accounts exist
@@ -57,15 +61,15 @@ public class DemoUserController : Controller
             return RedirectToAction("Login", "Account");
 
         // All demo accounts currently use password "demo"
-        var user = _demoUserProvider.ValidateUser(email, "demo");
+        var user = _demoUserProvider.ValidateUser(email, "sentineldemo");
         if (user is null)
         {
             TempData["Error"] = "Unknown demo user.";
             return RedirectToAction("Login", "Account");
         }
 
-        // Same tenant as we use in AccountController
-        var tenantId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+        var tenant = await _db.Tenants.FirstOrDefaultAsync(t => t.Name == DbInitializer.SandboxTenantName);
+        var tenantId = tenant?.Id ?? DbInitializer.SandboxTenantId;
 
         var claims = new List<Claim>
         {
@@ -76,12 +80,12 @@ public class DemoUserController : Controller
 
         var identity = new ClaimsIdentity(
             claims,
-            CookieAuthenticationDefaults.AuthenticationScheme);
+            IdentityConstants.ApplicationScheme);
 
         var principal = new ClaimsPrincipal(identity);
 
         await HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
+            IdentityConstants.ApplicationScheme,
             principal);
 
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))

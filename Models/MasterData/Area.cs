@@ -1,8 +1,9 @@
 ﻿using MaintenanceSandbox.Models.Base;
-using MaintenanceSandbox.Models.MasterData;
 using System.ComponentModel.DataAnnotations;
 
-public class Area : TenantEntity
+namespace MaintenanceSandbox.Models.MasterData
+{
+    public class Area : TenantEntity
 {
     public int Id { get; set; }
 
@@ -13,5 +14,6 @@ public class Area : TenantEntity
     [Required, MaxLength(120)]
     public string Name { get; set; } = "";
 
-    public ICollection<WorkCenter> WorkCenters { get; set; } = new List<WorkCenter>();
+    public ICollection<MaintenanceSandbox.Models.MasterData.WorkCenter> WorkCenters { get; set; } = new List<MaintenanceSandbox.Models.MasterData.WorkCenter>();
+    }
 }

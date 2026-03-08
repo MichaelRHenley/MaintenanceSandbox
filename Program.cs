@@ -97,9 +97,9 @@ builder.Services
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // If you are using Identity UI scaffolding, use these:
-    options.LoginPath = "/Identity/Account/Login";
-    options.LogoutPath = "/Identity/Account/Logout";
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.AccessDeniedPath = "/Account/AccessDenied";
 
     options.SlidingExpiration = true;
 });
@@ -173,14 +173,14 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
 
-    // Business DB
+    // Business DB - skip migration, database already exists on Azure
     var businessDb = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    businessDb.Database.Migrate();
+    // businessDb.Database.Migrate(); // Commented out - Azure DB already exists
     DbInitializer.SeedAsync(businessDb).GetAwaiter().GetResult();
 
-    // Directory DB (Identity + Tenants/Subs)
+    // Directory DB - skip migration, database already exists on Azure
     var directoryDb = scope.ServiceProvider.GetRequiredService<DirectoryDbContext>();
-    directoryDb.Database.Migrate();
+    // directoryDb.Database.Migrate(); // Commented out - Azure DB already exists
 
     // Optional: seed demo tenant/user later via a seeder you control
     // DirectorySeeder.Seed(directoryDb, scope.ServiceProvider);

@@ -19,14 +19,14 @@ namespace MaintenanceSandbox.Services
             {
                 Name = "Supervisor",
                 Email = "supervisor@sentinel-demo.local",
-                Password = "demo",
+                Password = "sentineldemo",
                 Role = "Supervisor"
             },
             new DemoUser
             {
                 Name = "Operator",
                 Email = "operator@sentinel-demo.local",
-                Password = "demo",
+                Password = "sentineldemo",
                 Role = "Operator"
             }
         ];

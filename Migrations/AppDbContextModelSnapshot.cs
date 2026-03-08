@@ -22,44 +22,6 @@ namespace MaintenanceSandbox.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Area", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsOnboarded")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.Property<DateTimeOffset?>("OnboardedAtUtc")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("OnboardedByUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SiteId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SiteId");
-
-                    b.HasIndex("TenantId", "SiteId", "Name")
-                        .IsUnique();
-
-                    b.ToTable("Areas");
-                });
-
             modelBuilder.Entity("MaintenanceSandbox.Models.AppUser", b =>
                 {
                     b.Property<int>("Id")
@@ -364,6 +326,44 @@ namespace MaintenanceSandbox.Migrations
                     b.HasIndex("TenantId", "WorkCenterId");
 
                     b.ToTable("MaintenanceRequests");
+                });
+
+            modelBuilder.Entity("MaintenanceSandbox.Models.MasterData.Area", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsOnboarded")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<DateTimeOffset?>("OnboardedAtUtc")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("OnboardedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SiteId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SiteId");
+
+                    b.HasIndex("TenantId", "SiteId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("Areas");
                 });
 
             modelBuilder.Entity("MaintenanceSandbox.Models.MasterData.Equipment", b =>
@@ -776,17 +776,6 @@ namespace MaintenanceSandbox.Migrations
                     b.ToTable("TenantSite");
                 });
 
-            modelBuilder.Entity("Area", b =>
-                {
-                    b.HasOne("MaintenanceSandbox.Models.MasterData.Site", "Site")
-                        .WithMany("Areas")
-                        .HasForeignKey("SiteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Site");
-                });
-
             modelBuilder.Entity("MaintenanceSandbox.Models.BomItem", b =>
                 {
                     b.HasOne("MaintenanceSandbox.Models.Asset", "Asset")
@@ -854,6 +843,17 @@ namespace MaintenanceSandbox.Migrations
                     b.Navigation("WorkCenter");
                 });
 
+            modelBuilder.Entity("MaintenanceSandbox.Models.MasterData.Area", b =>
+                {
+                    b.HasOne("MaintenanceSandbox.Models.MasterData.Site", "Site")
+                        .WithMany("Areas")
+                        .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Site");
+                });
+
             modelBuilder.Entity("MaintenanceSandbox.Models.MasterData.Equipment", b =>
                 {
                     b.HasOne("MaintenanceSandbox.Models.MasterData.WorkCenter", "WorkCenter")
@@ -878,7 +878,7 @@ namespace MaintenanceSandbox.Migrations
 
             modelBuilder.Entity("MaintenanceSandbox.Models.MasterData.WorkCenter", b =>
                 {
-                    b.HasOne("Area", "Area")
+                    b.HasOne("MaintenanceSandbox.Models.MasterData.Area", "Area")
                         .WithMany("WorkCenters")
                         .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -898,11 +898,6 @@ namespace MaintenanceSandbox.Migrations
                     b.Navigation("Tenant");
                 });
 
-            modelBuilder.Entity("Area", b =>
-                {
-                    b.Navigation("WorkCenters");
-                });
-
             modelBuilder.Entity("MaintenanceSandbox.Models.Asset", b =>
                 {
                     b.Navigation("BomItems");
@@ -911,6 +906,11 @@ namespace MaintenanceSandbox.Migrations
             modelBuilder.Entity("MaintenanceSandbox.Models.MaintenanceRequest", b =>
                 {
                     b.Navigation("Messages");
+                });
+
+            modelBuilder.Entity("MaintenanceSandbox.Models.MasterData.Area", b =>
+                {
+                    b.Navigation("WorkCenters");
                 });
 
             modelBuilder.Entity("MaintenanceSandbox.Models.MasterData.Site", b =>

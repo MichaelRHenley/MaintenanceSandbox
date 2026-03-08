@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using MaintenanceSandbox.Models.Base;
 using MaintenanceSandbox.Models.Onboarding;
+using Area = MaintenanceSandbox.Models.MasterData.Area;
+using Site = MaintenanceSandbox.Models.MasterData.Site;
+using WorkCenter = MaintenanceSandbox.Models.MasterData.WorkCenter;
 
 
 namespace MaintenanceSandbox.Data;

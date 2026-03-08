@@ -9,7 +9,7 @@ namespace MaintenanceSandbox.Models.MasterData
 
         [Required]
         public int WorkCenterId { get; set; }
-        public WorkCenter WorkCenter { get; set; } = null!;
+        public MaintenanceSandbox.Models.MasterData.WorkCenter WorkCenter { get; set; } = null!;
 
         [Required, MaxLength(50)]
         public string Code { get; set; } = ""; // e.g., "EQ-1001"

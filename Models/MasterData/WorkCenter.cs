@@ -9,7 +9,7 @@ namespace MaintenanceSandbox.Models.MasterData
 
         [Required]
         public int AreaId { get; set; }
-        public Area Area { get; set; } = null!;
+        public MaintenanceSandbox.Models.MasterData.Area Area { get; set; } = null!;
 
         [Required, MaxLength(50)]
         public string Code { get; set; } = ""; // e.g., "WC-01"
@@ -17,6 +17,6 @@ namespace MaintenanceSandbox.Models.MasterData
         [MaxLength(200)]
         public string? DisplayName { get; set; } // e.g., "Packaging Line A"
 
-        public ICollection<Equipment> Equipment { get; set; } = new List<Equipment>();
+        public ICollection<MaintenanceSandbox.Models.MasterData.Equipment> Equipment { get; set; } = new List<MaintenanceSandbox.Models.MasterData.Equipment>();
     }
 }

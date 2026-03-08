@@ -1,8 +1,10 @@
-﻿using MaintenanceSandbox.Models;
+﻿using MaintenanceSandbox.Data;
+using MaintenanceSandbox.Models;
 using MaintenanceSandbox.Services;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace MaintenanceSandbox.Controllers;
@@ -10,10 +12,12 @@ namespace MaintenanceSandbox.Controllers;
 public class AccountController : Controller
 {
     private readonly IDemoUserProvider _demoUserProvider;
+    private readonly AppDbContext _db;
 
-    public AccountController(IDemoUserProvider demoUserProvider)
+    public AccountController(IDemoUserProvider demoUserProvider, AppDbContext db)
     {
         _demoUserProvider = demoUserProvider;
+        _db = db;
     }
 
     [HttpGet]
@@ -36,8 +40,8 @@ public class AccountController : Controller
             return View(model);
         }
 
-        // For now, one hard-coded tenant for the demo
-        var tenantId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+        var tenant = await _db.Tenants.FirstOrDefaultAsync(t => t.Name == DbInitializer.SandboxTenantName);
+        var tenantId = tenant?.Id ?? DbInitializer.SandboxTenantId;
 
         var claims = new List<Claim>
         {
@@ -48,12 +52,12 @@ public class AccountController : Controller
 
         var identity = new ClaimsIdentity(
             claims,
-            CookieAuthenticationDefaults.AuthenticationScheme);
+            IdentityConstants.ApplicationScheme);
 
         var principal = new ClaimsPrincipal(identity);
 
         await HttpContext.SignInAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme,
+            IdentityConstants.ApplicationScheme,
             principal);
 
         if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
@@ -65,7 +69,7 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Logout()
     {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
         return RedirectToAction("Index", "Home");
     }
 

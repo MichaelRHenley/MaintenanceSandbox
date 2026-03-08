@@ -10,6 +10,6 @@ namespace MaintenanceSandbox.Models.MasterData
         [Required, MaxLength(120)]
         public string Name { get; set; } = "";
 
-        public ICollection<Area> Areas { get; set; } = new List<Area>();
+        public ICollection<MaintenanceSandbox.Models.MasterData.Area> Areas { get; set; } = new List<MaintenanceSandbox.Models.MasterData.Area>();
     }
 }

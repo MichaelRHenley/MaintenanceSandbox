@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MaintenanceSandbox.Migrations
 {
     /// <inheritdoc />
-    public partial class InitBusinessDb : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,7 +37,10 @@ namespace MaintenanceSandbox.Migrations
                     AssetCode = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     WorkCenter = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,7 +56,10 @@ namespace MaintenanceSandbox.Migrations
                     Code = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     Site = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,26 +67,23 @@ namespace MaintenanceSandbox.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MaintenanceRequests",
+                name: "OnboardingSessions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Site = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WorkCenter = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Equipment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RequestedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ResolvedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ResolvedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    DraftJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    AppliedUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaintenanceRequests", x => x.Id);
+                    table.PrimaryKey("PK_OnboardingSessions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,7 +100,10 @@ namespace MaintenanceSandbox.Migrations
                     ManufacturerPartNumber = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     EnhancedDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -132,7 +138,10 @@ namespace MaintenanceSandbox.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -140,25 +149,18 @@ namespace MaintenanceSandbox.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MaintenanceMessages",
+                name: "Tenants",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MaintenanceRequestId = table.Column<int>(type: "int", nullable: false),
-                    SentAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Sender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Domain = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    PlanTier = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaintenanceMessages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MaintenanceMessages_MaintenanceRequests_MaintenanceRequestId",
-                        column: x => x.MaintenanceRequestId,
-                        principalTable: "MaintenanceRequests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Tenants", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,7 +172,10 @@ namespace MaintenanceSandbox.Migrations
                     AssetId = table.Column<int>(type: "int", nullable: false),
                     PartId = table.Column<int>(type: "int", nullable: false),
                     QuantityPerAsset = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -200,7 +205,10 @@ namespace MaintenanceSandbox.Migrations
                     QuantityOnHand = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     ReorderPoint = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: true),
                     TargetQuantity = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: true),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -227,7 +235,10 @@ namespace MaintenanceSandbox.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SiteId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -241,6 +252,28 @@ namespace MaintenanceSandbox.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TenantSite",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenantSite", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenantSite_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WorkCenters",
                 columns: table => new
                 {
@@ -249,7 +282,10 @@ namespace MaintenanceSandbox.Migrations
                     AreaId = table.Column<int>(type: "int", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DisplayName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -271,7 +307,13 @@ namespace MaintenanceSandbox.Migrations
                     WorkCenterId = table.Column<int>(type: "int", nullable: false),
                     Code = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DisplayName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -281,7 +323,106 @@ namespace MaintenanceSandbox.Migrations
                         column: x => x.WorkCenterId,
                         principalTable: "WorkCenters",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EquipmentRequests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WorkCenterId = table.Column<int>(type: "int", nullable: false),
+                    RequestedCode = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    RequestedDisplayName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    RequestedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RequestedByDisplayName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CreatedUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    ReviewedUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    ReviewedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReviewNote = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CreatedEquipmentId = table.Column<int>(type: "int", nullable: true),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EquipmentRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EquipmentRequests_WorkCenters_WorkCenterId",
+                        column: x => x.WorkCenterId,
+                        principalTable: "WorkCenters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MaintenanceRequests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Site = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Area = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RequestedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ResolvedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ResolvedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    WorkCenterId = table.Column<int>(type: "int", nullable: false),
+                    EquipmentId = table.Column<int>(type: "int", nullable: true),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaintenanceRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MaintenanceRequests_Equipment_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalTable: "Equipment",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MaintenanceRequests_WorkCenters_WorkCenterId",
+                        column: x => x.WorkCenterId,
+                        principalTable: "WorkCenters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MaintenanceMessages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MaintenanceRequestId = table.Column<int>(type: "int", nullable: false),
+                    SentAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Sender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsOnboarded = table.Column<bool>(type: "bit", nullable: false),
+                    OnboardedAtUtc = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    OnboardedByUserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaintenanceMessages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MaintenanceMessages_MaintenanceRequests_MaintenanceRequestId",
+                        column: x => x.MaintenanceRequestId,
+                        principalTable: "MaintenanceRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -317,6 +458,21 @@ namespace MaintenanceSandbox.Migrations
                 column: "WorkCenterId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EquipmentRequests_TenantId_WorkCenterId_RequestedCode_Status",
+                table: "EquipmentRequests",
+                columns: new[] { "TenantId", "WorkCenterId", "RequestedCode", "Status" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EquipmentRequests_TenantId_WorkCenterId_Status",
+                table: "EquipmentRequests",
+                columns: new[] { "TenantId", "WorkCenterId", "Status" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EquipmentRequests_WorkCenterId",
+                table: "EquipmentRequests",
+                column: "WorkCenterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InventoryLevels_LocationBinId",
                 table: "InventoryLevels",
                 column: "LocationBinId");
@@ -332,6 +488,27 @@ namespace MaintenanceSandbox.Migrations
                 column: "MaintenanceRequestId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MaintenanceRequests_EquipmentId",
+                table: "MaintenanceRequests",
+                column: "EquipmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaintenanceRequests_TenantId_WorkCenterId",
+                table: "MaintenanceRequests",
+                columns: new[] { "TenantId", "WorkCenterId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MaintenanceRequests_WorkCenterId",
+                table: "MaintenanceRequests",
+                column: "WorkCenterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OnboardingSessions_TenantId_UserId",
+                table: "OnboardingSessions",
+                columns: new[] { "TenantId", "UserId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Parts_TenantId_PartNumber",
                 table: "Parts",
                 columns: new[] { "TenantId", "PartNumber" },
@@ -342,6 +519,17 @@ namespace MaintenanceSandbox.Migrations
                 table: "Sites",
                 columns: new[] { "TenantId", "Name" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tenants_Name",
+                table: "Tenants",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenantSite_TenantId",
+                table: "TenantSite",
+                column: "TenantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkCenters_AreaId",
@@ -365,7 +553,7 @@ namespace MaintenanceSandbox.Migrations
                 name: "BomItems");
 
             migrationBuilder.DropTable(
-                name: "Equipment");
+                name: "EquipmentRequests");
 
             migrationBuilder.DropTable(
                 name: "InventoryLevels");
@@ -374,13 +562,16 @@ namespace MaintenanceSandbox.Migrations
                 name: "MaintenanceMessages");
 
             migrationBuilder.DropTable(
+                name: "OnboardingSessions");
+
+            migrationBuilder.DropTable(
                 name: "ProductionCountLogs");
 
             migrationBuilder.DropTable(
-                name: "Assets");
+                name: "TenantSite");
 
             migrationBuilder.DropTable(
-                name: "WorkCenters");
+                name: "Assets");
 
             migrationBuilder.DropTable(
                 name: "LocationBins");
@@ -390,6 +581,15 @@ namespace MaintenanceSandbox.Migrations
 
             migrationBuilder.DropTable(
                 name: "MaintenanceRequests");
+
+            migrationBuilder.DropTable(
+                name: "Tenants");
+
+            migrationBuilder.DropTable(
+                name: "Equipment");
+
+            migrationBuilder.DropTable(
+                name: "WorkCenters");
 
             migrationBuilder.DropTable(
                 name: "Areas");

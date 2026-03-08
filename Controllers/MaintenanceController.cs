@@ -18,6 +18,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Area = MaintenanceSandbox.Models.MasterData.Area;
+using Site = MaintenanceSandbox.Models.MasterData.Site;
+using WorkCenter = MaintenanceSandbox.Models.MasterData.WorkCenter;
 
 [Authorize]
 [ServiceFilter(typeof(RequireTenantFilter))]

@@ -2,12 +2,17 @@
 using MaintenanceSandbox.Models;
 using MaintenanceSandbox.Models.MasterData;
 using Microsoft.EntityFrameworkCore;
+using Area = MaintenanceSandbox.Models.MasterData.Area;
+using Site = MaintenanceSandbox.Models.MasterData.Site;
+using WorkCenter = MaintenanceSandbox.Models.MasterData.WorkCenter;
 
 namespace MaintenanceSandbox.Data;
 
 public static class DbInitializer
 {
-    private const string SandboxTenantName = "Sandbox Tenant";
+    public static readonly Guid SandboxTenantId = Guid.Parse("5EFA6386-80F0-4565-87D2-5170079B6BE0");
+
+    internal const string SandboxTenantName = "Sandbox Tenant";
     private const string SandboxDomain = "sandbox.sentinel.local";
     private const string SandboxPlanTier = "Standard";
 
@@ -137,7 +142,7 @@ public static class DbInitializer
 
         var created = new Tenant
         {
-            Id = Guid.NewGuid(),
+            Id = name == SandboxTenantName ? SandboxTenantId : Guid.NewGuid(),
             Name = name,
             Domain = domain,
             PlanTier = planTier,
