@@ -1069,4 +1069,110 @@
 	<data name="Maint_Priority_High" xml:space="preserve">
   <value>Alta</value>
 </data>
+
+  <!-- EM Dashboard -->
+
+  <data name="Nav_EmDashboard" xml:space="preserve">
+	<value>Panel EM</value>
+  </data>
+  <data name="EM_Dashboard_Title" xml:space="preserve">
+	<value>Panel EM en Vivo</value>
+  </data>
+  <data name="EM_Dashboard_Subtitle" xml:space="preserve">
+	<value>Tablero de Operaciones en Vivo</value>
+  </data>
+  <data name="EM_Dashboard_UpdateBanner" xml:space="preserve">
+	<value>Nueva actividad EM detectada.</value>
+  </data>
+  <data name="EM_Dashboard_KPI_Active" xml:space="preserve">
+	<value>EMs Activos</value>
+  </data>
+  <data name="EM_Dashboard_KPI_MachineDown" xml:space="preserve">
+	<value>Máquinas Paradas</value>
+  </data>
+  <data name="EM_Dashboard_KPI_Investigating" xml:space="preserve">
+	<value>Investigando</value>
+  </data>
+  <data name="EM_Dashboard_KPI_Running" xml:space="preserve">
+	<value>En Marcha</value>
+  </data>
+  <data name="EM_Dashboard_KPI_AvgResponse" xml:space="preserve">
+	<value>Resp. Promedio</value>
+  </data>
+  <data name="EM_Dashboard_Min" xml:space="preserve">
+	<value>min</value>
+  </data>
+  <data name="EM_Dashboard_Filter_All" xml:space="preserve">
+	<value>Todos</value>
+  </data>
+  <data name="EM_Dashboard_Filter_MachineDown" xml:space="preserve">
+	<value>Máquina Parada</value>
+  </data>
+  <data name="EM_Dashboard_Filter_Investigating" xml:space="preserve">
+	<value>Investigando</value>
+  </data>
+  <data name="EM_Dashboard_Filter_Running" xml:space="preserve">
+	<value>En Marcha</value>
+  </data>
+  <data name="EM_Dashboard_Label_Opened" xml:space="preserve">
+	<value>Abierto</value>
+  </data>
+  <data name="EM_Dashboard_Label_Issue" xml:space="preserve">
+	<value>Problema</value>
+  </data>
+  <data name="EM_Dashboard_Label_OpsComment" xml:space="preserve">
+	<value>Operaciones</value>
+  </data>
+  <data name="EM_Dashboard_Label_MaintComment" xml:space="preserve">
+	<value>Mantenimiento</value>
+  </data>
+  <data name="EM_Dashboard_Label_Responder" xml:space="preserve">
+	<value>Responsable</value>
+  </data>
+  <data name="EM_Dashboard_Label_LastUpdate" xml:space="preserve">
+	<value>Última actualización</value>
+  </data>
+  <data name="EM_Dashboard_Label_NoEquipment" xml:space="preserve">
+	<value>Equipo desconocido</value>
+  </data>
+  <data name="EM_Dashboard_Button_Open" xml:space="preserve">
+	<value>Abrir</value>
+  </data>
+  <data name="EM_Dashboard_Label_ResponseTime" xml:space="preserve">
+	<value>Respuesta</value>
+  </data>
+  <data name="EM_Dashboard_Label_NoResponse" xml:space="preserve">
+	<value>Sin Respuesta</value>
+  </data>
+  <data name="EM_Dashboard_Label_AwaitingResponse" xml:space="preserve">
+	<value>Esperando Respuesta</value>
+  </data>
+  <data name="EM_Dashboard_AllClear" xml:space="preserve">
+	<value>Todo despejado</value>
+  </data>
+  <data name="EM_Dashboard_NoRequests" xml:space="preserve">
+	<value>Sin solicitudes EM activas — la planta opera con normalidad.</value>
+  </data>
+  <data name="EM_Status_MachineDown" xml:space="preserve">
+	<value>MÁQUINA PARADA</value>
+  </data>
+  <data name="EM_Status_Investigating" xml:space="preserve">
+	<value>INVESTIGANDO</value>
+  </data>
+  <data name="EM_Status_Running" xml:space="preserve">
+	<value>EN MARCHA</value>
+  </data>
+  <data name="AccessDenied_Title" xml:space="preserve">
+	<value>Acceso Denegado</value>
+  </data>
+  <data name="AccessDenied_Heading" xml:space="preserve">
+	<value>No tienes permiso para hacer eso</value>
+  </data>
+  <data name="AccessDenied_Body" xml:space="preserve">
+	<value>Tu rol actual no permite esta acción. Cambia de rol o contacta a tu administrador.</value>
+  </data>
+  <data name="AccessDenied_Button" xml:space="preserve">
+	<value>Volver al Panel</value>
+  </data>
+
 </root>

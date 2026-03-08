@@ -58,6 +58,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
 .sentinel-page-title {
@@ -1836,3 +1838,270 @@ body > .container-fluid:first-of-type {
         color: #7dd3fc;
         font-weight: 600;
     }
+
+/* =====================================================
+   EM DASHBOARD
+   ===================================================== */
+
+/* KPI label + value (also improves the Maintenance Index tiles) */
+.sentinel-kpi-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--sentinel-text-muted);
+    margin-bottom: 0.3rem;
+}
+
+.sentinel-kpi-value {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--sentinel-text);
+    line-height: 1;
+}
+
+/* Color-coded left border + subtle tinted background */
+.em-card-machine-down {
+    border-left: 5px solid #dc3545;
+    background: linear-gradient(to right, rgba(220, 53, 69, 0.08), transparent 55%);
+}
+
+.em-card-investigating {
+    border-left: 5px solid #ffc107;
+    background: linear-gradient(to right, rgba(255, 193, 7, 0.08), transparent 55%);
+}
+
+.em-card-running {
+    border-left: 5px solid #28a745;
+    background: linear-gradient(to right, rgba(40, 167, 69, 0.08), transparent 55%);
+}
+
+.em-card-completed {
+    border-left: 5px solid #6c757d;
+}
+
+/* EM status badge */
+.em-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 0.35rem;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    white-space: nowrap;
+}
+
+.em-status-machine-down {
+    background: rgba(220, 53, 69, 0.2);
+    color: #ff8a95;
+    border: 1px solid rgba(220, 53, 69, 0.45);
+    animation: emDownPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes emDownPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.5); }
+    50%       { box-shadow: 0 0 0 5px rgba(220, 53, 69, 0); }
+}
+
+.em-status-investigating {
+    background: rgba(255, 193, 7, 0.18);
+    color: #ffd965;
+    border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.em-status-running {
+    background: rgba(40, 167, 69, 0.18);
+    color: #6ee08e;
+    border: 1px solid rgba(40, 167, 69, 0.4);
+}
+
+.em-status-completed {
+    background: rgba(108, 117, 125, 0.18);
+    color: #adb5bd;
+    border: 1px solid rgba(108, 117, 125, 0.3);
+}
+
+/* KPI tile color accents */
+.em-kpi-tile--down { border-color: rgba(220, 53, 69, 0.4); }
+.em-kpi-tile--inv  { border-color: rgba(255, 193, 7,  0.4); }
+.em-kpi-tile--run  { border-color: rgba(40, 167, 69,  0.4); }
+
+.em-kpi-value--down { color: #ff8a95; }
+.em-kpi-value--inv  { color: #ffd965; }
+.em-kpi-value--run  { color: #6ee08e; }
+
+/* Filter tabs */
+.em-filter-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.28rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--sentinel-border);
+    color: var(--sentinel-text-muted);
+    background: transparent;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+    .em-filter-tab:hover {
+        border-color: var(--sentinel-accent);
+        color: var(--sentinel-text);
+    }
+
+    .em-filter-tab.active {
+        background: var(--sentinel-accent-soft);
+        border-color: var(--sentinel-accent);
+        color: var(--sentinel-accent);
+    }
+
+    .em-filter-tab--machine-down.active {
+        background: rgba(220, 53, 69, 0.12);
+        border-color: rgba(220, 53, 69, 0.55);
+        color: #ff8a95;
+    }
+
+    .em-filter-tab--investigating.active {
+        background: rgba(255, 193, 7, 0.12);
+        border-color: rgba(255, 193, 7, 0.55);
+        color: #ffd965;
+    }
+
+    .em-filter-tab--running.active {
+        background: rgba(40, 167, 69, 0.12);
+        border-color: rgba(40, 167, 69, 0.55);
+        color: #6ee08e;
+    }
+
+.em-filter-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0 0.3rem;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Downtime timer */
+.em-downtime-timer {
+    font-size: 0.78rem;
+    color: #ff8a95;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.em-timer-digits {
+    font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* Field label / value inside cards */
+.em-field-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--sentinel-text-muted);
+    margin-bottom: 0.1rem;
+}
+
+.em-field-value {
+    font-size: 0.875rem;
+    color: var(--sentinel-text);
+}
+
+/* KPI strip — horizontal scroll on mobile, equal-width tiles on desktop */
+.em-kpi-bar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.75rem 1rem 0.5rem;
+    border-bottom: 1px solid var(--sentinel-border);
+}
+
+    .em-kpi-bar::-webkit-scrollbar {
+        display: none;
+    }
+
+.em-kpi-scroll {
+    display: flex;
+    gap: 0.6rem;
+    min-width: max-content;
+}
+
+    .em-kpi-scroll .sentinel-kpi-tile {
+        min-width: 100px;
+        flex: 0 0 auto;
+    }
+
+@media (min-width: 768px) {
+    .em-kpi-bar {
+        padding: 1rem 1.5rem 0.75rem;
+    }
+
+    .em-kpi-scroll {
+        min-width: unset;
+    }
+
+        .em-kpi-scroll .sentinel-kpi-tile {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+}
+
+/* Filter tabs — bigger touch target on mobile */
+@media (max-width: 767px) {
+    .em-filter-tab {
+        padding: 0.4rem 0.9rem;
+        font-size: 0.82rem;
+        min-height: 38px;
+    }
+}
+
+/* Response time row */
+.em-response-row {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--sentinel-text-muted);
+}
+
+.em-response-time {
+    color: #6ee08e;
+}
+
+/* No-response badge — three severity tiers */
+.em-no-response {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(108, 117, 125, 0.15);
+    color: #9ca3af;
+    border: 1px solid rgba(108, 117, 125, 0.25);
+}
+
+.em-no-response--warning {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffd965;
+    border-color: rgba(255, 193, 7, 0.38);
+}
+
+.em-no-response--urgent {
+    background: rgba(220, 53, 69, 0.18);
+    color: #ff8a95;
+    border-color: rgba(220, 53, 69, 0.45);
+    animation: emDownPulse 2.4s ease-in-out infinite;
+}

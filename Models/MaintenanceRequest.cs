@@ -23,6 +23,7 @@ public class MaintenanceRequest : TenantEntity
     public string Description { get; set; } = string.Empty; // issue details
     public string? ResolvedBy { get; set; }
     public DateTime? ResolvedAt { get; set; }
+    public DateTime? RespondedAt { get; set; }   // when first tech/supervisor acknowledged
     public int WorkCenterId { get; set; }
     public WorkCenter WorkCenter { get; set; } = null!;
     public int? EquipmentId { get; set; }          // nullable if optional

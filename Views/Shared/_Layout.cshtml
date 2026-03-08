@@ -3,6 +3,7 @@
 @using MaintenanceSandbox.Services
 @inject ITierProvider TierProvider
 @using Microsoft.AspNetCore.Localization
+@inject Microsoft.Extensions.Configuration.IConfiguration Config
 
 
 @functions {
@@ -39,6 +40,14 @@
 
     var tierText = SR[tierLabelKey];
     var tierSuffix = SR["Tier_Label_TierSuffix"];
+
+    var ga4Id = Config["Analytics:GA4MeasurementId"] ?? "";
+    var clarityId = Config["Analytics:ClarityProjectId"] ?? "";
+    var isAuthenticated = User.Identity?.IsAuthenticated ?? false;
+    var analyticsRole = isAuthenticated
+        ? (User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? "User")
+        : "anonymous";
+    var analyticsIsDemo = isAuthenticated && User.HasClaim("is_demo", "true");
 }
 
 <!DOCTYPE html>
@@ -50,6 +59,31 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MaintenanceSandbox.styles.css" asp-append-version="true" />
+    @if (!string.IsNullOrEmpty(ga4Id))
+    {
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=@ga4Id"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '@ga4Id');
+        </script>
+    }
+    @if (!string.IsNullOrEmpty(clarityId))
+    {
+        <!-- Microsoft Clarity -->
+        <script>
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "@clarityId");
+            clarity('set', 'user_role', '@analyticsRole');
+            clarity('set', 'is_demo',   '@analyticsIsDemo.ToString().ToLower()');
+            clarity('set', 'tier',      '@tierEnum.ToString()');
+        </script>
+    }
 </head>
 <body>
     <header>
@@ -75,26 +109,22 @@
                                 @SR["Nav_Home"]
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link @IsActive("Home", "Privacy")"
-                               asp-area="" asp-controller="Home" asp-action="Privacy">
-                                @SR["Nav_Privacy"]
-                            </a>
-                        </li>
+                        @if (User.IsInRole("Supervisor"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @IsActive("Maintenance", "EmDashboard")"
+                                       asp-area="" asp-controller="Maintenance" asp-action="EmDashboard">
+                                    @SR["Nav_EmDashboard"]
+                                </a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link @IsActive("Maintenance", "Index")"
                                asp-area="" asp-controller="Maintenance" asp-action="Index">
                                 @SR["Nav_Maintenance"]
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Parts" asp-action="Index">
-                                Parts
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Production" asp-action="Index">Production</a>
-                        </li>
+                       
                         <li class="nav-item">
                             <a class="nav-link @IsActive("Settings", "Index")"
                                asp-area="" asp-controller="Settings" asp-action="Index">
@@ -192,7 +222,7 @@
     <footer class="border-top footer text-muted">
         <div class="container d-flex justify-content-between align-items-center">
             <span>
-                &copy; 2025 - MaintenanceSandbox -
+                &copy; 2025 - Sentinel AI Systems -
                 <a asp-area="" asp-controller="Home" asp-action="Privacy">
                     @SR["Nav_Privacy"]
                 </a>
@@ -269,6 +299,7 @@
                     const current = getSoundEnabled();
                     setSoundEnabled(!current);
                     updateSoundToggleUi();
+                    if (window.sentinelTrack) window.sentinelTrack('sound_toggled', { enabled: !current });
                 });
             });
 
@@ -332,8 +363,18 @@
             playWithCooldown("maintenance-comment-sound", false);
         };
 
+        // 📊 Analytics helper — fires to GA4 + Clarity simultaneously
+        window.sentinelTrack = function (eventName, params) {
+            if (typeof gtag === 'function') {
+                gtag('event', eventName, params || {});
+            }
+            if (typeof clarity !== 'undefined') {
+                clarity('event', eventName);
+            }
+        };
 
-            function showToast(message, kind) {
+
+            function showToast
                 const el = document.getElementById("sentinel-toast");
                 if (!el || !message) return;
 

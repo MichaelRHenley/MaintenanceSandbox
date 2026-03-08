@@ -1,6 +1,80 @@
-﻿@{
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
+
+@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container py-4" style="max-width: 780px;">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Privacy Policy</div>
+                <div class="sentinel-page-subtitle">@SR["App_Title"]</div>
+            </div>
+        </div>
+
+        <div class="glass-card m-3" style="color: rgba(255,255,255,0.85); line-height: 1.7;">
+
+            <p class="text-muted small mb-4">Last updated: June 2025</p>
+
+            <h5 class="text-uppercase small text-muted mb-2">1. What We Collect</h5>
+            <p>When you use Sentinel, we collect:</p>
+            <ul>
+                <li><strong>Account information</strong> — name, email address, and role within your organisation.</li>
+                <li><strong>Operational data</strong> — maintenance requests, comments, status updates, equipment records, and work-centre assignments that you and your team enter into the application.</li>
+                <li><strong>Usage data</strong> — page visits, feature interactions, and browser/device type for performance monitoring and product improvement.</li>
+                <li><strong>AI interaction content</strong> — when you use the AI help or AI suggestion features, the text of your request (including relevant maintenance context) is sent to Anthropic's Claude API for processing. No personally identifiable information is intentionally included in AI prompts.</li>
+            </ul>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">2. How We Use Your Data</h5>
+            <ul>
+                <li>To deliver and operate the Sentinel application for your tenant.</li>
+                <li>To provide real-time collaboration features (comments, status updates) via SignalR.</li>
+                <li>To generate AI-assisted maintenance suggestions and contextual help.</li>
+                <li>To send transactional emails (invite links, notifications) via Azure Communication Services.</li>
+                <li>To improve product reliability and performance.</li>
+            </ul>
+            <p>We do not sell your data to third parties.</p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">3. Tenant Isolation</h5>
+            <p>
+                All operational data is scoped to your organisation's tenant. Row-level isolation is enforced at the
+                database layer — no tenant can access another tenant's data. Demo sessions are isolated the same way
+                and are automatically purged after two hours.
+            </p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">4. Third-Party Services</h5>
+            <ul>
+                <li><strong>Anthropic (Claude)</strong> — AI features send anonymised maintenance context to Claude's API. Anthropic's data processing agreement applies. No prompts are used to train models.</li>
+                <li><strong>Microsoft Azure</strong> — the application is hosted on Azure infrastructure. Data is stored in Azure SQL Database. Azure Communication Services is used for email delivery.</li>
+            </ul>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">5. Data Retention</h5>
+            <p>
+                Operational data is retained for the duration of your subscription. On account closure, data is
+                deleted within 30 days. Demo tenant data is purged automatically after 2 hours.
+            </p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">6. Security</h5>
+            <p>
+                All data is transmitted over HTTPS. Authentication uses ASP.NET Core Identity with
+                hashed credentials. API keys and secrets are stored in Azure Key Vault or environment-level
+                secrets — never in source code.
+            </p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">7. Your Rights</h5>
+            <p>
+                You may request a copy of your data, correction of inaccurate data, or deletion of your account
+                by contacting your organisation's administrator or reaching us at the address below.
+            </p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">8. Contact</h5>
+            <p>
+                For privacy enquiries, contact us at
+                <a href="mailto:privacy@sentinelmfg.com" class="text-info">privacy@sentinelmfg.com</a>.
+            </p>
+
+        </div>
+    </div>
+</div>

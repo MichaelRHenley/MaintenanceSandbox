@@ -2,24 +2,24 @@
 @inject IStringLocalizer<SharedResource> SR
 
 @{
-    ViewData["Title"] = "Access Denied";
+    ViewData["Title"] = SR["AccessDenied_Title"].Value;
 }
 
 <div class="container py-4">
     <div class="sentinel-card">
         <div class="sentinel-page-header">
             <div>
-                <div class="sentinel-page-title">Access Denied</div>
+                <div class="sentinel-page-title">@SR["AccessDenied_Title"]</div>
                 <div class="sentinel-page-subtitle">@SR["App_Title"]</div>
             </div>
         </div>
 
         <div class="glass-card m-3 text-center py-5">
             <div class="mb-3" style="font-size: 3rem;">🔒</div>
-            <h4 class="text-light mb-2">You don't have permission to do that</h4>
-            <p class="text-muted mb-4">Your current role doesn't allow this action. Switch roles or contact your administrator.</p>
+            <h4 class="text-light mb-2">@SR["AccessDenied_Heading"]</h4>
+            <p class="text-muted mb-4">@SR["AccessDenied_Body"]</p>
             <a asp-controller="Maintenance" asp-action="Index" class="btn btn-sentinel-primary">
-                Back to Dashboard
+                @SR["AccessDenied_Button"]
             </a>
         </div>
     </div>

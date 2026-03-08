@@ -455,12 +455,20 @@ public class MaintenanceController : Controller
         if (string.IsNullOrWhiteSpace(text))
             return RedirectToAction("Details", new { id = maintenanceRequestId });
 
-        var exists = await _db.MaintenanceRequests.AnyAsync(r => r.Id == maintenanceRequestId);
-        if (!exists)
+        var request = await _db.MaintenanceRequests.FirstOrDefaultAsync(r => r.Id == maintenanceRequestId);
+        if (request == null)
             return NotFound();
 
         var demoUser = _demoUserProvider.CurrentUser;
         var displayName = string.IsNullOrWhiteSpace(sender) ? demoUser.Name : sender;
+
+        // Stamp first response time when a tech or supervisor posts on an unacknowledged request
+        if (!request.RespondedAt.HasValue &&
+            request.Status == "New" &&
+            demoUser.Role is "Tech" or "Supervisor")
+        {
+            request.RespondedAt = DateTime.UtcNow;
+        }
 
         var message = new MaintenanceMessage
         {
@@ -534,6 +542,10 @@ public class MaintenanceController : Controller
             else if (request.Status == "Resolved" && status != "Resolved")
                 request.ResolvedAt = null;
 
+            // Stamp first response time when someone moves the request off New
+            if (!request.RespondedAt.HasValue && request.Status == "New" && status != "New")
+                request.RespondedAt = DateTime.UtcNow;
+
             request.Status = status;
         }
 
@@ -581,6 +593,10 @@ public class MaintenanceController : Controller
         var currentUser = _demoUserProvider.CurrentUser;
         var oldStatus = request.Status ?? "New";
 
+        // Ensure RespondedAt is always set (covers direct New → Resolved jumps)
+        if (!request.RespondedAt.HasValue)
+            request.RespondedAt = DateTime.UtcNow;
+
         request.Status = "Resolved";
         request.ResolvedAt = DateTime.UtcNow;
         request.ResolvedBy = currentUser.Name;
@@ -603,6 +619,61 @@ public class MaintenanceController : Controller
 
         return RedirectToAction(nameof(Details), new { id = request.Id });
     }
+
+    // --------------------------------------------------------------------
+    // EM DASHBOARD
+    // --------------------------------------------------------------------
+    [Authorize(Roles = "Supervisor")]
+    [HttpGet]
+    public async Task<IActionResult> EmDashboard(string? statusFilter)
+    {
+        PopulateCommonViewData();
+
+        var requests = await _db.MaintenanceRequests
+            .Include(r => r.Messages)
+            .Include(r => r.WorkCenter)
+            .Include(r => r.Equipment)
+            .Where(r => r.Status != "Closed")
+            .ToListAsync();
+
+        requests = requests
+            .OrderBy(r => GetEmSortOrder(r.Status))
+            .ThenByDescending(r => r.CreatedAt)
+            .ToList();
+
+        ViewBag.ActiveCount        = requests.Count;
+        ViewBag.MachineDownCount   = requests.Count(r => r.Status == "New");
+        ViewBag.InvestigatingCount = requests.Count(r => r.Status is "In Progress" or "Waiting on Parts");
+        ViewBag.RunningCount       = requests.Count(r => r.Status == "Resolved");
+        ViewBag.StatusFilter       = statusFilter ?? "All";
+
+        var responded = requests.Where(r => r.RespondedAt.HasValue).ToList();
+        ViewBag.AvgResponseMinutes = responded.Count > 0
+            ? Math.Round(responded.Average(r => (r.RespondedAt!.Value - r.CreatedAt).TotalMinutes), 1)
+            : 0.0;
+
+        if (!string.IsNullOrWhiteSpace(statusFilter) && statusFilter != "All")
+        {
+            requests = statusFilter switch
+            {
+                "Machine Down"  => requests.Where(r => r.Status == "New").ToList(),
+                "Investigating" => requests.Where(r => r.Status is "In Progress" or "Waiting on Parts").ToList(),
+                "Running"       => requests.Where(r => r.Status == "Resolved").ToList(),
+                _               => requests
+            };
+        }
+
+        return View(requests);
+    }
+
+    private static int GetEmSortOrder(string? status) => status switch
+    {
+        "New"              => 0,
+        "In Progress"      => 1,
+        "Waiting on Parts" => 2,
+        "Resolved"         => 3,
+        _                  => 4
+    };
 
     private async Task AddSystemCommentAsync(int requestId, string message)
     {

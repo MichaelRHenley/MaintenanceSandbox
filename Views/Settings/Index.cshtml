@@ -31,6 +31,7 @@
                 </span>
             </div>
         </div>
+        <div class="p-3 p-md-4">
 
         @if (User.IsInRole("MaintenanceAdmin") || User.IsInRole("Supervisor"))
         {
@@ -161,16 +162,17 @@
                     </div>
 
                     <div class="col-12 col-md-4">
-                        <select class="form-select" name="SelectedTier" id="SelectedTier">
+                        <select class="form-select" name="SelectedTier" id="SelectedTier" disabled>
                             <option value="Standard">@SR["Tier_Label_Standard"]</option>
                             <option value="Enhanced">@SR["Tier_Label_Enhanced"]</option>
                             <option value="Premium">@SR["Tier_Label_Premium"]</option>
                         </select>
+                        <small class="text-muted mt-1 d-block">Additional tiers coming soon.</small>
                     </div>
                 </div>
 
                 <div class="d-flex gap-2 mt-3">
-                    <button type="submit" class="btn btn-sentinel-primary">
+                    <button type="submit" class="btn btn-sentinel-primary" disabled>
                         @SR["Settings_Button_Save"]
                     </button>
                     <a asp-controller="Maintenance" asp-action="Index" class="btn btn-sentinel-ghost">
@@ -178,6 +180,7 @@
                     </a>
                 </div>
             </form>
+        </div>
         </div>
     </div>
 

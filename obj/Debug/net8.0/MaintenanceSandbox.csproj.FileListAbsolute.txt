@@ -596,8 +596,8 @@ C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\swae.build.ex.cache
 C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\Maintena.82C0F03D.Up2Date
 C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\MaintenanceSandbox.genruntimeconfig.cache
 C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\ref\MaintenanceSandbox.dll
-C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
 C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\appsettings.Production.json
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
