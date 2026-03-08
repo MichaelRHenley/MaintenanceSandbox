@@ -561,7 +561,7 @@ public class MaintenanceController : Controller
     // --------------------------------------------------------------------
     // MARK RESOLVED BUTTON
     // --------------------------------------------------------------------
-    [Authorize(Roles = "Supervisor,Tech")]
+    [Authorize(Roles = "Operator,Supervisor,Tech")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> MarkResolved(int id)

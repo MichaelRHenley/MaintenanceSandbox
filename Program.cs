@@ -135,16 +135,20 @@ builder.Services.AddMemoryCache();
 
 builder.Services.Configure<AiOptions>(builder.Configuration.GetSection("Ai"));
 
-builder.Services.AddHttpClient<IChatModel, ClaudeChatModel>((sp, client) =>
+var claudeApiKey = builder.Configuration["Ai:ApiKey"];
+if (!string.IsNullOrWhiteSpace(claudeApiKey))
 {
-    var config = sp.GetRequiredService<IConfiguration>();
-    var apiKey = config["Ai:ApiKey"]
-        ?? throw new InvalidOperationException("Anthropic API key not configured.");
-
-    client.DefaultRequestHeaders.Add("x-api-key", apiKey);
-    client.DefaultRequestHeaders.Add("anthropic-version", "2023-06-01");
-    client.Timeout = TimeSpan.FromSeconds(30);
-});
+    builder.Services.AddHttpClient<IChatModel, ClaudeChatModel>((sp, client) =>
+    {
+        client.DefaultRequestHeaders.Add("x-api-key", claudeApiKey);
+        client.DefaultRequestHeaders.Add("anthropic-version", "2023-06-01");
+        client.Timeout = TimeSpan.FromSeconds(30);
+    });
+}
+else
+{
+    builder.Services.AddSingleton<IChatModel, NullChatModel>();
+}
 
 builder.Services.AddScoped<MaintenanceAiService>();
 builder.Services.AddScoped<IAiAssistantClient, AiAssistantClient>();

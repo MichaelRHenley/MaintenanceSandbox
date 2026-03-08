@@ -41,9 +41,9 @@ public class ClaudeChatModel : IChatModel
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync(ct);
-                _logger.LogError("Anthropic API error: {StatusCode} - {Error}",
+                _logger.LogWarning("Anthropic API error: {StatusCode} - {Error}",
                     response.StatusCode, error);
-                throw new HttpRequestException($"API call failed: {response.StatusCode}");
+                return string.Empty;
             }
 
             var result = await response.Content.ReadFromJsonAsync<AnthropicResponse>(
@@ -54,8 +54,8 @@ public class ClaudeChatModel : IChatModel
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Claude API call failed");
-            throw;
+            _logger.LogWarning(ex, "Claude API call failed — AI suggestions unavailable");
+            return string.Empty;
         }
     }
 

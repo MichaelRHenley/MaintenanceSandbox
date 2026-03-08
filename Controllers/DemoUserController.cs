@@ -43,6 +43,12 @@ public class DemoUserController : Controller
                 Name = "Operator",
                 Email = "operator@sentinel-demo.local",
                 Role = "Operator"
+            },
+            new DemoUser
+            {
+                Name = "Maintenance Tech",
+                Email = "tech@sentinel-demo.local",
+                Role = "Tech"
             }
         }
         };

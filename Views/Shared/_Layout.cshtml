@@ -150,9 +150,13 @@
                                         </button>
                                         <button type="submit" name="role" value="Operator"
                                                 class="sentinel-signout-btn @(roleClaim == "Operator" ? "active" : "")">
-                                            Operator
-                                        </button>
-                                    </form>
+                                                    Operator
+                                                </button>
+                                        <button type="submit" name="role" value="Tech"
+                                                class="sentinel-signout-btn @(roleClaim == "Tech" ? "active" : "")">
+                                                    Tech
+                                                </button>
+                                                    </form>
                                 </div>
                             }
                             else

@@ -108,6 +108,37 @@ even though both hit Claude. Keeps prompts and context windows isolated per doma
 
 ---
 
+## Demo Mobile Share / SMS Join Link
+
+**Decision:** A demo session's isolated `tenantId` GUID is the natural share token — it already
+uniquely identifies the tenant and has a TTL baked into the tenant name (epoch prefix).  
+**Planned endpoint:** `GET /DemoUser/Join?tenantId=<guid>&role=Operator` — validates the tenantId
+exists in `DemoTenant` / has not been purged, then signs the caller in via `SignInDemoUser` against
+that existing tenant. **No** `SeedDemoSessionAsync` call — the tenant is not reseeded.  
+**QR code:** Rendered client-side via `qrcode.js` (CDN) on the demo dashboard pointing at the
+join URL. No server-side dependency.  
+**SMS (optional):** Azure Communication Services (ACS) sends the join URL to a supplied phone
+number. ACS connection string stored in `appsettings.json` → `AzureCommunicationServices:ConnectionString`,
+overridden by user secrets in dev. Requires an ACS resource with an allocated phone number.  
+**Security constraints:**
+- Join link is only valid while the demo tenant is alive (≤2 h TTL, same `PurgeExpiredDemoTenantsAsync` logic).
+- Unknown or expired `tenantId` values redirect to `/DemoUser/Index` with a friendly message.
+- Join role is scoped to `Operator` or `Tech` — callers cannot self-elevate to `Supervisor` via the link.
+- `is_demo = "true"` claim is added to the joined session identically to a normal `Switch()` sign-in.  
+**Gotcha:** `DemoUserProvider` bypasses ASP.NET Identity — the same null-`ApplicationUser` caveat
+applies to joined sessions. Any code calling `UserManager.GetUserAsync(User)` returns `null`.  
+**Primary demo use case — Operator/Supervisor interaction:** The join-link feature unlocks the
+core two-role demo story. A presenter logs in on a laptop as Supervisor (normal demo login), then
+scans the QR code on a phone which joins as Operator on the **same tenant**. The phone creates a
+maintenance request; the laptop sees it arrive live via SignalR. The Supervisor triages, updates
+status, and adds comments — the Operator's phone reflects changes in real time. This is the key
+product differentiator (real-time cross-role workflow) demonstrated with zero setup, credentials,
+or IT involvement.  
+**Demo script shorthand:** Phone A (Operator) creates request → Phone B (Tech) picks it up &
+updates status → Laptop (Supervisor) triages, assigns priority & closes.
+
+---
+
 ## Pending / Deferred
 
 See `WEEKEND_PLAN.md` for the tracked backlog.

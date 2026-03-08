@@ -28,6 +28,13 @@ namespace MaintenanceSandbox.Services
                 Email = "operator@sentinel-demo.local",
                 Password = "sentineldemo",
                 Role = "Operator"
+            },
+            new DemoUser
+            {
+                Name = "Maintenance Tech",
+                Email = "tech@sentinel-demo.local",
+                Password = "sentineldemo",
+                Role = "Tech"
             }
         ];
 
