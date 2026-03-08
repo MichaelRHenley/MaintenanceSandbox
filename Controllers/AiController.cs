@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using MaintenanceSandbox.Data;
+using MaintenanceSandbox.Demo;
 using MaintenanceSandbox.Services;
+using System.Security.Claims;
 
 namespace MaintenanceSandbox.Controllers.Api;
 
@@ -13,20 +15,30 @@ public class AiController : ControllerBase
     private readonly IAiAssistantClient _aiClient;
     private readonly IStringLocalizer<SharedResource> _localizer;
     private readonly ILogger<AiController> _logger;
+    private readonly IDemoAiRateLimiter _rateLimiter;
 
     public AiController(
         IAiAssistantClient aiClient,
         IStringLocalizer<SharedResource> localizer,
-        ILogger<AiController> logger)
+        ILogger<AiController> logger,
+        IDemoAiRateLimiter rateLimiter)
     {
         _aiClient = aiClient;
         _localizer = localizer;
         _logger = logger;
+        _rateLimiter = rateLimiter;
     }
 
     [HttpPost("help")]
     public async Task<IActionResult> GetHelp([FromBody] AiHelpRequestDto dto)
     {
+        if (User.HasClaim("is_demo", "true"))
+        {
+            var tenantId = User.FindFirstValue("tenant_id") ?? "unknown";
+            if (!_rateLimiter.TryConsume(tenantId))
+                return StatusCode(429, "Demo AI limit reached for this session — please try again later.");
+        }
+
         try
         {
             var request = new AiHelpRequest

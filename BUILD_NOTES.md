@@ -57,7 +57,27 @@ a key.
 **AiOptions:** API key and model config come from `appsettings.json` → `Ai:` section, overridden
 by user secrets in dev.
 
-### Onboarding AI Service Split
+### Demo AI Rate Limiting
+**Decision:** Demo sessions are capped at **20 Claude API calls per hour per tenant**. All three
+demo personas (Supervisor, Operator, Tech) sharing the same tenant share the same pool.  
+**Implementation:** `IDemoAiRateLimiter` / `DemoAiRateLimiter` (`Demo\DemoAiRateLimiter.cs`).
+Registered as a **singleton** in `Program.cs`. Uses `IMemoryCache` with a fixed-window counter.  
+**Cache key:** `demo:ai:{tenantId}` — one window per tenant GUID.  
+**Window mechanics:** First call in a window sets `Count = 1` and `Expiry = now + 1 hour`. Each
+subsequent call increments `Count`. When `Count >= 20`, `TryConsume` returns `false`. The entry
+expires naturally — no sliding reset.  
+**Guarded endpoints:**
+- `POST /api/ai/help` — `AiController.GetHelp` (AI help panel)
+- `POST /Maintenance/SuggestFix` — `MaintenanceController.SuggestFix` (inline fix suggestions)  
+
+Both return **HTTP 429** when the limit is hit. The UIs check `res.status === 429` and render a
+styled warning in place of the AI result — no generic error, no misleading content.  
+**Non-demo users:** The guard only fires when the `is_demo = "true"` claim is present. Production
+tenants are completely unaffected.  
+**Gotcha:** `IMemoryCache.Set()` does not preserve an existing expiry — the expiry must be stored
+inside the cached value itself (the `Window(Count, Expiry)` record) and re-applied on every write.
+
+
 **Decision:** `IOnboardingAiService` and `IMaintenanceSuggestionService` are separate interfaces
 even though both hit Claude. Keeps prompts and context windows isolated per domain.
 
@@ -89,7 +109,7 @@ even though both hit Claude. Keeps prompts and context windows isolated per doma
 | `IgnoreQueryFilters` in seeding | Required any time seed code reads across tenants. Easy to forget on new seed methods. |
 | Demo user claims | `DemoUserProvider` bypasses ASP.NET Identity entirely. Demo users have no `ApplicationUser` record. Any code that calls `UserManager.GetUserAsync(User)` will return `null` for demo sessions. |
 | Localization | All user-facing strings go through `IStringLocalizer<SharedResource>`. Keys follow the pattern `Section_Page_Element`. Don't hardcode English strings in views. |
-| Claude connection | Currently stubbed (`StubAiAssistantClient`). Real `ClaudeChatModel` wiring is pending — see WEEKEND_PLAN.md. |
+| Claude connection | `ClaudeChatModel` is wired and live. `NullChatModel` is registered as the fallback when `Ai:ApiKey` is empty (dev without a key). Key comes from user secrets in dev; `Ai__ApiKey` machine env var in production. |
 
 ---
 

@@ -1,5 +1,6 @@
 ﻿using MaintenanceSandbox;
 using MaintenanceSandbox.Data;
+using MaintenanceSandbox.Demo;
 using MaintenanceSandbox.Hubs;
 using MaintenanceSandbox.Models;
 using MaintenanceSandbox.Models.MasterData;
@@ -16,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Area = MaintenanceSandbox.Models.MasterData.Area;
@@ -35,6 +37,7 @@ public class MaintenanceController : Controller
     private readonly IStringLocalizer<SharedResource> _localizer;
     private string L(string key) => _localizer[key];
     private readonly ITenantProvider _tenantProvider;
+    private readonly IDemoAiRateLimiter _demoAiRateLimiter;
 
     public MaintenanceController(
         AppDbContext db,
@@ -44,7 +47,8 @@ public class MaintenanceController : Controller
         IHubContext<MaintenanceHub> maintenanceHub,
         MaintenanceAiService ai,
         IStringLocalizer<SharedResource> localizer,
-        ITenantProvider tenantProvider)
+        ITenantProvider tenantProvider,
+        IDemoAiRateLimiter demoAiRateLimiter)
     {
         _db = db;
         _suggestions = suggestions;
@@ -54,6 +58,7 @@ public class MaintenanceController : Controller
         _ai = ai;
         _localizer = localizer;
         _tenantProvider = tenantProvider;
+        _demoAiRateLimiter = demoAiRateLimiter;
     }
 
     // --------------------------------------------------------------------
@@ -626,6 +631,13 @@ public class MaintenanceController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> SuggestFix(int id, CancellationToken ct)
     {
+        if (User.HasClaim("is_demo", "true"))
+        {
+            var tenantId = User.FindFirstValue("tenant_id") ?? "unknown";
+            if (!_demoAiRateLimiter.TryConsume(tenantId))
+                return StatusCode(429, new { message = "Demo AI limit reached for this session — AI suggestions will be available again in the next hour." });
+        }
+
         var request = await _db.MaintenanceRequests
             .FirstOrDefaultAsync(r => r.Id == id, ct);
 
@@ -641,8 +653,6 @@ public class MaintenanceController : Controller
 
         var suggestion = await _ai.SuggestFixAsync(request, messages, culture, ct);
 
-        TempData["AiFixSuggestion"] = suggestion;
-
-        return RedirectToAction("Details", new { id });
+        return Json(new { suggestion });
     }
 }

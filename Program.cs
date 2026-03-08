@@ -159,6 +159,7 @@ builder.Services.Configure<MaintenanceSandbox.Demo.DemoOptions>(
     builder.Configuration.GetSection("Demo"));
 
 builder.Services.AddScoped<MaintenanceSandbox.Demo.IDemoMode, MaintenanceSandbox.Demo.DemoMode>();
+builder.Services.AddSingleton<MaintenanceSandbox.Demo.IDemoAiRateLimiter, MaintenanceSandbox.Demo.DemoAiRateLimiter>();
 
 
 builder.Services.AddAuthorization();

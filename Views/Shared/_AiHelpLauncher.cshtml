@@ -50,13 +50,7 @@
             <div class="ai-help-loading" hidden>@SR["AiHelp_Thinking"]</div>
             <div class="ai-help-content"></div>
         </div>
-        <!-- Add to _AiHelpLauncher.cshtml after response -->
-        <div class="ai-help-feedback">
-            Was this helpful?
-            <button class="btn-feedback" data-feedback="yes">👍</button>
-            <button class="btn-feedback" data-feedback="no">👎</button>
         </div>
-    </div>
 </div>
 
 <style>
@@ -76,7 +70,7 @@
         left: auto;
         width: 380px;
         max-width: 100%;
-        max-height: calc(50vh - 3rem);
+        max-height: calc(85vh - 3rem);
         margin: 0;
         border-radius: 1rem 0 0 1rem;
         overflow: hidden;
@@ -199,9 +193,13 @@
                         })
                     });
 
-                    const text = await res.text();
                     loadingEl.hidden = true;
-                    contentEl.innerText = text;
+                    if (res.status === 429) {
+                        contentEl.innerHTML = '<p class="text-warning small mb-0">⚠️ Demo AI limit reached for this session — please try again later.</p>';
+                    } else {
+                        const text = await res.text();
+                        contentEl.innerText = text;
+                    }
                 } catch (e) {
                     loadingEl.hidden = true;
                     contentEl.innerText = errorText;
