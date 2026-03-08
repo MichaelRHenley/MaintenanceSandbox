@@ -50,6 +50,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Azure.Communication.Sms": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            },
             "Azure.Identity": {
               "target": "Package",
               "version": "[1.18.0, )"

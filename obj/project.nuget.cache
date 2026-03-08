@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "myjdNH+ZmZo=",
+  "dgSpecHash": "QVYBF4TqN8I=",
   "success": true,
   "projectFilePath": "C:\\Dev\\repos\\MaintenanceSandbox\\MaintenanceSandbox.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\HP\\.nuget\\packages\\azure.communication.sms\\1.0.2\\azure.communication.sms.1.0.2.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\azure.core\\1.51.1\\azure.core.1.51.1.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\azure.identity\\1.18.0\\azure.identity.1.18.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\bogus\\35.6.5\\bogus.35.6.5.nupkg.sha512",

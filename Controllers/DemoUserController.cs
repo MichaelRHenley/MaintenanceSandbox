@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using MaintenanceSandbox.Data;
+using MaintenanceSandbox.Demo;
 using MaintenanceSandbox.Models;
 using MaintenanceSandbox.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -15,11 +16,19 @@ public class DemoUserController : Controller
 {
     private readonly IDemoUserProvider _demoUserProvider;
     private readonly AppDbContext _db;
+    private readonly DemoSmsLinkTokenService _tokenService;
+    private readonly IEmailService _emailService;
 
-    public DemoUserController(IDemoUserProvider demoUserProvider, AppDbContext db)
+    public DemoUserController(
+        IDemoUserProvider demoUserProvider,
+        AppDbContext db,
+        DemoSmsLinkTokenService tokenService,
+        IEmailService emailService)
     {
         _demoUserProvider = demoUserProvider;
         _db = db;
+        _tokenService = tokenService;
+        _emailService = emailService;
     }
 
     // Simple page that tells people what demo accounts exist
@@ -103,6 +112,77 @@ public class DemoUserController : Controller
             return Redirect(returnUrl);
 
         return RedirectToAction("Index", "Maintenance");
+    }
+
+    // GET /DemoUser/JoinDemo?token=... — anonymous, validates HMAC token, signs into same demo tenant
+    [HttpGet]
+    public async Task<IActionResult> JoinDemo(string token)
+    {
+        var result = _tokenService.ValidateToken(token);
+        if (result is null)
+        {
+            TempData["Error"] = "This demo link has expired or is invalid.";
+            return RedirectToAction("Index");
+        }
+
+        var (tenantId, role) = result.Value;
+
+        var tenant = await _db.Tenants.FirstOrDefaultAsync(t => t.Id == tenantId);
+        if (tenant is null)
+        {
+            TempData["Error"] = "This demo session has expired. Please request a new link.";
+            return RedirectToAction("Index");
+        }
+
+        var user = _demoUserProvider.GetByRole(role);
+        if (user is null)
+        {
+            TempData["Error"] = "Invalid role in demo link.";
+            return RedirectToAction("Index");
+        }
+
+        await SignInDemoUser(user, tenantId.ToString());
+        return RedirectToAction("Index", "Maintenance");
+    }
+
+    // POST /DemoUser/SendEmailLink — demo session only, generates token and sends email
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SendEmailLink([FromForm] string toEmail, [FromForm] string role)
+    {
+        if (!User.HasClaim("is_demo", "true"))
+            return Json(new { error = "Not a demo session." });
+
+        var tenantIdRaw = User.FindFirstValue("tenant_id");
+        if (!Guid.TryParse(tenantIdRaw, out var tenantId))
+            return Json(new { error = "Invalid session." });
+
+        toEmail = (toEmail ?? "").Trim();
+        if (!toEmail.Contains('@'))
+            return Json(new { error = "Please enter a valid email address." });
+
+        if (role is not ("Supervisor" or "Operator" or "Tech"))
+            return Json(new { error = "Invalid role." });
+
+        var token = _tokenService.GenerateToken(tenantId, role);
+        var link = Url.Action("JoinDemo", "DemoUser", new { token }, Request.Scheme)!;
+
+        bool emailSent = false;
+        string? emailError = null;
+        try
+        {
+            await _emailService.SendAsync(
+                toEmail,
+                "Sentinel Demo Access",
+                $"You've been invited to the Sentinel demo. Join here: {link}");
+            emailSent = true;
+        }
+        catch (Exception ex)
+        {
+            emailError = ex.Message;
+        }
+
+        return Json(new { emailSent, link, emailError });
     }
 
     private async Task SignInDemoUser(DemoUser user, string tenantId)

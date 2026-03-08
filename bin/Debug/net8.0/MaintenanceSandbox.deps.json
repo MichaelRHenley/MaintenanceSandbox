@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "MaintenanceSandbox/1.0.0": {
         "dependencies": {
+          "Azure.Communication.Sms": "1.0.2",
           "Azure.Identity": "1.18.0",
           "Bogus": "35.6.5",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.22",
@@ -28,6 +29,17 @@
           },
           "fr-CA/MaintenanceSandbox.resources.dll": {
             "locale": "fr-CA"
+          }
+        }
+      },
+      "Azure.Communication.Sms/1.0.2": {
+        "dependencies": {
+          "Azure.Core": "1.51.1"
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Communication.Sms.dll": {
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.225.46801"
           }
         }
       },
@@ -2039,6 +2051,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Azure.Communication.Sms/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EOgM6NjodrOTB8ej7aLP8PmW5m1ZzAOXIv3gu+7QhYL5p/FvmsGHPozrMKVeZPsIEB50gZQg7gbDKvtpAOvDbg==",
+      "path": "azure.communication.sms/1.0.2",
+      "hashPath": "azure.communication.sms.1.0.2.nupkg.sha512"
     },
     "Azure.Core/1.51.1": {
       "type": "package",

@@ -2,6 +2,22 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "Azure.Communication.Sms/1.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Azure.Core": "1.47.3"
+        },
+        "compile": {
+          "lib/net8.0/Azure.Communication.Sms.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Communication.Sms.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Azure.Core/1.51.1": {
         "type": "package",
         "dependencies": {
@@ -2873,6 +2889,24 @@
     }
   },
   "libraries": {
+    "Azure.Communication.Sms/1.0.2": {
+      "sha512": "EOgM6NjodrOTB8ej7aLP8PmW5m1ZzAOXIv3gu+7QhYL5p/FvmsGHPozrMKVeZPsIEB50gZQg7gbDKvtpAOvDbg==",
+      "type": "package",
+      "path": "azure.communication.sms/1.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "README.md",
+        "azure.communication.sms.1.0.2.nupkg.sha512",
+        "azure.communication.sms.nuspec",
+        "azureicon.png",
+        "lib/net8.0/Azure.Communication.Sms.dll",
+        "lib/net8.0/Azure.Communication.Sms.xml",
+        "lib/netstandard2.0/Azure.Communication.Sms.dll",
+        "lib/netstandard2.0/Azure.Communication.Sms.xml"
+      ]
+    },
     "Azure.Core/1.51.1": {
       "sha512": "JRANrRvN5O5FFRh+pMUb8qqWU7jBQ39qXEbVr7Rkb1/s7rqc6RSzVHKGBz5Ro1gDy2WSGjG5YEOJKpPIBiCMcA==",
       "type": "package",
@@ -7954,6 +7988,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Azure.Communication.Sms >= 1.0.2",
       "Azure.Identity >= 1.18.0",
       "Bogus >= 35.6.5",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.22",
@@ -8014,6 +8049,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Azure.Communication.Sms": {
+            "target": "Package",
+            "version": "[1.0.2, )"
+          },
           "Azure.Identity": {
             "target": "Package",
             "version": "[1.18.0, )"

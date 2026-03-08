@@ -116,6 +116,62 @@ Any attempt redirects back to the Index with a `TempData["err"]` message.
 - 4 Equipment items
 - 40 randomised maintenance requests with 0–3 messages each
 
+### Email Demo Sharing
+
+The **📧 Share** button in the demo nav pill lets a demo user send a one-time login link to any email address. The recipient lands directly in the **same isolated tenant** — no password required.
+
+#### How it works
+1. Demo user clicks **📧 Share** in the top-right nav
+2. Enters an email address and picks a role (Supervisor / Operator / Tech)
+3. App generates a time-limited HMAC-signed token (default: 30 min)
+4. An email is sent with a `/DemoUser/JoinDemo?token=…` link
+5. Recipient clicks the link → signed in to the same demo tenant instantly
+
+#### Fallback (no email configured — works out of the box)
+If `Email:SmtpHost` is not set, the modal shows a **copyable link** instead of sending email. The share feature works immediately with no mail server setup required.
+
+#### Activating real email delivery (SMTP)
+
+Any SMTP provider works (SendGrid, Mailgun, AWS SES, Gmail, etc.).
+
+**Step 1 — Gather your SMTP credentials**
+
+For **SendGrid**:
+1. Create a SendGrid account → Settings → API Keys → Create API Key (Mail Send permission)
+2. Host: `smtp.sendgrid.net`, Port: `587`, User: `apikey`, Password: your API key
+
+For **Gmail** (dev/testing only):
+1. Enable 2-factor auth → Google Account → Security → App Passwords → generate one
+2. Host: `smtp.gmail.com`, Port: `587`, User: your Gmail address, Password: the app password
+
+**Step 2 — Set secrets locally**
+```bash
+dotnet user-secrets set "Email:SmtpHost"     "smtp.sendgrid.net"
+dotnet user-secrets set "Email:SmtpPort"     "587"
+dotnet user-secrets set "Email:SmtpUser"     "apikey"
+dotnet user-secrets set "Email:SmtpPassword" "SG.xxxx..."
+dotnet user-secrets set "Email:FromAddress"  "noreply@yourdomain.com"
+
+# Any random string, 32+ characters
+dotnet user-secrets set "Demo:EmailLinkSecret" "replace-with-a-long-random-secret-string"
+```
+
+**Step 3 — Set environment variables in production**
+```
+Email__SmtpHost        = smtp.sendgrid.net
+Email__SmtpPort        = 587
+Email__SmtpUser        = apikey
+Email__SmtpPassword    = SG.xxxx...
+Email__FromAddress     = noreply@yourdomain.com
+Demo__EmailLinkSecret  = <32+ char secret>
+Demo__EmailLinkExpiryMinutes = 30
+```
+
+> **Tip:** Generate a strong `EmailLinkSecret` with:
+> ```bash
+> node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+> ```
+
 ## Configuration
 
 ### appsettings.json
@@ -130,16 +186,31 @@ Any attempt redirects back to the Index with a `TempData["err"]` message.
     "Model": "claude-sonnet-4-5",
     "MaxTokens": 1024
   },
+  "Analytics": {
+    "GA4MeasurementId": "",
+    "ClarityProjectId": ""
+  },
   "Billing": {
     "Mode": "Pilot",
     "DefaultTier": "Tier1"
   },
   "Demo": {
     "Enabled": true,
-    "SeedOnStartup": true
+    "SeedOnStartup": true,
+    "EmailLinkSecret": "",
+    "EmailLinkExpiryMinutes": 30
+  },
+  "Email": {
+    "SmtpHost": "",
+    "SmtpPort": 587,
+    "SmtpUser": "",
+    "SmtpPassword": "",
+    "FromAddress": ""
   }
 }
 ```
+
+Set secrets via `dotnet user-secrets` locally (see Setup section) or via environment variables in production using double-underscore notation (e.g. `Demo__SmsLinkSecret`). Leave `Analytics`, `Sms`, and `Demo:SmsLinkSecret` empty in development — the features degrade gracefully (no scripts injected, copyable link shown instead of SMS).
 
 ## Project Structure
 

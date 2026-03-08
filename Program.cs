@@ -160,6 +160,24 @@ builder.Services.Configure<MaintenanceSandbox.Demo.DemoOptions>(
 
 builder.Services.AddScoped<MaintenanceSandbox.Demo.IDemoMode, MaintenanceSandbox.Demo.DemoMode>();
 builder.Services.AddSingleton<MaintenanceSandbox.Demo.IDemoAiRateLimiter, MaintenanceSandbox.Demo.DemoAiRateLimiter>();
+builder.Services.AddSingleton<MaintenanceSandbox.Demo.DemoSmsLinkTokenService>();
+
+var smtpHost = builder.Configuration["Email:SmtpHost"];
+if (!string.IsNullOrWhiteSpace(smtpHost))
+{
+    builder.Services.AddSingleton<MaintenanceSandbox.Services.IEmailService>(
+        new MaintenanceSandbox.Services.SmtpEmailService(
+            smtpHost,
+            int.TryParse(builder.Configuration["Email:SmtpPort"], out var port) ? port : 587,
+            builder.Configuration["Email:SmtpUser"] ?? "",
+            builder.Configuration["Email:SmtpPassword"] ?? "",
+            builder.Configuration["Email:FromAddress"] ?? ""));
+}
+else
+{
+    builder.Services.AddSingleton<MaintenanceSandbox.Services.IEmailService,
+        MaintenanceSandbox.Services.NullEmailService>();
+}
 
 
 builder.Services.AddAuthorization();

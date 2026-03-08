@@ -48,6 +48,7 @@
         ? (User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? "User")
         : "anonymous";
     var analyticsIsDemo = isAuthenticated && User.HasClaim("is_demo", "true");
+    var demoSmsExpiry = Config["Demo:EmailLinkExpiryMinutes"] ?? "30";
 }
 
 <!DOCTYPE html>
@@ -187,6 +188,10 @@
                                                     Tech
                                                 </button>
                                                     </form>
+                                    <button type="button"
+                                            class="sentinel-signout-btn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#demo-share-modal">📧 Share</button>
                                 </div>
                             }
                             else
@@ -374,7 +379,7 @@
         };
 
 
-            function showToast
+            function showToast(message, kind) {
                 const el = document.getElementById("sentinel-toast");
                 if (!el || !message) return;
 
@@ -460,6 +465,113 @@
         };
         })();
     </script>
+
+    @if (analyticsIsDemo)
+    {
+        <!-- Demo email share modal — only rendered for active demo sessions -->
+        <div class="modal fade" id="demo-share-modal" tabindex="-1"
+             aria-labelledby="demo-share-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-dark text-white border border-secondary">
+                    <div class="modal-header border-secondary">
+                        <h5 class="modal-title" id="demo-share-label">📧 Share Demo Access</h5>
+                        <button type="button" class="btn-close btn-close-white"
+                                data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-muted small mb-3">
+                            Send a one-time login link so someone else can join
+                            <strong>this exact demo session</strong>.
+                            Link expires in @demoSmsExpiry minutes.
+                        </p>
+                        <form id="demo-share-form" autocomplete="off">
+                            @Html.AntiForgeryToken()
+                            <div class="mb-3">
+                                <label class="form-label">Email address</label>
+                                <input type="email" name="toEmail"
+                                       class="form-control bg-dark text-white border-secondary"
+                                       placeholder="colleague@example.com" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Role</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               name="role" value="Supervisor" id="share-role-sup" />
+                                        <label class="form-check-label" for="share-role-sup">Supervisor</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               name="role" value="Operator" id="share-role-op" checked />
+                                        <label class="form-check-label" for="share-role-op">Operator</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                               name="role" value="Tech" id="share-role-tech" />
+                                        <label class="form-check-label" for="share-role-tech">Tech</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" id="demo-share-submit"
+                                    class="btn btn-sentinel-primary w-100">Send Link</button>
+                        </form>
+                        <div id="demo-share-result" class="mt-3" style="display:none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function () {
+                const form = document.getElementById('demo-share-form');
+                if (!form) return;
+
+                form.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const btn = document.getElementById('demo-share-submit');
+                    const result = document.getElementById('demo-share-result');
+
+                    btn.disabled = true;
+                    btn.textContent = 'Sending\u2026';
+                    result.style.display = 'none';
+
+                    try {
+                        const resp = await fetch('/DemoUser/SendEmailLink', {
+                            method: 'POST',
+                            body: new FormData(form)
+                        });
+                        const data = await resp.json();
+
+                        result.style.display = 'block';
+                        if (data.error) {
+                            result.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                        } else if (data.emailSent) {
+                            result.innerHTML = `<div class="alert alert-success">\u2705 Email sent! Link expires in @demoSmsExpiry minutes.</div>`;
+                            form.reset();
+                        } else {
+                            const link = data.link || '';
+                            const escaped = link.replace(/'/g, "\\'");
+                            result.innerHTML = `
+                                <div class="alert alert-warning">
+                                    <strong>Email not configured.</strong> Share this link manually:
+                                    <div class="mt-2 text-break small"><a href="${link}" target="_blank">${link}</a></div>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary mt-2"
+                                            onclick="navigator.clipboard.writeText('${escaped}').then(()=>this.textContent='\u2705 Copied!')">
+                                        \uD83D\uDCCB Copy link
+                                    </button>
+                                </div>`;
+                        }
+                    } catch {
+                        result.style.display = 'block';
+                        result.innerHTML = `<div class="alert alert-danger">Request failed. Please try again.</div>`;
+                    } finally {
+                        btn.disabled = false;
+                        btn.textContent = 'Send Link';
+                    }
+                });
+            })();
+        </script>
+    }
 
     @RenderSection("Scripts", required: false)
     <div id="sentinel-toast" class="sentinel-toast"></div>
