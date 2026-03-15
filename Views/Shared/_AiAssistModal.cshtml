@@ -1,0 +1,236 @@
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+    <!-- ✦ AI Assist FAB -->
+    <button type="button"
+            id="ai-assist-fab"
+            class="ai-assist-fab"
+            data-bs-toggle="modal"
+            data-bs-target="#aiAssistModal"
+            title="AI Assist">
+        ✦
+    </button>
+
+    <!-- ✦ AI Assist Modal -->
+    <div class="modal fade" id="aiAssistModal" tabindex="-1" aria-labelledby="aiAssistModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content ai-assist-modal-content">
+                <div class="modal-header ai-assist-modal-header">
+                    <span class="modal-title fw-semibold" id="aiAssistModalLabel">✦ AI Assist</span>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ai-assist-modal-body">
+                    <p class="text-muted small mb-3">Ask about incidents, search history, or draft a new report.</p>
+
+                    <!-- Mode tabs -->
+                    <div class="d-flex gap-2 flex-wrap mb-3">
+                        <button class="btn btn-sm btn-sentinel-primary ai-mode-btn" data-mode="Ask">Ask</button>
+                        <button class="btn btn-sm btn-sentinel-ghost ai-mode-btn" data-mode="Command">Command</button>
+                        <button class="btn btn-sm btn-sentinel-ghost ai-mode-btn" data-mode="Troubleshoot">Troubleshoot</button>
+                    </div>
+
+                    <div class="border-bottom border-secondary mb-3"></div>
+
+                    <!-- Input -->
+                    <div class="d-flex gap-2 align-items-end mb-2">
+                        <textarea id="ai-input"
+                                  class="form-control"
+                                  rows="2"
+                                  placeholder="Ask about incidents, equipment status, or history… (Enter to send)"
+                                  style="resize:none;"></textarea>
+                        <button id="ai-send-btn" class="btn btn-sentinel-primary flex-shrink-0">Send</button>
+                    </div>
+
+                    <!-- Loading -->
+                    <div id="ai-loading" class="mt-2 text-muted small" style="display:none;">✦ Thinking…</div>
+
+                    <!-- Error -->
+                    <div id="ai-error" class="mt-2 small text-danger" style="display:none;"></div>
+
+                    <!-- Response -->
+                    <div id="ai-response-area" class="mt-3" style="display:none;">
+                        <div id="ai-answer"
+                             class="p-3 rounded"
+                             style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); white-space:pre-wrap; line-height:1.6;"></div>
+                        <div id="ai-citations" class="mt-2 d-flex flex-wrap gap-1"></div>
+                        <div id="ai-actions" class="mt-2 d-flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .ai-assist-fab {
+            position: fixed;
+            bottom: 1.75rem;
+            right: 1.75rem;
+            z-index: 1040;
+            width: 3.25rem;
+            height: 3.25rem;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #2c3358 0, #141a30 60%, #050713 100%);
+            border: 1px solid rgba(0, 200, 255, 0.45);
+            color: rgba(0, 200, 255, 0.9);
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            box-shadow: 0 0 18px rgba(0, 200, 255, 0.25), 0 4px 12px rgba(0, 0, 0, 0.5);
+            transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+        }
+
+            .ai-assist-fab:hover {
+                border-color: rgba(0, 200, 255, 0.8);
+                box-shadow: 0 0 28px rgba(0, 200, 255, 0.45), 0 4px 16px rgba(0, 0, 0, 0.6);
+                transform: scale(1.07);
+                color: #00c8ff;
+            }
+
+        .ai-assist-modal-content {
+            background: radial-gradient(circle at top left, #2c3358 0, #141a30 45%, #050713 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #e8eaf2;
+        }
+
+        .ai-assist-modal-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(0, 200, 255, 0.9);
+        }
+
+        .ai-assist-modal-body {
+            padding: 1.25rem;
+        }
+    </style>
+
+    <script>
+    (function () {
+        let sessionId = null;
+        let currentMode = 'Ask';
+
+        const modalEl    = document.getElementById('aiAssistModal');
+        const input      = document.getElementById('ai-input');
+        const sendBtn    = document.getElementById('ai-send-btn');
+        const loadingEl  = document.getElementById('ai-loading');
+        const errorEl    = document.getElementById('ai-error');
+        const responseEl = document.getElementById('ai-response-area');
+        const answerEl   = document.getElementById('ai-answer');
+        const citeEl     = document.getElementById('ai-citations');
+        const actionsEl  = document.getElementById('ai-actions');
+
+        if (!input) return;
+
+        // Focus textarea when modal opens
+        if (modalEl) {
+            modalEl.addEventListener('shown.bs.modal', () => input.focus());
+        }
+
+        // Mode tab switching
+        document.querySelectorAll('.ai-mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.ai-mode-btn').forEach(b => {
+                    b.classList.remove('btn-sentinel-primary');
+                    b.classList.add('btn-sentinel-ghost');
+                });
+                btn.classList.remove('btn-sentinel-ghost');
+                btn.classList.add('btn-sentinel-primary');
+                currentMode = btn.dataset.mode;
+            });
+        });
+
+        // Enter to send (Shift+Enter for newline)
+        input.addEventListener('keydown', e => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendQuery();
+            }
+        });
+
+        sendBtn.addEventListener('click', sendQuery);
+
+        async function sendQuery() {
+            const text = input.value.trim();
+            if (!text) return;
+
+            sendBtn.disabled = true;
+            input.disabled = true;
+            loadingEl.style.display = 'block';
+            responseEl.style.display = 'none';
+            errorEl.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/ai/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userText: text, sessionId, mode: currentMode })
+                });
+
+                if (!res.ok) {
+                    const msg = await res.text().catch(() => `HTTP ${res.status}`);
+                    throw new Error(msg);
+                }
+
+                const data = await res.json();
+                sessionId = data.sessionId;
+
+                answerEl.textContent = data.answer || '(No response)';
+
+                // Citations
+                citeEl.innerHTML = '';
+                if (data.citations && data.citations.length) {
+                    data.citations.forEach(c => {
+                        const chip = document.createElement('span');
+                        chip.className = 'badge bg-secondary me-1 mb-1';
+                        chip.style.cssText = 'font-size:0.72rem; font-weight:400; white-space:normal; text-align:left;';
+                        chip.textContent = c.length > 80 ? c.substring(0, 80) + '\u2026' : c;
+                        citeEl.appendChild(chip);
+                    });
+                }
+
+                // Suggested actions
+                actionsEl.innerHTML = '';
+                if (data.suggestedActions && data.suggestedActions.length) {
+                    data.suggestedActions.forEach(a => {
+                        const btn = document.createElement('button');
+                        btn.className = 'btn btn-sm btn-sentinel-ghost';
+                        btn.textContent = a.label;
+                        btn.addEventListener('click', () => handleAction(a.action, a.payload));
+                        actionsEl.appendChild(btn);
+                    });
+                }
+
+                responseEl.style.display = 'block';
+
+            } catch (err) {
+                errorEl.textContent = 'Could not reach AI assistant. Make sure Ollama is running locally.';
+                errorEl.style.display = 'block';
+                console.error('AI query error:', err);
+            } finally {
+                sendBtn.disabled = false;
+                input.disabled = false;
+                loadingEl.style.display = 'none';
+            }
+        }
+
+        function handleAction(action, payload) {
+            if (action === 'view_incident') {
+                window.location.href = '/Maintenance/Details/' + payload;
+            } else if (action === 'create_incident') {
+                try {
+                    const draft = JSON.parse(payload || '{}');
+                    const params = new URLSearchParams();
+                    if (draft.issueSummary) params.set('description', draft.issueSummary);
+                    if (draft.priority)     params.set('priority',     draft.priority);
+                    if (draft.areaId)       params.set('areaId',       draft.areaId);
+                    if (draft.workCenterId) params.set('workCenterId', draft.workCenterId);
+                    if (draft.equipmentId)  params.set('equipmentId',  draft.equipmentId);
+                    window.location.href = '/Maintenance/Create?' + params.toString();
+                } catch {
+                    window.location.href = '/Maintenance/Create';
+                }
+            }
+        }
+    })();
+    </script>
+}

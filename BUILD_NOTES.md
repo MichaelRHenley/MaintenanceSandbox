@@ -49,13 +49,50 @@ Applied via `[ServiceFilter(typeof(BlockDemoFilter))]` on individual action meth
 `UserInvitesAdmin/Invite` (GET + POST).  
 **Assumption:** Any new user-creation or invite endpoint added in future must also be decorated.
 
-### AI Integration — Claude
-**Decision:** Claude (Anthropic) is the AI backend. `IChatModel` abstracts the HTTP call.
-`ClaudeChatModel` is the real impl; `StubAiAssistantClient` is the fallback for local dev without
-a key.  
-**Status:** Connection currently broken / stubbed — see WEEKEND_PLAN.md.  
-**AiOptions:** API key and model config come from `appsettings.json` → `Ai:` section, overridden
-by user secrets in dev.
+### AI Integration — Claude (Onboarding & Help Panel)
+**Decision:** Claude (Anthropic) handles the guided onboarding flow and the contextual `?` help
+panel (`_AiHelpLauncher`). `IChatModel` abstracts the HTTP call. `ClaudeChatModel` is the
+production impl; `NullChatModel` is registered as the fallback when `Ai:ApiKey` is empty.  
+**Key config:** `appsettings.json` → `Ai:` section (`Provider`, `Model`, `MaxTokens`). API key
+comes from user secrets in dev; `Ai__ApiKey` env var in production.  
+**Separate interfaces:** `IOnboardingAiService` and `IMaintenanceSuggestionService` are kept
+separate even though both hit Claude — isolates prompts and context windows per domain.
+
+### AI Assist — Ollama Orchestrator (Incident Intelligence)
+**Decision:** The full AI Assist chat panel (Ask / Command / Troubleshoot modes) runs against a
+local Ollama instance, not Claude. This keeps operational AI free, offline-capable, and
+key-free for demos and dev.  
+**Model:** `llama3.2` (3b / ~2 GB by default). Configured in `appsettings.json` → `Ollama:BaseUrl`
+and `Ollama:ChatModel`.  
+**2-turn orchestration (`AiOrchestrator`):**
+- Turn 1 — Intent extraction: temp 0.05, 250 tokens → structured `AiParsedIntent` JSON.
+- Turn 2 — Response composition: temp 0.2, 400 tokens — skipped for action-only intents
+  (e.g. `CreateIncidentDraft`).
+
+**Three read-only + draft tools (`IncidentAiTools`):**
+- `SearchIncidentsAsync` — full-text search across recent maintenance requests.
+- `GetEquipmentStatusAsync` — live equipment + open-request status lookup.
+- `CreateIncidentDraftAsync` — async DB lookup (`Equipment.Include(WorkCenter)`) resolves
+  `equipmentId`, `workCenterId`, `areaId`; serialises a JSON payload for the Create form.
+
+**Intent fallback:** Small LLMs sometimes put the issue description in `symptom` instead of
+`issueSummary`. Orchestrator always uses `intent.IssueSummary ?? intent.Symptom`.  
+**Null payload rule:** `issueSummary` in the `CreateIncidentDraft` payload is `null` when the
+LLM didn't extract a value — never `"Not specified"`. The display fallback string only appears
+in the human-readable AI summary text, never in the action payload JSON.  
+**Audit trail:** Every session, message, and tool invocation is written to three tables:
+`AiConversationSession`, `AiConversationMessage`, `AiToolAudit`. Migration: `AddAiAuditTables`.  
+**UI — Floating modal:** `Views/Shared/_AiAssistModal.cshtml` is included from `_Layout.cshtml`
+for all authenticated users — no per-page wiring required. A fixed ✦ FAB (bottom-right,
+`z-index: 1040`) opens a Bootstrap modal. JS maintains `sessionId` for multi-turn continuity.
+`handleAction` routes `create_incident` payloads to `GET /Maintenance/Create?description=...`
+with all five query params (description, priority, areaId, workCenterId, equipmentId).  
+**Endpoint:** `POST /api/ai/query` → `AiController.Query`. Tenant and username resolved from
+HTTP context claims — no explicit params from client.  
+**Create form pre-fill:** `GET /Maintenance/Create` accepts `description?` and `priority?` query
+params. The cascade dropdown `nav()` function preserves them through Area→WorkCenter→Equipment
+reloads. The form uses `method="post"` with `asp-action`/`asp-controller` tag helpers
+(antiforgery token auto-injected).
 
 ### Demo AI Rate Limiting
 **Decision:** Demo sessions are capped at **20 Claude API calls per hour per tenant**. All three
@@ -77,9 +114,6 @@ tenants are completely unaffected.
 **Gotcha:** `IMemoryCache.Set()` does not preserve an existing expiry — the expiry must be stored
 inside the cached value itself (the `Window(Count, Expiry)` record) and re-applied on every write.
 
-
-**Decision:** `IOnboardingAiService` and `IMaintenanceSuggestionService` are separate interfaces
-even though both hit Claude. Keeps prompts and context windows isolated per domain.
 
 ---
 
@@ -110,6 +144,9 @@ even though both hit Claude. Keeps prompts and context windows isolated per doma
 | Demo user claims | `DemoUserProvider` bypasses ASP.NET Identity entirely. Demo users have no `ApplicationUser` record. Any code that calls `UserManager.GetUserAsync(User)` will return `null` for demo sessions. |
 | Localization | All user-facing strings go through `IStringLocalizer<SharedResource>`. Keys follow the pattern `Section_Page_Element`. Don't hardcode English strings in views. |
 | Claude connection | `ClaudeChatModel` is wired and live. `NullChatModel` is registered as the fallback when `Ai:ApiKey` is empty (dev without a key). Key comes from user secrets in dev; `Ai__ApiKey` machine env var in production. |
+| Ollama must be running | `/api/ai/query` returns a user-visible error if Ollama is not reachable at `Ollama:BaseUrl` (default `http://localhost:11434`). No health-check gate — the error surfaces directly in the AI Assist modal. Run `ollama serve` and `ollama pull llama3.2` before testing AI Assist locally. |
+| AI Assist modal (layout) | `_AiAssistModal.cshtml` is rendered from `_Layout.cshtml` for all authenticated users. No per-page wiring is needed when adding new pages. FAB sits at `z-index: 1040` — below Bootstrap modal backdrop (1050) — so it disappears naturally when any other modal is open. |
+| CreateIncidentDraft pre-fill | Description and priority travel as query-string params to `GET /Maintenance/Create`. The cascade `nav()` JS re-attaches them on every dropdown reload. If the LLM omits them entirely the form still loads blank — no error. |
 
 ---
 

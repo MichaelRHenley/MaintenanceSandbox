@@ -225,7 +225,7 @@ public class MaintenanceController : Controller
     // CREATE (GET)
     // --------------------------------------------------------------------
     [HttpGet]
-    public async Task<IActionResult> Create(int? areaId, int? workCenterId, int? equipmentId)
+    public async Task<IActionResult> Create(int? areaId, int? workCenterId, int? equipmentId, string? description = null, string? priority = null)
     {
         PopulateCommonViewData();
         var demoUser = _demoUserProvider.CurrentUser;
@@ -273,7 +273,8 @@ public class MaintenanceController : Controller
             EquipmentId = equipmentId,
 
             RequestedBy = demoUser.Name,
-            Priority = "Medium",
+            Priority = priority ?? "Medium",
+            Description = description,
 
             AreaOptions = areas.Select(a => new SelectListItem
             {

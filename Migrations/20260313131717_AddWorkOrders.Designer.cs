@@ -4,6 +4,7 @@ using MaintenanceSandbox.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MaintenanceSandbox.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260313131717_AddWorkOrders")]
+    partial class AddWorkOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,129 +24,6 @@ namespace MaintenanceSandbox.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("MaintenanceSandbox.Models.AiConversationMessage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Language")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("NormalizedText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OriginalText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("SessionId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SessionId");
-
-                    b.ToTable("AiConversationMessages");
-                });
-
-            modelBuilder.Entity("MaintenanceSandbox.Models.AiConversationSession", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("IncidentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Mode")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("SessionId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTime>("StartedUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
-
-                    b.ToTable("AiConversationSessions");
-                });
-
-            modelBuilder.Entity("MaintenanceSandbox.Models.AiToolAudit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedUtc")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SessionId")
-                        .IsRequired()
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<bool>("Succeeded")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ToolInputJson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ToolName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ToolOutputJson")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SessionId");
-
-                    b.ToTable("AiToolAudits");
-                });
 
             modelBuilder.Entity("MaintenanceSandbox.Models.AppUser", b =>
                 {
@@ -902,6 +782,68 @@ namespace MaintenanceSandbox.Migrations
                     b.ToTable("TenantSite");
                 });
 
+            modelBuilder.Entity("MaintenanceSandbox.Models.WorkOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AssignedTo")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsOnboarded")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaintenanceRequestId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("OnboardedAtUtc")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("OnboardedByUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("WorkOrderNumber")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaintenanceRequestId")
+                        .IsUnique();
+
+                    b.HasIndex("TenantId", "WorkOrderNumber")
+                        .IsUnique();
+
+                    b.ToTable("WorkOrders");
+                });
+
             modelBuilder.Entity("MaintenanceSandbox.Models.BomItem", b =>
                 {
                     b.HasOne("MaintenanceSandbox.Models.Asset", "Asset")
@@ -1024,6 +966,17 @@ namespace MaintenanceSandbox.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("MaintenanceSandbox.Models.WorkOrder", b =>
+                {
+                    b.HasOne("MaintenanceSandbox.Models.MaintenanceRequest", "MaintenanceRequest")
+                        .WithOne("WorkOrder")
+                        .HasForeignKey("MaintenanceSandbox.Models.WorkOrder", "MaintenanceRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MaintenanceRequest");
+                });
+
             modelBuilder.Entity("MaintenanceSandbox.Models.Asset", b =>
                 {
                     b.Navigation("BomItems");
@@ -1032,6 +985,8 @@ namespace MaintenanceSandbox.Migrations
             modelBuilder.Entity("MaintenanceSandbox.Models.MaintenanceRequest", b =>
                 {
                     b.Navigation("Messages");
+
+                    b.Navigation("WorkOrder");
                 });
 
             modelBuilder.Entity("MaintenanceSandbox.Models.MasterData.Area", b =>

@@ -59,6 +59,14 @@ public sealed class AppDbContext : DbContext
     public DbSet<Tenant> Tenants => Set<Tenant>();
 
     // ============================
+    // AI AUDIT
+    // ============================
+
+    public DbSet<AiConversationSession> AiConversationSessions => Set<AiConversationSession>();
+    public DbSet<AiConversationMessage> AiConversationMessages => Set<AiConversationMessage>();
+    public DbSet<AiToolAudit> AiToolAudits => Set<AiToolAudit>();
+
+    // ============================
     // MODEL CONFIGURATION
     // ============================
 
@@ -168,7 +176,32 @@ public sealed class AppDbContext : DbContext
             b.HasIndex(x => new { x.TenantId, x.UserId }).IsUnique();
         });
 
- 
+        // -------------------------------------------------
+        // AI AUDIT TABLES
+        // -------------------------------------------------
+
+        modelBuilder.Entity<AiConversationSession>(b =>
+        {
+            b.HasIndex(x => x.TenantId);
+            b.Property(x => x.SessionId).HasMaxLength(36).IsRequired();
+            b.Property(x => x.UserName).HasMaxLength(200);
+            b.Property(x => x.Mode).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<AiConversationMessage>(b =>
+        {
+            b.HasIndex(x => x.SessionId);
+            b.Property(x => x.SessionId).HasMaxLength(36).IsRequired();
+            b.Property(x => x.Role).HasMaxLength(20).IsRequired();
+            b.Property(x => x.Language).HasMaxLength(20);
+        });
+
+        modelBuilder.Entity<AiToolAudit>(b =>
+        {
+            b.HasIndex(x => x.SessionId);
+            b.Property(x => x.SessionId).HasMaxLength(36).IsRequired();
+            b.Property(x => x.ToolName).HasMaxLength(100).IsRequired();
+        });
 
         // -------------------------------------------------
         // MULTI-TENANT GLOBAL FILTER

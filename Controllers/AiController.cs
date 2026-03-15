@@ -3,6 +3,7 @@ using Microsoft.Extensions.Localization;
 using MaintenanceSandbox.Data;
 using MaintenanceSandbox.Demo;
 using MaintenanceSandbox.Services;
+using MaintenanceSandbox.Services.Ai;
 using System.Security.Claims;
 
 namespace MaintenanceSandbox.Controllers.Api;
@@ -13,17 +14,20 @@ namespace MaintenanceSandbox.Controllers.Api;
 public class AiController : ControllerBase
 {
     private readonly IAiAssistantClient _aiClient;
+    private readonly IAiOrchestrator _orchestrator;
     private readonly IStringLocalizer<SharedResource> _localizer;
     private readonly ILogger<AiController> _logger;
     private readonly IDemoAiRateLimiter _rateLimiter;
 
     public AiController(
         IAiAssistantClient aiClient,
+        IAiOrchestrator orchestrator,
         IStringLocalizer<SharedResource> localizer,
         ILogger<AiController> logger,
         IDemoAiRateLimiter rateLimiter)
     {
         _aiClient = aiClient;
+        _orchestrator = orchestrator;
         _localizer = localizer;
         _logger = logger;
         _rateLimiter = rateLimiter;
@@ -58,6 +62,33 @@ public class AiController : ControllerBase
             _logger.LogError(ex, "AI Help request failed");
             return StatusCode(500, _localizer["AiHelp_Error"].Value);
         }
+    }
+
+    [HttpPost("query")]
+    public async Task<IActionResult> Query([FromBody] AiQueryRequest request, CancellationToken ct)
+    {
+        if (string.IsNullOrWhiteSpace(request.UserText))
+            return BadRequest("UserText is required.");
+
+        if (User.HasClaim("is_demo", "true"))
+        {
+            var tenantId = User.FindFirstValue("tenant_id") ?? "unknown";
+            if (!_rateLimiter.TryConsume(tenantId))
+                return StatusCode(429, "Demo AI limit reached — please try again later.");
+        }
+
+        var tenantIdStr = User.FindFirstValue("tenant_id");
+        var parsedTenantId = Guid.TryParse(tenantIdStr, out var tid) ? tid : Guid.Empty;
+        var userName = User.FindFirstValue(ClaimTypes.Name)
+            ?? User.FindFirstValue(ClaimTypes.Email)
+            ?? "unknown";
+
+        var response = await _orchestrator.HandleAsync(request, parsedTenantId, userName, ct);
+
+        if (!response.Success)
+            return StatusCode(503, response);
+
+        return Ok(response);
     }
 
     private static AiHelpIntent ParseIntent(string? intent)

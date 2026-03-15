@@ -31,7 +31,7 @@
                 @SR["Maint_Create_Notice_RealTime"]
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-            <form id="createForm" method="get" class="row g-3">
+            <form id="createForm" asp-action="Create" asp-controller="Maintenance" method="post" class="row g-3">
                 <input type="hidden" asp-for="SiteId" />
 
                 <div class="col-md-6">
@@ -177,6 +177,12 @@
             if (area && area.value) p.set("areaId", area.value);
             if (wc && wc.value && resetLevel !== "wc") p.set("workCenterId", wc.value);
             if (eq && eq.value && resetLevel !== "eq") p.set("equipmentId", eq.value);
+
+            // Preserve description and priority through cascade navigation
+            const descEl = document.getElementById("Description");
+            const priEl  = document.getElementById("Priority");
+            if (descEl && descEl.value.trim()) p.set("description", descEl.value.trim());
+            if (priEl  && priEl.value)          p.set("priority",    priEl.value);
 
             window.location = "@Url.Action("Create", "Maintenance")" + (p.toString() ? "?" + p.toString() : "");
           }

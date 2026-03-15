@@ -155,6 +155,20 @@ builder.Services.AddScoped<IAiAssistantClient, AiAssistantClient>();
 builder.Services.AddScoped<IOnboardingAiService, OnboardingAiService>();
 builder.Services.AddScoped<IOnboardingAiClient, OnboardingAiClient>();
 
+// =====================================================
+// AI ORCHESTRATOR (Ollama-backed incident assistant)
+// =====================================================
+builder.Services.AddHttpClient<IOllamaService, OllamaService>((sp, client) =>
+{
+    var cfg = sp.GetRequiredService<IConfiguration>();
+    var baseUrl = cfg["Ollama:BaseUrl"] ?? "http://localhost:11434";
+    client.BaseAddress = new Uri(baseUrl);
+    client.Timeout = TimeSpan.FromMinutes(2);
+});
+
+builder.Services.AddScoped<IIncidentAiTools, IncidentAiTools>();
+builder.Services.AddScoped<IAiOrchestrator, AiOrchestrator>();
+
 builder.Services.Configure<MaintenanceSandbox.Demo.DemoOptions>(
     builder.Configuration.GetSection("Demo"));
 

@@ -19,7 +19,8 @@ ASP.NET Core 8 MVC application for managing maintenance requests with multi-tena
 - **Multi-tenancy**: Row-level data isolation using `TenantId`
 - **Identity**: ASP.NET Core Identity with custom `ApplicationUser`
 - **Azure SQL**: Microsoft Entra ID (Azure AD) authentication
-- **AI Integration**: Claude AI for maintenance suggestions
+- **AI Assist**: Floating ✦ modal (all pages) — Ask / Command / Troubleshoot modes backed by a local Ollama LLM with tool-calling for incident search, equipment status, and create-incident drafting
+- **AI Integration**: Claude AI for onboarding guidance and the contextual `?` help panel
 - **Onboarding Flow**: Guided tenant provisioning and user setup
 - **Subscription Management**: Stripe integration (pilot mode available)
 - **Demo Mode**: Per-session isolated tenants with auto-seeded data and auto-purge
@@ -172,6 +173,51 @@ Demo__EmailLinkExpiryMinutes = 30
 > node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 > ```
 
+## AI Assist
+
+The ✦ AI Assist panel is accessible from every page via a fixed floating button in the bottom-right corner. Clicking it opens a modal with three modes:
+
+| Mode | What it does |
+|------|--------------|
+| **Ask** | Natural-language queries against your incident history and equipment data |
+| **Command** | Direct tool invocations — search incidents, check equipment status |
+| **Troubleshoot** | Guided diagnosis that can draft a pre-filled Create Incident form |
+
+### Local Setup (Ollama)
+
+AI Assist uses a local [Ollama](https://ollama.ai) instance — no cloud API key required.
+
+```bash
+# 1. Install Ollama (https://ollama.ai/download)
+# 2. Pull the model
+ollama pull llama3.2
+# 3. Start the server (runs on http://localhost:11434 by default)
+ollama serve
+```
+
+Configure the endpoint in `appsettings.json` (or override via user secrets):
+
+```json
+"Ollama": {
+  "BaseUrl": "http://localhost:11434",
+  "ChatModel": "llama3.2"
+}
+```
+
+If Ollama is not running, the modal shows a friendly error — no other functionality is affected.
+
+### Create Incident from AI
+
+When the AI returns a `create_incident` suggested action, clicking **✔ Create Incident** navigates
+to `GET /Maintenance/Create` with all available fields pre-filled (description, priority, area,
+work centre, equipment). Cascade dropdowns preserve AI-filled values through selection changes.
+The form submits via `POST` with antiforgery protection.
+
+### Audit Trail
+
+Every AI session, message, and tool call is recorded in three tables:
+`AiConversationSession`, `AiConversationMessage`, `AiToolAudit`.
+
 ## Configuration
 
 ### appsettings.json
@@ -185,6 +231,10 @@ Demo__EmailLinkExpiryMinutes = 30
     "Provider": "Claude",
     "Model": "claude-sonnet-4-5",
     "MaxTokens": 1024
+  },
+  "Ollama": {
+    "BaseUrl": "http://localhost:11434",
+    "ChatModel": "llama3.2"
   },
   "Analytics": {
     "GA4MeasurementId": "",
@@ -236,7 +286,15 @@ MaintenanceSandbox/
 │   └── MaintenanceRequest.cs
 ├── Security/              # Tenant claims transformation
 ├── Services/              # AI, Demo providers, TenantProvider
-└── Program.cs             # App configuration
+│   └── Ai/                # Ollama orchestrator, Claude models, AI tools
+│       ├── AiOrchestrator.cs      # 2-turn intent → tool → response pipeline
+│       ├── IncidentAiTools.cs     # DB-backed incident search & draft tools
+│       ├── OllamaService.cs       # Direct HTTP to Ollama REST API
+│       └── PromptLibrary.cs       # All system + user prompt templates
+└── Views/
+    └── Shared/
+        ├── _AiAssistModal.cshtml  # Floating FAB + modal (rendered in layout)
+        └── _AiHelpLauncher.cshtml # Contextual ? help panel (per-page)
 ```
 
 ## Key Technologies
@@ -248,6 +306,8 @@ MaintenanceSandbox/
 - Bogus (fake data generation)
 - SignalR (real-time updates)
 - Localization (en-CA, fr-CA, es-MX)
+- Ollama (local LLM runtime — llama3.2 for AI Assist incident intelligence)
+- Anthropic Claude (onboarding guidance & contextual help panel)
 
 ## Troubleshooting
 
