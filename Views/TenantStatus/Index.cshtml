@@ -4,79 +4,531 @@
 @{
     ViewData["Title"] = "Workspace Status";
 
-    var (badgeClass, icon) = Model.ProvisioningStatus switch
+    var (statusCss, statusLabel, pageTitle) = Model.ProvisioningStatus switch
     {
-        TenantProvisioningStatus.Ready        => ("bg-success",           "✅"),
-        TenantProvisioningStatus.Provisioning => ("bg-info text-dark",    "⚙️"),
-        TenantProvisioningStatus.Pending      => ("bg-secondary",         "⏳"),
-        TenantProvisioningStatus.Failed       => ("bg-danger",            "❌"),
-        TenantProvisioningStatus.Suspended    => ("bg-warning text-dark", "⛔"),
-        _                                     => ("bg-secondary",         "❓")
+        TenantProvisioningStatus.Ready        => ("ts-badge--ready",      "Ready",        "Workspace ready"),
+        TenantProvisioningStatus.Provisioning => ("ts-badge--active",     "Provisioning", "Setting up your workspace"),
+        TenantProvisioningStatus.Pending      => ("ts-badge--active",     "Pending",      "Workspace setup in progress"),
+        TenantProvisioningStatus.Failed       => ("ts-badge--failed",     "Setup failed", "We encountered a problem"),
+        TenantProvisioningStatus.Suspended    => ("ts-badge--suspended",  "Suspended",    "This workspace has been suspended"),
+        _                                     => ("ts-badge--active",     "Unknown",      "Checking workspace status"),
     };
 
     var isTransient = Model.ProvisioningStatus is
-        TenantProvisioningStatus.Pending or
-        TenantProvisioningStatus.Provisioning;
+        TenantProvisioningStatus.Pending or TenantProvisioningStatus.Provisioning;
+
+    var rawName     = Model.TenantName ?? string.Empty;
+    var isDemoName  = rawName.StartsWith("demo-", StringComparison.OrdinalIgnoreCase);
+    var displayName = isDemoName ? "Demo Workspace" : rawName;
 }
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
+<style>
+    /* -------------------------------------------------------
+       TenantStatus — page-scoped styles
+       ------------------------------------------------------- */
 
-            <div class="sentinel-card text-center p-4 p-md-5">
+    .ts-viewport {
+        min-height: calc(100vh - 62px);
+        display: flex;
+        align-items: center;
+        padding: 2.5rem 0;
+    }
 
-                <div style="font-size: 3rem; line-height: 1; margin-bottom: 1.25rem;">@icon</div>
+    .ts-card {
+        padding: 2.5rem 2rem 2.25rem;
+    }
 
-                @if (!string.IsNullOrEmpty(Model.TenantName))
-                {
-                    <h2 class="mb-2">@Model.TenantName</h2>
-                }
+    @@media (min-width: 576px) {
+        .ts-card {
+            padding: 3rem 3rem 2.75rem;
+        }
+    }
 
-                <span class="badge @badgeClass fs-6 mb-4">@Model.ProvisioningStatus</span>
+    /* Eyebrow */
+    .ts-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        font-size: 0.625rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.13em;
+        color: var(--sentinel-text-muted);
+        opacity: 0.6;
+        margin-bottom: 2rem;
+    }
 
-                <p class="text-muted mb-4">@Model.DisplayMessage</p>
+    .ts-eyebrow-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--sentinel-accent);
+        flex-shrink: 0;
+    }
 
-                @if (isTransient)
-                {
-                    <p class="small text-muted mb-2">
-                        This page will refresh automatically in <span id="countdown">15</span> seconds.
-                    </p>
-                    <div class="progress mb-4" style="height: 4px;">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-                             style="width: 100%"></div>
+    /* Icon / spinner area */
+    .ts-icon-area {
+        margin-bottom: 1.75rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Spinner — nested rings for pending / provisioning */
+    .ts-spinner {
+        position: relative;
+        width: 64px;
+        height: 64px;
+    }
+
+    .ts-spinner__outer {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px solid rgba(56, 189, 248, 0.10);
+        border-top-color: #38bdf8;
+        animation: ts-spin 1.4s linear infinite;
+    }
+
+    .ts-spinner__inner {
+        position: absolute;
+        inset: 11px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(56, 189, 248, 0.07);
+        border-bottom-color: rgba(56, 189, 248, 0.45);
+        animation: ts-spin 2s linear infinite reverse;
+    }
+
+    .ts-spinner__core {
+        position: absolute;
+        inset: 23px;
+        border-radius: 50%;
+        background: rgba(56, 189, 248, 0.12);
+        animation: ts-pulse 2.2s ease-in-out infinite;
+    }
+
+    @@keyframes ts-spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @@keyframes ts-pulse {
+        0%, 100% { opacity: 0.35; transform: scale(0.8); }
+        50%       { opacity: 1;    transform: scale(1.15); }
+    }
+
+    /* SVG icon for non-transient states */
+    .ts-status-icon {
+        width: 58px;
+        height: 58px;
+    }
+
+    /* Page title */
+    .ts-title {
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: var(--sentinel-text);
+        letter-spacing: 0.01em;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+    }
+
+    /* Workspace identifier block */
+    .ts-workspace {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.2rem;
+        margin-bottom: 1.5rem;
+        padding: 0.7rem 1.25rem;
+        border-radius: 0.6rem;
+        background: rgba(8, 15, 28, 0.7);
+        border: 1px solid rgba(31, 41, 55, 0.9);
+    }
+
+    .ts-workspace__label {
+        font-size: 0.575rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.11em;
+        color: var(--sentinel-text-muted);
+        opacity: 0.55;
+    }
+
+    .ts-workspace__name {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--sentinel-text);
+        word-break: break-word;
+        line-height: 1.35;
+    }
+
+    .ts-workspace__raw {
+        font-size: 0.6rem;
+        color: var(--sentinel-text-muted);
+        opacity: 0.4;
+        font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+        word-break: break-all;
+        line-height: 1.5;
+        margin-top: 0.1rem;
+    }
+
+    /* Status badge */
+    .ts-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.28rem 0.85rem;
+        border-radius: 999px;
+        font-size: 0.675rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        border: 1px solid transparent;
+        margin-bottom: 1.25rem;
+    }
+
+    .ts-badge--ready {
+        background: rgba(34, 197, 94, 0.10);
+        border-color: rgba(34, 197, 94, 0.22);
+        color: #86efac;
+    }
+
+    .ts-badge--active {
+        background: rgba(56, 189, 248, 0.09);
+        border-color: rgba(56, 189, 248, 0.18);
+        color: #7dd3fc;
+    }
+
+    .ts-badge--failed {
+        background: rgba(239, 68, 68, 0.10);
+        border-color: rgba(239, 68, 68, 0.22);
+        color: #fca5a5;
+    }
+
+    .ts-badge--suspended {
+        background: rgba(245, 158, 11, 0.10);
+        border-color: rgba(245, 158, 11, 0.22);
+        color: #fcd34d;
+    }
+
+    .ts-badge-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+        flex-shrink: 0;
+    }
+
+    .ts-badge--active .ts-badge-dot {
+        animation: ts-blink 1.3s ease-in-out infinite;
+    }
+
+    @@keyframes ts-blink {
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0.15; }
+    }
+
+    /* Message */
+    .ts-message {
+        color: var(--sentinel-text-muted);
+        font-size: 0.875rem;
+        line-height: 1.65;
+        margin: 0 auto 0.5rem;
+        max-width: 38ch;
+    }
+
+    .ts-submessage {
+        font-size: 0.75rem;
+        color: var(--sentinel-text-muted);
+        opacity: 0.5;
+        line-height: 1.6;
+        margin: 0 auto 1.75rem;
+        max-width: 44ch;
+    }
+
+    /* Progress track + animated fill */
+    .ts-progress-track {
+        height: 2px;
+        border-radius: 999px;
+        background: rgba(56, 189, 248, 0.07);
+        overflow: hidden;
+        margin-bottom: 0.65rem;
+    }
+
+    .ts-progress-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.35), #38bdf8);
+        box-shadow: 0 0 6px rgba(56, 189, 248, 0.45);
+        transition: width 1s linear;
+    }
+
+    .ts-countdown-label {
+        font-size: 0.72rem;
+        color: var(--sentinel-text-muted);
+        opacity: 0.55;
+        margin: 0;
+    }
+
+    .ts-countdown-label strong {
+        color: var(--sentinel-accent);
+        font-variant-numeric: tabular-nums;
+        opacity: 1;
+    }
+
+    /* Error details */
+    .ts-details {
+        border: 1px solid rgba(239, 68, 68, 0.18);
+        border-radius: 0.6rem;
+        padding: 0.7rem 1rem;
+        text-align: left;
+        margin-top: 1.25rem;
+    }
+
+    .ts-details summary {
+        font-size: 0.72rem;
+        color: var(--sentinel-text-muted);
+        cursor: pointer;
+        user-select: none;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .ts-details summary::-webkit-details-marker { display: none; }
+
+    .ts-details summary::before {
+        content: "▸";
+        font-size: 0.65rem;
+        transition: transform 0.15s ease;
+    }
+
+    .ts-details[open] summary::before {
+        transform: rotate(90deg);
+    }
+
+    .ts-error-pre {
+        background: rgba(239, 68, 68, 0.05);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.13);
+        border-radius: 0.5rem;
+        padding: 0.7rem 0.9rem;
+        font-size: 0.7rem;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin: 0.65rem 0 0;
+    }
+
+    /* Meta timestamp */
+    .ts-meta {
+        font-size: 0.67rem;
+        color: var(--sentinel-text-muted);
+        opacity: 0.4;
+        margin: 1rem 0 0;
+    }
+
+    /* Divider + support line */
+    .ts-divider {
+        border: none;
+        border-top: 1px solid var(--sentinel-border);
+        margin: 1.75rem 0 1.5rem;
+        opacity: 0.4;
+    }
+
+    .ts-support {
+        font-size: 0.78rem;
+        color: var(--sentinel-text-muted);
+        opacity: 0.7;
+        margin: 0;
+    }
+
+    .ts-support a {
+        color: var(--sentinel-accent);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+        transition: border-color 0.15s, opacity 0.15s;
+    }
+
+    .ts-support a:hover {
+        border-bottom-color: var(--sentinel-accent);
+        opacity: 1;
+    }
+
+    /* Demo escape */
+    .ts-demo-escape {
+        margin-top: 1.5rem;
+        padding: 0.9rem 1.1rem;
+        border-radius: 0.6rem;
+        border: 1px solid rgba(56, 189, 248, 0.14);
+        background: rgba(56, 189, 248, 0.04);
+    }
+
+    .ts-demo-escape p {
+        font-size: 0.75rem;
+        color: var(--sentinel-text-muted);
+        opacity: 0.65;
+        margin: 0 0 0.65rem;
+    }
+
+    .ts-demo-escape-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.35rem 1rem;
+        border-radius: 0.45rem;
+        border: 1px solid rgba(56, 189, 248, 0.28);
+        background: rgba(56, 189, 248, 0.08);
+        color: #7dd3fc;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.15s, border-color 0.15s;
+    }
+
+    .ts-demo-escape-btn:hover {
+        background: rgba(56, 189, 248, 0.15);
+        border-color: rgba(56, 189, 248, 0.45);
+        color: #bae6fd;
+    }
+</style>
+
+<div class="ts-viewport">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+
+                <div class="sentinel-card ts-card text-center">
+
+                    <!-- Eyebrow -->
+                    <div class="ts-eyebrow">
+                        <span class="ts-eyebrow-dot" aria-hidden="true"></span>
+                        Sentinel AI Systems &mdash; Platform Status
                     </div>
-                }
 
-                @if (Model.ProvisioningStatus == TenantProvisioningStatus.Failed
-                     && !string.IsNullOrEmpty(Model.LastProvisioningError))
-                {
-                    <details class="text-start mb-4">
-                        <summary class="small text-muted" style="cursor: pointer;">Technical details</summary>
-                        <pre class="bg-dark text-danger p-3 rounded small mt-2"
-                             style="overflow-x: auto; white-space: pre-wrap;">@Model.LastProvisioningError</pre>
-                    </details>
-                }
+                    <!-- Status icon -->
+                    <div class="ts-icon-area">
+                        @if (isTransient)
+                        {
+                            <div class="ts-spinner" aria-hidden="true">
+                                <div class="ts-spinner__outer"></div>
+                                <div class="ts-spinner__inner"></div>
+                                <div class="ts-spinner__core"></div>
+                            </div>
+                        }
+                        else if (Model.ProvisioningStatus == TenantProvisioningStatus.Ready)
+                        {
+                            <svg class="ts-status-icon" viewBox="0 0 58 58" fill="none" aria-hidden="true">
+                                <circle cx="29" cy="29" r="27" stroke="#22c55e" stroke-width="1.5" opacity=".18"/>
+                                <circle cx="29" cy="29" r="20" stroke="#22c55e" stroke-width="1" opacity=".1"/>
+                                <path d="M21 29.5l5.5 5.5 11-11" stroke="#22c55e" stroke-width="2.5"
+                                      stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        }
+                        else if (Model.ProvisioningStatus == TenantProvisioningStatus.Failed)
+                        {
+                            <svg class="ts-status-icon" viewBox="0 0 58 58" fill="none" aria-hidden="true">
+                                <circle cx="29" cy="29" r="27" stroke="#ef4444" stroke-width="1.5" opacity=".18"/>
+                                <circle cx="29" cy="29" r="20" stroke="#ef4444" stroke-width="1" opacity=".1"/>
+                                <path d="M22 22l14 14M36 22L22 36" stroke="#ef4444" stroke-width="2.5"
+                                      stroke-linecap="round"/>
+                            </svg>
+                        }
+                        else
+                        {
+                            <svg class="ts-status-icon" viewBox="0 0 58 58" fill="none" aria-hidden="true">
+                                <circle cx="29" cy="29" r="27" stroke="#f59e0b" stroke-width="1.5" opacity=".18"/>
+                                <circle cx="29" cy="29" r="20" stroke="#f59e0b" stroke-width="1" opacity=".1"/>
+                                <rect x="24.5" y="21" width="4" height="16" rx="2" fill="#f59e0b" opacity=".75"/>
+                                <rect x="31" y="21" width="4" height="16" rx="2" fill="#f59e0b" opacity=".75"/>
+                            </svg>
+                        }
+                    </div>
 
-                @if (Model.ProvisionedAt.HasValue)
-                {
-                    <p class="small text-muted mb-3">
-                        Last provisioned: @Model.ProvisionedAt.Value.ToString("yyyy-MM-dd HH:mm") UTC
-                    </p>
-                }
+                    <!-- Title -->
+                    <h1 class="ts-title">@pageTitle</h1>
 
-                @if (Model.ProvisioningStatus is
-                     TenantProvisioningStatus.Failed or
-                     TenantProvisioningStatus.Suspended)
-                {
-                    <hr class="border-secondary my-3" />
-                    <p class="small text-muted mb-0">
-                        Need help? Contact
-                        <a href="mailto:support@sentinel.ai" class="text-info">Sentinel Support</a>.
-                    </p>
-                }
+                    <!-- Workspace identifier -->
+                    @if (!string.IsNullOrEmpty(rawName))
+                    {
+                        <div class="ts-workspace">
+                            <span class="ts-workspace__label">Workspace</span>
+                            <span class="ts-workspace__name">@displayName</span>
+                            @if (isDemoName)
+                            {
+                                <span class="ts-workspace__raw">@rawName</span>
+                            }
+                        </div>
+                    }
+
+                    <!-- Status badge -->
+                    <span class="ts-badge @statusCss">
+                        <span class="ts-badge-dot" aria-hidden="true"></span>
+                        @statusLabel
+                    </span>
+
+                    <!-- Status message -->
+                    <p class="ts-message">@Model.DisplayMessage</p>
+
+                    @if (isTransient)
+                    {
+                        <p class="ts-submessage">
+                            Sentinel is preparing your workspace and validating platform resources.
+                        </p>
+
+                        <div class="ts-progress-track">
+                            <div class="ts-progress-fill" id="ts-progress-fill" style="width:100%"></div>
+                        </div>
+                        <p class="ts-countdown-label">
+                            Refreshing in <strong id="countdown">15</strong>s
+                        </p>
+                    }
+
+                    @if (Model.ProvisioningStatus == TenantProvisioningStatus.Failed
+                         && !string.IsNullOrEmpty(Model.LastProvisioningError))
+                    {
+                        <details class="ts-details">
+                            <summary>Technical details</summary>
+                            <pre class="ts-error-pre">@Model.LastProvisioningError</pre>
+                        </details>
+                    }
+
+                    @if (Model.ProvisionedAt.HasValue)
+                    {
+                        <p class="ts-meta">
+                            Last provisioned: @Model.ProvisionedAt.Value.ToString("yyyy-MM-dd HH:mm") UTC
+                        </p>
+                    }
+
+                    @if (Model.ProvisioningStatus is TenantProvisioningStatus.Failed
+                                                  or TenantProvisioningStatus.Suspended)
+                    {
+                        <hr class="ts-divider" />
+                        <p class="ts-support">
+                            Need help? <a href="mailto:support@sentinel.ai">Contact Sentinel Support</a>
+                        </p>
+                    }
+
+                    @if (User.HasClaim("is_demo", "true"))
+                    {
+                        <div class="ts-demo-escape">
+                            <p>Running in demo mode? Start a fresh session to reset your workspace.</p>
+                            <form method="post" action="/DemoUser/Switch">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="role" value="Supervisor" />
+                                <button type="submit" class="ts-demo-escape-btn">
+                                    ↺ &nbsp;New demo session
+                                </button>
+                            </form>
+                        </div>
+                    }
+
+                </div>
 
             </div>
-
         </div>
     </div>
 </div>
@@ -86,11 +538,15 @@
     @section Scripts {
         <script>
             (function () {
-                var remaining = 15;
-                var el = document.getElementById('countdown');
+                var total     = 15;
+                var remaining = total;
+                var countEl   = document.getElementById('countdown');
+                var fillEl    = document.getElementById('ts-progress-fill');
+
                 var timer = setInterval(function () {
                     remaining--;
-                    if (el) el.textContent = remaining;
+                    if (countEl) countEl.textContent = remaining;
+                    if (fillEl)  fillEl.style.width = Math.max(0, (remaining / total) * 100) + '%';
                     if (remaining <= 0) {
                         clearInterval(timer);
                         window.location.reload();

@@ -26,6 +26,7 @@ public sealed class ProvisioningStatusGateMiddleware
         "/Subscribe",       // subscription / sign-up flow
         "/Onboarding",      // onboarding wizard
         "/SentinelAdmin",   // Sentinel platform operators must never be blocked
+        "/DemoUser",        // demo session switch — lets stuck demo users escape to a fresh session
         "/hubs",            // SignalR endpoints
         "/api",             // JSON API endpoints
         "/health",          // health checks

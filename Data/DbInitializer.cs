@@ -29,6 +29,16 @@ public static class DbInitializer
         // 3) Reset + regenerate operational data
         await ResetSandboxRequestsAsync(db, tenantId);
         await SeedRequestsAsync(db, tenantId, randomSeed: 12345);
+
+        // 4) The sandbox tenant is seeded inline and never goes through TenantOperationalProvisioner.
+        //    Mark it as provisioned so the UI provisioning-pending gate does not loop forever.
+        if (tenant.ProvisioningStatus == TenantProvisioningStatus.Pending)
+        {
+            tenant.ProvisioningStatus = TenantProvisioningStatus.Ready;
+            tenant.ProvisionedAt ??= DateTime.UtcNow;
+            tenant.ProvisioningCompletedAt ??= DateTime.UtcNow;
+            await db.SaveChangesAsync();
+        }
     }
 
     // Creates a fully isolated tenant + data for one demo session.
@@ -46,7 +56,10 @@ public static class DbInitializer
             Name = tenantName,
             Domain = null,
             PlanTier = DemoPlanTier,
-            IsActive = true
+            IsActive = true,
+            ProvisioningStatus = TenantProvisioningStatus.Ready,
+            ProvisionedAt = DateTime.UtcNow,
+            ProvisioningCompletedAt = DateTime.UtcNow
         });
         await db.SaveChangesAsync();
 
@@ -73,6 +86,23 @@ public static class DbInitializer
             })
             .Select(t => t.Id)
             .ToList();
+
+        // Backfill: surviving demo tenants stuck at Pending were fully seeded before the
+        // ProvisioningStatus fix was applied. Promote them to Ready so the gate clears.
+        var survivingPendingIds = demoTenants
+            .Where(t => !expiredIds.Contains(t.Id) && t.ProvisioningStatus == TenantProvisioningStatus.Pending)
+            .Select(t => t.Id)
+            .ToList();
+
+        if (survivingPendingIds.Count > 0)
+        {
+            await db.Tenants
+                .Where(t => survivingPendingIds.Contains(t.Id))
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(t => t.ProvisioningStatus, TenantProvisioningStatus.Ready)
+                    .SetProperty(t => t.ProvisionedAt, t => t.ProvisionedAt ?? DateTime.UtcNow)
+                    .SetProperty(t => t.ProvisioningCompletedAt, t => t.ProvisioningCompletedAt ?? DateTime.UtcNow));
+        }
 
         if (expiredIds.Count == 0) return;
 
@@ -162,6 +192,30 @@ public static class DbInitializer
                 CREATE INDEX [IX_IncidentAiInsights_TenantId]
                     ON [dbo].[IncidentAiInsights] ([TenantId]);
             END
+            """);
+
+        // Migrate Tenants table to add provisioning columns added after initial Azure deployment.
+        await db.Database.ExecuteSqlRawAsync("""
+            IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Tenants]') AND name = 'ProvisioningStatus')
+                ALTER TABLE [dbo].[Tenants] ADD [ProvisioningStatus] INT NOT NULL DEFAULT 0;
+
+            IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Tenants]') AND name = 'ProvisionedAt')
+                ALTER TABLE [dbo].[Tenants] ADD [ProvisionedAt] DATETIME2 NULL;
+
+            IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Tenants]') AND name = 'LastProvisioningError')
+                ALTER TABLE [dbo].[Tenants] ADD [LastProvisioningError] NVARCHAR(2000) NULL;
+
+            IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Tenants]') AND name = 'ProvisioningStartedAt')
+                ALTER TABLE [dbo].[Tenants] ADD [ProvisioningStartedAt] DATETIME2 NULL;
+
+            IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Tenants]') AND name = 'ProvisioningCompletedAt')
+                ALTER TABLE [dbo].[Tenants] ADD [ProvisioningCompletedAt] DATETIME2 NULL;
+
+            IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Tenants]') AND name = 'ProvisioningRetryCount')
+                ALTER TABLE [dbo].[Tenants] ADD [ProvisioningRetryCount] INT NOT NULL DEFAULT 0;
+
+            IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Tenants]') AND name = 'ProvisioningActor')
+                ALTER TABLE [dbo].[Tenants] ADD [ProvisioningActor] NVARCHAR(200) NULL;
             """);
 
         // Migrate existing IncidentAiInsights tables that pre-date multi-language support.

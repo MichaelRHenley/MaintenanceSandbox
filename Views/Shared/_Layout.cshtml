@@ -203,6 +203,11 @@
                                             class="sentinel-signout-btn"
                                             data-bs-toggle="modal"
                                             data-bs-target="#demo-share-modal">@SR["Nav_DemoShare"]</button>
+                                    <form asp-controller="DemoUser" asp-action="Switch" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="role" value="Supervisor" />
+                                        <button type="submit" class="sentinel-signout-btn" title="Start a fresh demo session">↺ New session</button>
+                                    </form>
                                 </div>
                             }
                             else
