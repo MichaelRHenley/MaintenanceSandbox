@@ -26,7 +26,7 @@ IDs are stored in `appsettings.json` under the `Analytics` section. Leave them e
 | GA4 Measurement ID   | `Analytics__GA4MeasurementId`     | `G-XXXXXXXXXX`  |
 | Clarity Project ID   | `Analytics__ClarityProjectId`     | `abcde12345`    |
 
-Set these in Azure App Service → **Configuration → Application settings**, or via VM system environment variables.
+Set these on the VM as system environment variables, or via IIS Manager → Site → Configuration Editor → `system.webServer/aspNetCore` → `environmentVariables`.
 
 ---
 

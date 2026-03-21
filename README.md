@@ -1,32 +1,63 @@
-# Maintenance Sandbox - Multi-Tenant SaaS Application
+# Maintenance Sandbox — Sentinel Multi-Tenant SaaS Platform
 
-ASP.NET Core 8 MVC application for managing maintenance requests with multi-tenant support, Azure SQL integration, AI-powered assistance, and a fully isolated demo mode.
+ASP.NET Core 8 MVC application for managing maintenance requests with full multi-tenant SaaS
+architecture, a Sentinel operator control plane, AI-powered assistance, real-time SignalR
+updates, and a fully isolated demo mode. Deployed to an Azure VM running IIS.
 
 ## Architecture
 
 ### Two-Database Design
 - **SentinelMfgSuite_Core** (Business Database)
-  - Tenant data, sites, work centers, equipment
-  - Maintenance requests and messages
-  - Multi-tenant filtered via `TenantId`
+  - Tenant data, provisioning state, sites, work centers, equipment
+  - Maintenance requests, messages, production logs
+  - Multi-tenant filtered via `TenantId` EF global query filters
+  - Append-only provisioning audit log (`TenantProvisioningEvent`)
 
 - **SentinelMfgSuite_Identity** (Directory Database)
   - ASP.NET Identity (users, roles)
   - Tenant subscriptions and billing
-  - User-tenant associations
+  - User-tenant associations and invites
+
+### Sentinel SaaS Control Plane
+
+The `/SentinelAdmin` area is a Sentinel-operator–only control plane (`[Authorize(Roles = "SentinelAdmin")]`):
+
+| Feature | Route | Description |
+|---|---|---|
+| Tenant list | `/SentinelAdmin` | All tenants with provisioning status |
+| Health dashboard | `/SentinelAdmin/TenantHealth` | Color-coded health cards, stale detection, retry button |
+| Provisioning history | `/SentinelAdmin/TenantProvisioningHistory?tenantId=...` | Grouped attempt cards with per-event detail |
+| Suspend / Reactivate | POST actions | Lifecycle transitions via `ITenantLifecycleService` |
+
+**Provisioning lifecycle:** `Pending → Provisioning → Ready | Failed | Suspended`
+enforced by `ProvisioningStatusGateMiddleware`.
+
+**Audit log:** Every provisioning action is written to `TenantProvisioningEvent` (append-only,
+never updated or deleted). Events are grouped by `CorrelationId` on the history page so each
+provisioning attempt or retry is visually distinct.
 
 ### Key Features
-- **Multi-tenancy**: Row-level data isolation using `TenantId`
+- **Multi-tenancy**: Row-level isolation via `TenantId` + EF Core global query filters
 - **Identity**: ASP.NET Core Identity with custom `ApplicationUser`
 - **Azure SQL**: Microsoft Entra ID (Azure AD) authentication
-- **AI Assist**: Floating ✦ modal (all pages) — Ask / Command / Troubleshoot modes backed by a local Ollama LLM with tool-calling for incident search, equipment status, and create-incident drafting
+- **Data Protection**: Keys persisted to `C:\inetpub\dpkeys\MaintenanceSandbox\` — auth cookies
+  survive IIS app pool recycles
+- **AI Assist**: Floating ✦ modal (all pages) — Ask / Command / Troubleshoot modes backed by a
+  local Ollama LLM with tool-calling for incident search, equipment status, and create-incident drafting
 - **AI Integration**: Claude AI for onboarding guidance and the contextual `?` help panel
 - **Onboarding Flow**: Guided tenant provisioning and user setup
-- **Subscription Management**: Stripe integration (pilot mode available)
-- **Demo Mode**: Per-session isolated tenants with auto-seeded data and auto-purge
+- **Subscription Management**: Stripe integration (pilot mode active)
+- **Demo Mode**: Per-session isolated tenants with auto-seeded data and 2-hour auto-purge
+- **Localization**: 7 languages — `en-CA`, `fr-CA`, `es-MX`, `de-DE`, `it-IT`, `sv-SE`, `fi-FI`
+- **Real-time**: SignalR hub at `/hubs/maintenance` (requires IIS WebSocket Protocol feature)
 
 ## Prerequisites
-- .NET 8 SDK
+- .NET 8 SDK (dev machine)
+- Azure SQL Database access
+- Azure Entra ID authentication (or SQL auth connection strings)
+- Visual Studio 2022+ or VS Code
+- **IIS on target VM** with .NET 8 Hosting Bundle and WebSocket Protocol feature (see `DEPLOYMENT.md`)
+- Ollama (optional — local AI Assist only)
 - Azure SQL Database access
 - Azure Entra ID authentication
 - Visual Studio 2022+ or VS Code
@@ -267,34 +298,57 @@ Set secrets via `dotnet user-secrets` locally (see Setup section) or via environ
 ```
 MaintenanceSandbox/
 ├── Areas/
-│   └── Identity/          # Scaffolded Identity pages
-├── Controllers/           # MVC controllers
-│   ├── DemoUserController.cs   # Demo login + session switching
-│   └── UsersAdminController.cs # Blocked for demo tenants
-├── Data/                  # Business DbContext
-│   ├── AppDbContext.cs
-│   └── DbInitializer.cs   # Seeds sandbox + per-session demo tenants
+│   └── Identity/              # Scaffolded Identity pages
+├── Controllers/               # MVC controllers
+│   ├── DemoUserController.cs  # Demo login + session switching
+│   ├── SentinelAdminController.cs  # Operator control plane (SentinelAdmin role)
+│   └── UsersAdminController.cs     # Blocked for demo tenants
+├── Data/                      # Business DbContext
+│   ├── AppDbContext.cs        # TenantId global query filters, model configuration
+│   └── DbInitializer.cs       # Seeds sandbox + per-session demo tenants
 ├── Directory/
-│   ├── Data/              # DirectoryDbContext
-│   ├── Models/            # ApplicationUser, Tenant
-│   └── Services/          # Tenant provisioning
+│   ├── Data/                  # DirectoryDbContext (Identity + Tenants)
+│   ├── Models/                # ApplicationUser, Tenant, TenantSubscription
+│   └── Services/              # Tenant provisioning
 ├── Filters/
-│   └── BlockDemoFilter.cs # Blocks mutating actions for demo tenants
-├── Middleware/            # Subscription gate, etc.
-├── Models/                # Business entities
-│   ├── MasterData/        # Sites, Equipment, WorkCenters
-│   └── MaintenanceRequest.cs
-├── Security/              # Tenant claims transformation
-├── Services/              # AI, Demo providers, TenantProvider
-│   └── Ai/                # Ollama orchestrator, Claude models, AI tools
-│       ├── AiOrchestrator.cs      # 2-turn intent → tool → response pipeline
-│       ├── IncidentAiTools.cs     # DB-backed incident search & draft tools
-│       ├── OllamaService.cs       # Direct HTTP to Ollama REST API
-│       └── PromptLibrary.cs       # All system + user prompt templates
-└── Views/
-    └── Shared/
-        ├── _AiAssistModal.cshtml  # Floating FAB + modal (rendered in layout)
-        └── _AiHelpLauncher.cshtml # Contextual ? help panel (per-page)
+│   └── BlockDemoFilter.cs     # Blocks mutating actions for demo tenants
+├── Middleware/                 # TenantContextMiddleware, ProvisioningStatusGateMiddleware,
+│                              # SubscriptionGateMiddleware
+├── Models/
+│   ├── MasterData/            # Site, Area, WorkCenter, Equipment
+│   ├── Base/                  # TenantEntity base class
+│   ├── MaintenanceRequest.cs
+│   └── TenantProvisioningEvent.cs  # Append-only provisioning audit log
+├── Properties/
+│   └── PublishProfiles/
+│       ├── AzureWebApp.pubxml      # Azure App Service profile (reference only)
+│       └── IISFolderPublish.pubxml # Active: folder publish for IIS VM deploy
+├── Security/                  # TenantClaimsTransformation
+├── Services/
+│   ├── ITenantLifecycleService.cs  # Provisioning, health, history, suspend/reactivate
+│   ├── TenantLifecycleService.cs
+│   ├── ITenantOperationalProvisioner.cs
+│   ├── TenantOperationalProvisioner.cs
+│   ├── ITenantProvisioningAuditLogger.cs  # Append-only event logger
+│   ├── TenantProvisioningAuditLogger.cs
+│   └── Ai/                    # Ollama orchestrator, Claude models, AI tools
+│       ├── AiOrchestrator.cs          # 2-turn intent → tool → response pipeline
+│       ├── IncidentAiTools.cs         # DB-backed incident search & draft tools
+│       ├── OllamaService.cs           # Direct HTTP to Ollama REST API
+│       └── PromptLibrary.cs           # All system + user prompt templates
+├── ViewModels/Admin/
+│   ├── TenantHealthSummaryVm.cs
+│   ├── TenantProvisioningEventVm.cs
+│   ├── TenantProvisioningAttemptVm.cs  # Groups events by CorrelationId
+│   └── TenantProvisioningHistoryVm.cs  # Top-level grouped history model
+├── Views/SentinelAdmin/
+│   ├── Index.cshtml
+│   ├── TenantHealth.cshtml             # Health dashboard with retry button
+│   └── TenantProvisioningHistory.cshtml # Grouped attempt cards
+├── Views/Shared/
+│   ├── _AiAssistModal.cshtml  # Floating FAB + modal (rendered in layout for all users)
+│   └── _AiHelpLauncher.cshtml # Contextual ? help panel (per-page)
+└── web.config                 # ANCM template — requestLimits override, stdout log docs
 ```
 
 ## Key Technologies
@@ -303,13 +357,42 @@ MaintenanceSandbox/
 - ASP.NET Core Identity
 - Azure SQL Database
 - Microsoft Entra ID (Azure AD) Authentication
+- ASP.NET Core Data Protection (file system key persistence for IIS)
+- IIS + ANCM v2 (deployment target — Azure VM)
 - Bogus (fake data generation)
-- SignalR (real-time updates)
-- Localization (en-CA, fr-CA, es-MX)
-- Ollama (local LLM runtime — llama3.2 for AI Assist incident intelligence)
+- SignalR (real-time updates — requires IIS WebSocket Protocol)
+- Localization (`en-CA`, `fr-CA`, `es-MX`, `de-DE`, `it-IT`, `sv-SE`, `fi-FI`)
+- Ollama (local LLM runtime — `llama3.2` for AI Assist incident intelligence)
 - Anthropic Claude (onboarding guidance & contextual help panel)
 
+## Deployment
+
+See `DEPLOYMENT.md` for the full step-by-step IIS deployment guide.
+See `CONFIG_CHECKLIST.md` for the pre/post deploy checklist and all required environment variables.
+
+**Quick summary:**
+1. `dotnet publish -c Release -r win-x64 --no-self-contained -o .\publish`
+2. `robocopy .\publish\ \\VM-NAME\c$\inetpub\wwwroot\MaintenanceSandbox\ /MIR /XD logs`
+3. IIS app pool: **No Managed Code**, 64-bit, AlwaysRunning
+4. Set env vars via IIS Manager → Configuration Editor → `system.webServer/aspNetCore`
+5. Create `C:\inetpub\dpkeys\MaintenanceSandbox\` and grant app pool identity Modify rights
+
 ## Troubleshooting
+
+### "HTTP 500.30 — ANCM In-Process Handler Load Failure" on IIS
+**Cause:** Most commonly the app pool is set to a managed .NET CLR version instead of "No Managed Code", or the .NET 8 Hosting Bundle is not installed.
+
+**Fix:**
+1. Set app pool → .NET CLR Version = **No Managed Code**
+2. Verify Hosting Bundle is installed: run `dotnet --version` in a new cmd prompt on the VM
+3. Enable stdout logging in `web.config` (`stdoutLogEnabled="true"`) and read `.\logs\stdout_*.log`
+
+### Everyone gets logged out after IIS recycle
+**Cause:** Data Protection keys are ephemeral (not persisted to disk).
+
+**Fix:** Create `C:\inetpub\dpkeys\MaintenanceSandbox\`, grant the app pool identity Modify
+rights, and verify `DataProtection:KeysPath` in `appsettings.Production.json` points to it.
+See `CONFIG_CHECKLIST.md` — Data Protection section.
 
 ### "Login failed for user '<token-identified principal>'"
 **Cause:** Azure SQL configured for Entra ID only, but connection string uses SQL auth.
@@ -327,7 +410,20 @@ MaintenanceSandbox/
 ### "Tenant mismatch between databases"
 **Cause:** Business database has tenant `5EFA6386...` but Identity database doesn't.
 
-**Fix:** Run the INSERT statement in "Sync Tenant Across Databases" section above.
+**Fix:** Run the INSERT statement in the database setup section above.
+
+### SentinelAdmin panel shows 403 / Access Denied
+**Cause:** The `SentinelAdmin` role is not assigned to your user.
+
+**Fix:** The role is created automatically on startup. Assign it via direct SQL on the Identity DB:
+```sql
+-- Get role ID
+SELECT Id FROM AspNetRoles WHERE Name = 'SentinelAdmin';
+-- Get user ID
+SELECT Id FROM AspNetUsers WHERE Email = 'your@email.com';
+-- Assign
+INSERT INTO AspNetUserRoles (UserId, RoleId) VALUES ('<userId>', '<roleId>');
+```
 
 ## Demo Tenant ID
 The sandbox demo data uses this fixed tenant ID across both databases:
@@ -336,10 +432,12 @@ The sandbox demo data uses this fixed tenant ID across both databases:
 ```
 
 ## Development Notes
-- Migrations are disabled on startup (databases already exist on Azure)
-- Demo data seeds on every app start
-- Tenant filtering is enforced via `ITenantProvider` and query filters
+- Migrations are disabled on startup — run manually with `dotnet ef database update` before deploying
+- Demo data seeds on every app start (`DbInitializer.SeedAsync`)
+- Tenant filtering enforced via `ITenantProvider` and EF global query filters
+- `TenantProvisioningEvent` has **no global query filter** — admin reads are intentionally cross-tenant
 - Onboarding flow automatically assigns users to tenants
+- All user-facing strings use `IStringLocalizer<SharedResource>` — 7 locale files under `Resources\`
 
 ## Contributing
 1. Fork the repository

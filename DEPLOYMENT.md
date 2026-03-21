@@ -1,15 +1,19 @@
 # Deployment Guide — Sentinel Maintenance Suite
-> Generated during pilot stabilization pass. Update this file after each deployment.
+> Target: Azure VM running IIS with .NET 8 Hosting Bundle.
+> Update this file after each deployment.
 
 ---
 
 ## Prerequisites
 
-| Tool | Purpose | Install |
-|---|---|---|
-| Azure CLI | Resource management, app deploy | `winget install Microsoft.AzureCLI` |
-| .NET 8 SDK | Build | [dotnet.microsoft.com](https://dotnet.microsoft.com/download) |
-| Git | Source control | already installed |
+| Tool / Component | Where |
+|---|---|
+| .NET 8 SDK (dev machine) | [dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/download/dotnet/8.0) |
+| .NET 8 **Hosting Bundle** (VM) | Same page → "Hosting Bundle" installer — installs ANCM v2 + ASP.NET Core runtime |
+| IIS with WebSocket Protocol (VM) | Server Manager → Add Roles → Web Server → Application Development → WebSocket Protocol |
+| Git | Already installed |
+
+Run `iisreset` on the VM after installing the Hosting Bundle.
 
 ---
 
@@ -24,148 +28,248 @@ Expected: `Build succeeded. 0 Error(s)`
 
 ---
 
-## Step 2 — Set production secrets (one-time per machine)
+## Step 2 — Apply pending migrations (if schema changed)
 
-Never commit real secrets. Use Azure App Service → Configuration → Application Settings.
-
-Required settings (set in Portal or via CLI):
-
-```powershell
-$rg  = "your-resource-group"
-$app = "your-app-service-name"
-
-az webapp config appsettings set -g $rg -n $app --settings `
-  "Ai__ApiKey=sk-ant-..." `
-  "Demo__EmailLinkSecret=$(New-Guid)" `
-  "Email__SmtpHost=smtp.sendgrid.net" `
-  "Email__SmtpPort=587" `
-  "Email__SmtpUser=apikey" `
-  "Email__SmtpPassword=SG.xxx" `
-  "Email__FromAddress=noreply@yourdomain.com"
-```
-
-Connection strings go under **Connection Strings** tab (not App Settings):
+Migrations must be applied **before** deploying the new app binaries. The app does not
+run `Database.Migrate()` on startup — migrations are manual.
 
 ```powershell
-az webapp config connection-string set -g $rg -n $app --connection-string-type SQLAzure --settings `
-  DefaultConnection="Server=tcp:sentinaldb.database.windows.net,1433;Initial Catalog=SentinelMfgSuite_Core;Authentication=Active Directory Default;Encrypt=Mandatory;MultipleActiveResultSets=True;" `
-  DirectoryConnection="Server=tcp:sentinaldb.database.windows.net,1433;Initial Catalog=SentinelMfgSuite_Identity;Authentication=Active Directory Default;Encrypt=Mandatory;MultipleActiveResultSets=True;"
+# Replace with your production connection strings
+$bizConn = "Server=tcp:yourserver.database.windows.net,1433;Initial Catalog=SentinelMfgSuite_Core;..."
+$dirConn = "Server=tcp:yourserver.database.windows.net,1433;Initial Catalog=SentinelMfgSuite_Identity;..."
+
+dotnet ef database update --connection $bizConn --context AppDbContext
+dotnet ef database update --connection $dirConn --context DirectoryDbContext
 ```
+
+> Your dev machine IP must be in the Azure SQL Server firewall before running these.
 
 ---
 
-## Step 3 — Publish
+## Step 3 — Publish to folder
 
-### Option A — Visual Studio (quickest)
+### Option A — Visual Studio
 
 1. Right-click project → **Publish**
-2. Select **AzureWebApp** profile (or create one targeting your App Service)
+2. Select **IISFolderPublish** profile
 3. Click **Publish**
-4. Watch Output window for success
+4. Output lands in `.\publish\`
 
-### Option B — CLI (repeatable / CI-friendly)
+### Option B — CLI
 
 ```powershell
-# 1. Produce a release build into ./publish
-dotnet publish -c Release -o ./publish
-
-# 2. Zip it
-Compress-Archive -Path ./publish/* -DestinationPath ./publish.zip -Force
-
-# 3. Deploy to Azure App Service
-az webapp deploy `
-  --resource-group $rg `
-  --name $app `
-  --src-path ./publish.zip `
-  --type zip
-
-# 4. Confirm the app is running
-az webapp show -g $rg -n $app --query state -o tsv
+dotnet publish -c Release -r win-x64 --no-self-contained -o .\publish
 ```
-
-Expected output: `Running`
 
 ---
 
-## Step 4 — Verify deployment
+## Step 4 — Copy to VM
 
-Open in browser:
+```powershell
+# Replace with your VM name or IP and site root path
+$vmSiteRoot = "\\YOUR-VM-NAME\c$\inetpub\wwwroot\MaintenanceSandbox"
+
+# /MIR = mirror (delete removed files), /XD logs = preserve logs folder on server
+robocopy .\publish\ $vmSiteRoot /MIR /XD logs /NFL /NDL
+```
+
+> If you don't have a UNC share set up, use RDP to copy the `publish` folder manually,
+> or `scp` if OpenSSH is enabled on the VM.
+
+---
+
+## Step 5 — First-time VM setup (one-time only)
+
+### a) Create required folders
+
+On the VM (run as Administrator):
+
+```powershell
+# Site root logs folder (for stdout troubleshooting)
+New-Item -ItemType Directory -Force "C:\inetpub\wwwroot\MaintenanceSandbox\logs"
+
+# Data Protection key ring (must survive deployments — do NOT put inside site root)
+New-Item -ItemType Directory -Force "C:\inetpub\dpkeys\MaintenanceSandbox"
+```
+
+### b) Grant app pool identity permissions
+
+```powershell
+$pool = "MaintenanceSandbox"   # your IIS app pool name
+
+# Site root: Read + Execute
+icacls "C:\inetpub\wwwroot\MaintenanceSandbox" /grant "IIS AppPool\${pool}:(OI)(CI)RX"
+
+# Logs folder: Write (only needed when stdout logging is enabled for troubleshooting)
+icacls "C:\inetpub\wwwroot\MaintenanceSandbox\logs" /grant "IIS AppPool\${pool}:(OI)(CI)W"
+
+# Data Protection keys: Modify (read + write + delete old keys)
+icacls "C:\inetpub\dpkeys\MaintenanceSandbox" /grant "IIS AppPool\${pool}:(OI)(CI)M"
+```
+
+### c) Create IIS app pool
+
+| Setting | Value |
+|---|---|
+| Name | `MaintenanceSandbox` |
+| .NET CLR Version | **No Managed Code** |
+| Pipeline Mode | Integrated |
+| Platform (Advanced Settings) | `64-bit` |
+| Start Mode | `AlwaysRunning` |
+| Idle Time-out | `0` |
+
+### d) Create IIS site
+
+- Physical path: `C:\inetpub\wwwroot\MaintenanceSandbox\`
+- App pool: `MaintenanceSandbox`
+- Binding: HTTPS, port 443, with your SSL certificate
+
+### e) Set environment variables
+
+In IIS Manager → Sites → `MaintenanceSandbox` → Configuration Editor →
+`system.webServer/aspNetCore` → `environmentVariables`:
+
+| Name | Value |
+|---|---|
+| `ASPNETCORE_ENVIRONMENT` | `Production` |
+| `ConnectionStrings__DefaultConnection` | `Server=tcp:yourserver...` |
+| `ConnectionStrings__DirectoryConnection` | `Server=tcp:yourserver...` |
+| `Ai__ApiKey` | `sk-ant-...` |
+| `Demo__EmailLinkSecret` | *(32+ char random string)* |
+| `Email__SmtpHost` | `smtp.sendgrid.net` *(if sending email)* |
+
+See `CONFIG_CHECKLIST.md` for the full variable list.
+
+---
+
+## Step 6 — Enable and assign SentinelAdmin role
+
+The `SentinelAdmin` role is created automatically on first startup. Assign it to your operator
+account directly in the `SentinelMfgSuite_Identity` database:
+
+```sql
+-- Find the role ID
+SELECT Id FROM AspNetRoles WHERE Name = 'SentinelAdmin';
+
+-- Find your user ID
+SELECT Id FROM AspNetUsers WHERE Email = 'your-operator@yourdomain.com';
+
+-- Assign
+INSERT INTO AspNetUserRoles (UserId, RoleId) VALUES ('<userId>', '<roleId>');
+```
+
+---
+
+## Step 7 — Verify deployment
 
 ```
-https://<your-app-name>.azurewebsites.net
+https://<your-vm-hostname>/
 ```
 
-Quick smoke-test checklist:
+Smoke-test checklist:
 - [ ] Home page loads without errors
 - [ ] Login page renders (`/Account/Login`)
-- [ ] Demo login works (operator@sentinel-demo.local / demo)
+- [ ] Demo login works (`operator@sentinel-demo.local` / `sentineldemo`)
 - [ ] Maintenance index loads with seeded data
-- [ ] Live indicator shows "Live" (green) within 5 seconds
+- [ ] SignalR live indicator turns green within 5 seconds
+- [ ] `?` help button returns an AI response (requires `Ai__ApiKey`)
 - [ ] Language dropdown in Settings shows all 7 languages
-- [ ] AI Help `?` button opens panel and returns a response (Claude)
-- [ ] AI Assist `✦` button opens modal (Ollama — will show "unavailable" on Azure, expected)
+- [ ] Log out and log back in — session re-establishes (Data Protection keys working)
+- [ ] `/SentinelAdmin/TenantHealth` — health dashboard loads for `SentinelAdmin` users
+- [ ] Mobile: no horizontal scroll, hamburger menu opens
 
 ---
 
-## Step 5 — Mobile test checklist
-
-Open on phone: `https://<your-app-name>.azurewebsites.net`
-
-| Test | Expected |
-|---|---|
-| Home page layout | No horizontal scroll, text readable |
-| Navbar burger menu | Opens / closes correctly |
-| Maintenance index — cards | Full width, labels legible |
-| Details page — two-column layout | Stacks to single column below lg breakpoint |
-| Comment form | Text area and button visible without zooming |
-| Settings page — language dropdown | Touch-friendly, full width |
-| Login form | Keyboard doesn't push form off screen |
-
----
-
-## Step 6 — Database migrations (if schema changed)
-
-> The app runs `DbInitializer.SeedAsync` on startup. New migrations must be applied manually before deploying.
+## Subsequent Deployments (no schema changes)
 
 ```powershell
-# Against Azure SQL (requires firewall to allow your IP)
-dotnet ef database update --connection "Server=tcp:sentinaldb.database.windows.net,1433;..." --context AppDbContext
-dotnet ef database update --connection "Server=tcp:sentinaldb.database.windows.net,1433;..." --context DirectoryDbContext
+# 1. Build
+dotnet publish -c Release -r win-x64 --no-self-contained -o .\publish
+
+# 2. Stop app pool (optional but cleaner — prevents file-lock errors mid-copy)
+Invoke-Command -ComputerName YOUR-VM-NAME -ScriptBlock {
+    Stop-WebAppPool -Name "MaintenanceSandbox"
+}
+
+# 3. Copy
+robocopy .\publish\ "\\YOUR-VM-NAME\c$\inetpub\wwwroot\MaintenanceSandbox" /MIR /XD logs /NFL /NDL
+
+# 4. Restart app pool
+Invoke-Command -ComputerName YOUR-VM-NAME -ScriptBlock {
+    Start-WebAppPool -Name "MaintenanceSandbox"
+}
 ```
 
 ---
 
-## Known behaviours in production
+## Troubleshooting Startup Failures
 
-| Behaviour | Reason | Action |
-|---|---|---|
-| AI Assist modal returns "temporarily unavailable" | Ollama requires a local GPU process — not deployed to Azure | Expected. AI Help `?` panel still works via Claude. |
-| Demo tenants auto-purge after 2 hours | By design | None |
-| First request after cold start is slow (~5 s) | App Service free/shared tier cold start | Upgrade to Basic or higher, or use Always On |
+### HTTP 500.30 — ANCM In-Process Handler Load Failure
+
+1. Enable stdout logging — on the VM, edit `web.config` in the site root:
+   ```xml
+   stdoutLogEnabled="true"
+   ```
+2. Ensure `.\logs\` folder exists and app pool identity has Write access
+3. Recycle app pool, reproduce error, read `.\logs\stdout_*.log`
+4. **Disable stdout logging immediately after** — it is unbuffered and degrades performance
+
+Common causes:
+- App pool not set to **No Managed Code**
+- .NET 8 Hosting Bundle not installed (run `dotnet --version` in a new cmd prompt on the VM)
+- `ASPNETCORE_ENVIRONMENT` not set (app reads LocalDB connection strings → startup DB failure)
+
+### DB Connection Failure at Startup
+
+The startup seeder (`DbInitializer.SeedAsync`, `EnsureRagTablesAsync`, `PurgeExpiredDemoTenantsAsync`)
+runs synchronously at boot. If Azure SQL is unreachable the process crashes with a 500.30.
+Check:
+- Environment variables for connection strings are set and correct
+- VM's IP is in the Azure SQL Server firewall
+- Azure SQL server is running
+
+### Auth Cookies Break After Recycle
+
+Data Protection keys are not persisted. Check:
+- `C:\inetpub\dpkeys\MaintenanceSandbox\` exists
+- App pool identity has Modify rights on that folder
+- `DataProtection:KeysPath` config key resolves to the correct path
 
 ---
 
 ## Rollback
 
-```powershell
-# List recent deployments
-az webapp deployment list -g $rg -n $app -o table
+Rollback is a re-deploy of the previous publish output:
 
-# Roll back one slot (if staging slot is configured)
-az webapp deployment slot swap -g $rg -n $app --slot staging --target-slot production
+```powershell
+# Keep the previous publish in a dated archive before each deploy
+Copy-Item .\publish\ ".\publish-backup-$(Get-Date -Format yyyyMMdd-HHmm)\" -Recurse
+
+# To rollback: stop app pool, robocopy previous archive, start app pool
 ```
+
+If migrations were applied for the failed release, you may need to roll back the schema manually
+(`dotnet ef database update <PreviousMigrationName>`).
 
 ---
 
-## Useful commands
+## Useful Commands
 
 ```powershell
-# Stream live logs
-az webapp log tail -g $rg -n $app
+# Check .NET runtime on the VM
+dotnet --info
 
-# Restart app
-az webapp restart -g $rg -n $app
+# Recycle app pool remotely
+Invoke-Command -ComputerName YOUR-VM-NAME -ScriptBlock {
+    Restart-WebAppPool -Name "MaintenanceSandbox"
+}
 
-# Check environment variables are set
-az webapp config appsettings list -g $rg -n $app -o table
+# Check IIS site state
+Invoke-Command -ComputerName YOUR-VM-NAME -ScriptBlock {
+    Get-Website -Name "MaintenanceSandbox"
+}
+
+# View Windows Application Event Log for ANCM errors
+Get-EventLog -LogName Application -Source "IIS AspNetCore Module*" -Newest 20
 ```
+

@@ -5,7 +5,104 @@ during development. Add to this as decisions are made.
 
 ---
 
-## Pilot Deployment — Stabilization Pass (current)
+## IIS VM Deployment Pass (current)
+
+**Date:** 2026
+**Goal:** Deploy to an Azure VM running IIS for multi-tenant SaaS pilot staging.
+
+**Changes made this pass:**
+- `Program.cs` — `AddDataProtection().PersistKeysToFileSystem(...).SetApplicationName(...)` added.
+  Without this, auth cookies are invalidated on every IIS app pool recycle. Key path is read from
+  `DataProtection:KeysPath` (config or env var); falls back to `%ProgramData%\MaintenanceSandbox\dpkeys`.
+- `Properties/PublishProfiles/IISFolderPublish.pubxml` — new folder publish profile targeting
+  `win-x64`, framework-dependent, Release. Output goes to `.\publish\`.
+- `web.config` — project-level template added. Custom `requestLimits` (50 MB for CSV imports)
+  survives SDK transform. `stdoutLogEnabled` instructions embedded as comments.
+- `appsettings.Production.json` — replaced comments-only file with a real JSON structure:
+  `Demo:Enabled = false`, `Demo:SeedOnStartup = false`, `Logging` at Warning level,
+  `DataProtection:KeysPath`. Secrets still come from VM env vars.
+- `DEPLOYMENT.md` and `CONFIG_CHECKLIST.md` updated to IIS-on-VM target.
+
+**IIS prerequisites (required on VM):**
+- .NET 8 Hosting Bundle (installs ANCM v2 + runtime)
+- IIS WebSocket Protocol feature (required for SignalR `/hubs/maintenance`)
+- App pool: No Managed Code, 64-bit, AlwaysRunning, Idle Time-out = 0
+
+**Known pilot gaps (not blocking):**
+- AI Assist (`✦` modal) unavailable — Ollama not installed on VM. Falls back to graceful error.
+- No `/health` endpoint for IIS monitoring.
+- Email invites silently dropped until SMTP is configured.
+- No blue/green or staging slot — rollback = full folder redeploy.
+
+---
+
+## Sentinel SaaS Control Plane (sessions 3–6)
+
+**Date:** 2026
+**Goal:** Build operator-grade provisioning lifecycle, health observability, and audit trail.
+
+### Provisioning Lifecycle State Machine
+**Decision:** `ProvisioningStatus` enum (`Pending → Provisioning → Ready | Failed | Suspended`)
+is stored on the business-DB `Tenant` entity and enforced by `ProvisioningStatusGateMiddleware`.  
+**Transitions:** `ITenantOperationalProvisioner.ProvisionAsync` drives the state. Retry resets to
+`Pending` before re-attempting.  
+**Observability fields on `Tenant`:** `ProvisioningStartedAt`, `ProvisioningCompletedAt`,
+`ProvisioningRetryCount`, `ProvisioningActor`. Written by `TenantOperationalProvisioner` — not
+by the lifecycle service directly.  
+**Stale detection:** `TenantHealthSummaryVm.IsProvisioningStale` is true when status is
+`Provisioning` and `now - ProvisioningStartedAt > Provisioning:StaleThresholdMinutes` (default 10).
+Configured in `appsettings.json`.
+
+### Retry Flow
+**Decision:** `RetryProvisionTenantAsync` in `TenantLifecycleService` validates that the tenant
+is in `Failed` or `Provisioning` (stale) before resetting to `Pending` and calling the provisioner.
+Guard prevents double-retry on `Ready` or `Suspended` tenants.  
+**Actor:** `User.Identity.Name` from the controller is threaded through to both the provisioner
+and the audit log.
+
+### Append-Only Provisioning Audit Log
+**Decision:** `TenantProvisioningEvent` is a plain entity (not `TenantEntity`) with a `long` PK
+and its own `TenantId` column. No EF global query filter — admin reads bypass tenant isolation
+by design.  
+**Actions logged:** `ProvisionStart`, `ProvisionSuccess`, `ProvisionFailed`, `RetryRequested`,
+`RetrySucceeded`, `RetryFailed`.  
+**All log calls wrapped in `try {} catch {}`** — a logging failure must never abort a provisioning
+transaction.  
+**`CorrelationId`:** A `Guid.NewGuid().ToString("D")` generated at the start of each provisioning
+run or retry. Threads through `TenantOperationalProvisioner` (via param) and `TenantLifecycleService`
+(via local variable). Stored on every event in a run so the full attempt can be reconstructed.  
+**Migration:** `AddTenantProvisioningEvents` — 4 indexes including composite `TenantId + TimestampUtc`.
+
+### Grouped Provisioning History Read Model
+**Decision:** The history page groups events into attempt cards by `CorrelationId`. This is a
+pure read-model enhancement — no schema change.  
+**Grouping strategy:** Events loaded flat with `AsNoTracking`, then grouped in .NET
+(`GroupBy` on `CorrelationId`). EF `GroupBy` translation is avoided deliberately.  
+**Null `CorrelationId` handling:** Events without a correlation ID get a synthetic key
+`"no-correlation-{e.Id}"` so each orphan becomes its own single-event attempt card rather than
+being silently merged.  
+**`TenantProvisioningAttemptVm`:** `StartedAtUtc = Min(TimestampUtc)`,
+`CompletedAtUtc = Max(TimestampUtc)`, `DurationSeconds = (int)(Max - Min).TotalSeconds`,
+`IsSuccessful = any(Action == "ProvisionSuccess" || "RetrySucceeded")`,
+`HasFailure = any(Action == "ProvisionFailed" || "RetryFailed")`.
+Both flags can be false simultaneously (in-progress attempt).  
+**View:** Bootstrap cards, color-coded border (green / red / blue). Per-attempt collapsible event
+table, newest attempt first, events oldest-first within attempt. `@functions{}` required for Razor
+helper methods (avoids RZ1010 parser error with local function declarations inside `@foreach`).
+
+### Data Protection Key Persistence
+**Decision:** `AddDataProtection().PersistKeysToFileSystem()` with `SetApplicationName("MaintenanceSandbox")`
+added to `Program.cs`.  
+**Reason:** IIS app pool recycles invalidate ephemeral keys, logging out all active sessions. The
+auth cookie, antiforgery token, and temp data all depend on the Data Protection key ring.  
+**Key path:** Read from `DataProtection:KeysPath` config key. Folder must exist and be writable
+by the IIS app pool identity before first launch.  
+**`SetApplicationName`:** Ensures keys are scoped to this app even if the key folder is shared
+with other apps on the same VM in future.
+
+---
+
+## Pilot Deployment — Azure App Service Stabilization Pass (prior)
 
 **Date:** 2026  
 **Goal:** Get the app running on Azure App Service for mobile pilot testing.
@@ -168,6 +265,10 @@ inside the cached value itself (the `Window(Count, Expiry)` record) and re-appli
 | Ollama must be running | `/api/ai/query` returns a user-visible error if Ollama is not reachable at `Ollama:BaseUrl` (default `http://localhost:11434`). No health-check gate — the error surfaces directly in the AI Assist modal. Run `ollama serve` and `ollama pull llama3.2` before testing AI Assist locally. |
 | AI Assist modal (layout) | `_AiAssistModal.cshtml` is rendered from `_Layout.cshtml` for all authenticated users. No per-page wiring is needed when adding new pages. FAB sits at `z-index: 1040` — below Bootstrap modal backdrop (1050) — so it disappears naturally when any other modal is open. |
 | CreateIncidentDraft pre-fill | Description and priority travel as query-string params to `GET /Maintenance/Create`. The cascade `nav()` JS re-attaches them on every dropdown reload. If the LLM omits them entirely the form still loads blank — no error. |
+| `TenantProvisioningEvent` has no global filter | The entity does NOT inherit `TenantEntity` — admin reads are intentionally cross-tenant. Never add a global query filter to this table. Always scope admin reads manually with `.Where(e => e.TenantId == tenantId)`. |
+| Provisioning audit log calls | All `_auditLogger.LogEventAsync(...)` calls are wrapped in `try {} catch {}`. A logging failure must never abort or roll back a provisioning transaction. |
+| Data Protection keys folder | Must exist on the VM before first launch. If `DirectoryInfo(dpKeysPath)` cannot create/write keys, the app starts but Data Protection silently falls back to ephemeral keys — all auth cookies break on the next recycle. Check IIS app pool identity has Write on the folder. |
+| `CorrelationId` on provisioning events | Null/empty `CorrelationId` means the event pre-dates the correlation feature or was written outside the normal provisioner path. The grouped history view handles this safely via a synthetic `no-correlation-{id}` key. |
 
 ---
 
