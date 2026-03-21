@@ -1,0 +1,127 @@
+@model IList<MaintenanceSandbox.ViewModels.Admin.TenantSummaryVm>
+@using MaintenanceSandbox.Directory.Models.Tenants
+
+@{
+    ViewData["Title"] = "Sentinel Admin — Tenants";
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Tenant Management</div>
+                <div class="sentinel-page-subtitle">Sentinel Operations · All tenants across the platform</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-secondary">@Model.Count tenants</span>
+                <span class="badge bg-success">@Model.Count(t => t.SubscriptionActive) active</span>
+                <span class="badge bg-warning text-dark">@Model.Count(t => t.Status == TenantStatus.Suspended) suspended</span>
+                <a asp-action="TenantHealth" class="btn btn-sm btn-outline-info ms-2">⚡ Health Dashboard</a>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+
+            @if (TempData["ok"] is string ok)
+            {
+                <div class="alert alert-success">@ok</div>
+            }
+
+            @if (Model.Count == 0)
+            {
+                <p class="text-muted">No tenants found.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Tenant</th>
+                                <th>Tier</th>
+                                <th>Status</th>
+                                <th>Users</th>
+                                <th>Created</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var t in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="fw-semibold">@t.Name</div>
+                                        <small class="text-muted font-monospace">@t.TenantId</small>
+                                    </td>
+                                    <td>
+                                        @if (t.Tier != null)
+                                        {
+                                            <span class="badge bg-info text-dark">@t.Tier</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (t.Status == TenantStatus.Active && t.SubscriptionActive)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else if (t.Status == TenantStatus.Suspended)
+                                        {
+                                            <span class="badge bg-warning text-dark">Suspended</span>
+                                        }
+                                        else if (!t.SubscriptionActive)
+                                        {
+                                            <span class="badge bg-secondary">No Subscription</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@t.Status</span>
+                                        }
+                                    </td>
+                                    <td>@t.UserCount</td>
+                                    <td><small class="text-muted">@t.CreatedUtc.ToString("MMM d, yyyy")</small></td>
+                                    <td class="text-end">
+                                        @if (t.Status == TenantStatus.Active)
+                                        {
+                                            <form asp-action="Suspend" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@t.TenantId" />
+                                                <button type="submit" class="btn btn-sm btn-outline-warning">Suspend</button>
+                                            </form>
+                                        }
+                                        else if (t.Status == TenantStatus.Suspended)
+                                        {
+                                            <form asp-action="Reactivate" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@t.TenantId" />
+                                                <button type="submit" class="btn btn-sm btn-outline-success">Reactivate</button>
+                                            </form>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+            <div class="mt-4 p-3 glass-card--accent glass-card">
+                <div class="fw-semibold small text-uppercase text-muted mb-2">How to grant SentinelAdmin access</div>
+                <p class="text-muted small mb-0">
+                    Run the following in a SQL session against the <code>SentinelMfgSuite_Identity</code> database,
+                    replacing <code>{userId}</code> with the ASP.NET Identity user ID:
+                </p>
+                <pre class="mt-2 small text-info mb-0">INSERT INTO AspNetUserRoles (UserId, RoleId)
+SELECT '{userId}', Id FROM AspNetRoles WHERE Name = 'SentinelAdmin'</pre>
+                <p class="text-muted small mt-2 mb-0">
+                    Or use <code>UserManager.AddToRoleAsync</code> in a one-off seed script.
+                    The role is created automatically at app startup if it does not exist.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>

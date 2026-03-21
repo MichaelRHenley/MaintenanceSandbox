@@ -57,6 +57,7 @@ public sealed class AppDbContext : DbContext
     public DbSet<Equipment> Equipment => Set<Equipment>();
     public DbSet<EquipmentRequest> EquipmentRequests => Set<EquipmentRequest>();
     public DbSet<Tenant> Tenants => Set<Tenant>();
+    public DbSet<TenantProvisioningEvent> TenantProvisioningEvents => Set<TenantProvisioningEvent>();
 
     // ============================
     // AI AUDIT
@@ -65,6 +66,8 @@ public sealed class AppDbContext : DbContext
     public DbSet<AiConversationSession> AiConversationSessions => Set<AiConversationSession>();
     public DbSet<AiConversationMessage> AiConversationMessages => Set<AiConversationMessage>();
     public DbSet<AiToolAudit> AiToolAudits => Set<AiToolAudit>();
+    public DbSet<IncidentEmbedding> IncidentEmbeddings => Set<IncidentEmbedding>();
+    public DbSet<IncidentAiInsight> IncidentAiInsights => Set<IncidentAiInsight>();
 
     // ============================
     // MODEL CONFIGURATION
@@ -82,6 +85,9 @@ public sealed class AppDbContext : DbContext
 
             b.Property(x => x.Domain).HasMaxLength(200);
             b.Property(x => x.PlanTier).HasMaxLength(50);
+            b.Property(x => x.ProvisioningStatus).HasConversion<int>();
+            b.Property(x => x.LastProvisioningError).HasMaxLength(2000);
+            b.Property(x => x.ProvisioningActor).HasMaxLength(200);
         });
 
         // -------------------------------------------------
@@ -201,6 +207,43 @@ public sealed class AppDbContext : DbContext
             b.HasIndex(x => x.SessionId);
             b.Property(x => x.SessionId).HasMaxLength(36).IsRequired();
             b.Property(x => x.ToolName).HasMaxLength(100).IsRequired();
+        });
+
+        modelBuilder.Entity<IncidentEmbedding>(b =>
+        {
+            b.HasKey(x => x.Id);
+            b.HasIndex(x => new { x.TenantId, x.IncidentId }).IsUnique();
+            b.Property(x => x.TextChunk).HasMaxLength(2000);
+            b.Property(x => x.EmbeddingJson).HasColumnType("nvarchar(max)");
+        });
+
+        modelBuilder.Entity<IncidentAiInsight>(b =>
+        {
+            b.HasKey(x => x.Id);
+            b.HasIndex(x => new { x.TenantId, x.IncidentId, x.Language }).IsUnique();
+            b.Property(x => x.Language).HasMaxLength(10).IsRequired();
+            b.Property(x => x.InsightText).HasColumnType("nvarchar(max)");
+            b.Property(x => x.ModelUsed).HasMaxLength(100);
+        });
+
+        // -------------------------------------------------
+        // PROVISIONING AUDIT LOG
+        // -------------------------------------------------
+
+        modelBuilder.Entity<TenantProvisioningEvent>(b =>
+        {
+            b.HasKey(x => x.Id);
+            b.Property(x => x.Action).HasMaxLength(100).IsRequired();
+            b.Property(x => x.Actor).HasMaxLength(200);
+            b.Property(x => x.ErrorMessage).HasMaxLength(2000);
+            b.Property(x => x.CorrelationId).HasMaxLength(100);
+            b.Property(x => x.StatusBefore).HasConversion<int>();
+            b.Property(x => x.StatusAfter).HasConversion<int>();
+
+            b.HasIndex(x => x.TenantId);
+            b.HasIndex(x => x.TimestampUtc);
+            b.HasIndex(x => x.Success);
+            b.HasIndex(x => new { x.TenantId, x.TimestampUtc });
         });
 
         // -------------------------------------------------

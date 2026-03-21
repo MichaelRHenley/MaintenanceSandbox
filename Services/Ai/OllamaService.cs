@@ -57,4 +57,19 @@ public sealed class OllamaService : IOllamaService
     private sealed record OllamaOptionsPayload(
         [property: JsonPropertyName("temperature")] double Temperature,
         [property: JsonPropertyName("num_predict")] int NumPredict);
+
+    public async Task<float[]> EmbedAsync(string model, string text, CancellationToken ct = default)
+    {
+        var payload = new { model, prompt = text };
+        using var response = await _http.PostAsJsonAsync("/api/embeddings", payload, ct);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStringAsync(ct);
+        using var doc = JsonDocument.Parse(json);
+        return doc.RootElement
+            .GetProperty("embedding")
+            .EnumerateArray()
+            .Select(e => e.GetSingle())
+            .ToArray();
+    }
 }

@@ -601,4 +601,17 @@ C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\Microsoft.Extensions.FileProvid
 C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\appsettings.Production.json
 C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\Azure.Communication.Sms.dll
+C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\de-DE\MaintenanceSandbox.resources.dll
+C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\fi-FI\MaintenanceSandbox.resources.dll
+C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\it-IT\MaintenanceSandbox.resources.dll
+C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\sv-SE\MaintenanceSandbox.resources.dll
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\MaintenanceSandbox.Resources.SharedResource.de-DE.resources
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\MaintenanceSandbox.Resources.SharedResource.fi-FI.resources
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\MaintenanceSandbox.Resources.SharedResource.it-IT.resources
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\MaintenanceSandbox.Resources.SharedResource.sv-SE.resources
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\de-DE\MaintenanceSandbox.resources.dll
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\fi-FI\MaintenanceSandbox.resources.dll
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\it-IT\MaintenanceSandbox.resources.dll
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\sv-SE\MaintenanceSandbox.resources.dll
 C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\web.config

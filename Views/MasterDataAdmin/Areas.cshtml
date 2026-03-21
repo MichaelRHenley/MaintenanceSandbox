@@ -1,0 +1,85 @@
+@model IList<MaintenanceSandbox.Models.MasterData.Area>
+@using MaintenanceSandbox.Models.MasterData
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = "Areas";
+    var site = ViewBag.Site as Site;
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Areas — @site?.Name</div>
+                <div class="sentinel-page-subtitle">
+                    @SR["App_Title"] · <a asp-action="Index" class="text-reset text-decoration-none">Plant Structure</a> → @site?.Name
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <a class="btn btn-sentinel-ghost btn-sm" asp-action="Index">← Sites</a>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+
+            @if (TempData["ok"] is string ok)
+            {
+                <div class="alert alert-success">@ok</div>
+            }
+            @if (TempData["err"] is string err)
+            {
+                <div class="alert alert-danger">@err</div>
+            }
+
+            @if (Model.Count == 0)
+            {
+                <p class="text-muted mb-4">No areas yet. Create the first one below.</p>
+            }
+            else
+            {
+                <div class="table-responsive mb-4">
+                    <table class="table table-dark table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Area Name</th>
+                                <th>Work Centers</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var area in Model)
+                            {
+                                <tr>
+                                    <td>@area.Name</td>
+                                    <td>@area.WorkCenters.Count</td>
+                                    <td class="text-end">
+                                        <a class="btn btn-sm btn-sentinel-ghost"
+                                           asp-action="WorkCenters"
+                                           asp-route-areaId="@area.Id">Manage Work Centers →</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+            <div class="glass-card--accent glass-card">
+                <div class="fw-semibold small text-uppercase text-muted mb-3">Add Area</div>
+                <form asp-action="CreateArea" method="post" class="row g-2 align-items-end">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="siteId" value="@site?.Id" />
+                    <div class="col-md-6">
+                        <label class="form-label small text-uppercase text-muted mb-1">Area Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="e.g. Packaging Hall" maxlength="120" required />
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-sentinel-primary">Add Area</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

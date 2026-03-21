@@ -5,6 +5,27 @@ during development. Add to this as decisions are made.
 
 ---
 
+## Pilot Deployment — Stabilization Pass (current)
+
+**Date:** 2026  
+**Goal:** Get the app running on Azure App Service for mobile pilot testing.
+
+**Changes made this pass:**
+- Ollama `HttpClient` timeout reduced from 2 min → 12 s when `BaseUrl` is not localhost. Prevents
+  AI Assist requests hanging silently on Azure (no local Ollama). Outer `try/catch` in
+  `AiOrchestrator` returns a graceful "temporarily unavailable" message.
+- `Properties/PublishProfiles/AzureWebApp.pubxml` created (fill in the four TODOs before first use).
+- `DEPLOYMENT.md` created — step-by-step Azure CLI + Visual Studio publish guide.
+- `CONFIG_CHECKLIST.md` created — all required env vars and pre/post deploy checklist.
+
+**Known pilot gaps (not blocking):**
+- AI Assist (`✦` modal) returns "temporarily unavailable" on Azure — Ollama not deployed.
+- No staging slot — rollback = full redeploy.
+- No `/health` endpoint for App Service probing.
+- Email invites silently dropped until SMTP is configured.
+
+---
+
 ## Architecture Decisions
 
 ### Two-Database Split

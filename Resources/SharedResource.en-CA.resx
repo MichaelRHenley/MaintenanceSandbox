@@ -628,7 +628,16 @@
     <value>Sign in</value>
   </data>
   <data name="Auth_SignOut" xml:space="preserve">
-    <value>Sign out</value>
+	<value>Sign out</value>
+  </data>
+  <data name="Auth_Email" xml:space="preserve">
+	<value>Email</value>
+  </data>
+  <data name="Auth_Password" xml:space="preserve">
+	<value>Password</value>
+  </data>
+  <data name="Auth_TryDemo" xml:space="preserve">
+	<value>Try Demo</value>
   </data>
   <data name="Layout_TenantLabel" xml:space="preserve">
     <value>Tenant</value>
@@ -694,7 +703,10 @@
     <value>Waiting on parts</value>
   </data>
   <data name="Maint_Status_Resolved" xml:space="preserve">
-    <value>Resolved</value>
+	<value>Resolved</value>
+  </data>
+  <data name="Maint_Status_Closed" xml:space="preserve">
+	<value>Closed</value>
   </data>
 
   <!-- Tier changed toast (for your controller TempData) -->
@@ -722,6 +734,9 @@
 </data>
 	<data name="Role_Supervisor" xml:space="preserve">
   <value>Supervisor</value>
+</data>
+	<data name="Role_Tech" xml:space="preserve">
+  <value>Tech</value>
 </data>
 	<data name="Role_MaintenanceManager" xml:space="preserve">
   <value>Maintenance manager</value>
@@ -1179,6 +1194,185 @@
   </data>
   <data name="AccessDenied_Button" xml:space="preserve">
 	<value>Back to Dashboard</value>
+  </data>
+
+	<!-- AI Insight panel -->
+
+	<data name="AiInsight_Title" xml:space="preserve">
+	<value>AI Troubleshooting Insight</value>
+  </data>
+	<data name="AiInsight_Button_Refresh" xml:space="preserve">
+	<value>Refresh</value>
+  </data>
+	<data name="AiInsight_Tooltip_Refresh" xml:space="preserve">
+	<value>Regenerate analysis</value>
+  </data>
+	<data name="AiInsight_Loading" xml:space="preserve">
+	<value>Building AI troubleshooting insight…</value>
+  </data>
+	<data name="AiInsight_Button_ViewSimilar" xml:space="preserve">
+	<value>View Similar Incidents</value>
+  </data>
+	<data name="AiInsight_Error_Unavailable" xml:space="preserve">
+	<value>AI insight is temporarily unavailable.</value>
+  </data>
+	<data name="AiInsight_Link_TryAgain" xml:space="preserve">
+	<value>Try again</value>
+  </data>
+	<data name="AiInsight_Demo_Limit" xml:space="preserve">
+	<value>Demo AI limit reached — insight quota used for this session.</value>
+  </data>
+	<data name="AiInsight_Generated" xml:space="preserve">
+	  <value>Generated</value>
+	</data>
+
+	<!-- Settings: Admin section -->
+	<data name="Settings_Section_Admin_Title" xml:space="preserve">
+	  <value>Admin</value>
+	</data>
+	<data name="Settings_Section_Admin_Description" xml:space="preserve">
+	  <value>Master data and approvals.</value>
+	</data>
+	<data name="Settings_Admin_EquipmentAdmin" xml:space="preserve">
+	  <value>Equipment Admin</value>
+	</data>
+	<data name="Settings_Admin_EquipmentRequests" xml:space="preserve">
+	  <value>Equipment Requests</value>
+	</data>
+	<data name="Settings_Admin_UserAdmin" xml:space="preserve">
+	  <value>User Admin</value>
+	</data>
+	<data name="Settings_Admin_PlantStructure" xml:space="preserve">
+	  <value>Plant Structure</value>
+	</data>
+	<data name="Settings_Tier_ComingSoon" xml:space="preserve">
+	  <value>Additional tiers coming soon.</value>
+	</data>
+
+	<!-- Privacy page -->
+	<data name="Privacy_Title" xml:space="preserve">
+	  <value>Privacy Policy</value>
+	</data>
+	<data name="Privacy_LastUpdated" xml:space="preserve">
+	  <value>Last updated: June 2025</value>
+	</data>
+	<data name="Privacy_S1_Title" xml:space="preserve">
+	  <value>1. What We Collect</value>
+	</data>
+	<data name="Privacy_S1_Intro" xml:space="preserve">
+	  <value>When you use Sentinel, we collect:</value>
+	</data>
+	<data name="Privacy_S1_Item_Account" xml:space="preserve">
+	  <value>&lt;strong&gt;Account information&lt;/strong&gt; — name, email address, and role within your organisation.</value>
+	</data>
+	<data name="Privacy_S1_Item_Operational" xml:space="preserve">
+	  <value>&lt;strong&gt;Operational data&lt;/strong&gt; — maintenance requests, comments, status updates, equipment records, and work-centre assignments that you and your team enter into the application.</value>
+	</data>
+	<data name="Privacy_S1_Item_Usage" xml:space="preserve">
+	  <value>&lt;strong&gt;Usage data&lt;/strong&gt; — page visits, feature interactions, and browser/device type for performance monitoring and product improvement.</value>
+	</data>
+	<data name="Privacy_S1_Item_Ai" xml:space="preserve">
+	  <value>&lt;strong&gt;AI interaction content&lt;/strong&gt; — when you use the AI help or AI suggestion features, the text of your request (including relevant maintenance context) is sent to Anthropic's Claude API for processing. No personally identifiable information is intentionally included in AI prompts.</value>
+	</data>
+	<data name="Privacy_S2_Title" xml:space="preserve">
+	  <value>2. How We Use Your Data</value>
+	</data>
+	<data name="Privacy_S2_Item1" xml:space="preserve">
+	  <value>To deliver and operate the Sentinel application for your tenant.</value>
+	</data>
+	<data name="Privacy_S2_Item2" xml:space="preserve">
+	  <value>To provide real-time collaboration features (comments, status updates) via SignalR.</value>
+	</data>
+	<data name="Privacy_S2_Item3" xml:space="preserve">
+	  <value>To generate AI-assisted maintenance suggestions and contextual help.</value>
+	</data>
+	<data name="Privacy_S2_Item4" xml:space="preserve">
+	  <value>To send transactional emails (invite links, notifications) via Azure Communication Services.</value>
+	</data>
+	<data name="Privacy_S2_Item5" xml:space="preserve">
+	  <value>To improve product reliability and performance.</value>
+	</data>
+	<data name="Privacy_S2_NoSell" xml:space="preserve">
+	  <value>We do not sell your data to third parties.</value>
+	</data>
+	<data name="Privacy_S3_Title" xml:space="preserve">
+	  <value>3. Tenant Isolation</value>
+	</data>
+	<data name="Privacy_S3_Body" xml:space="preserve">
+	  <value>All operational data is scoped to your organisation's tenant. Row-level isolation is enforced at the database layer — no tenant can access another tenant's data. Demo sessions are isolated the same way and are automatically purged after two hours.</value>
+	</data>
+	<data name="Privacy_S4_Title" xml:space="preserve">
+	  <value>4. Third-Party Services</value>
+	</data>
+	<data name="Privacy_S4_Item_Anthropic" xml:space="preserve">
+	  <value>&lt;strong&gt;Anthropic (Claude)&lt;/strong&gt; — AI features send anonymised maintenance context to Claude's API. Anthropic's data processing agreement applies. No prompts are used to train models.</value>
+	</data>
+	<data name="Privacy_S4_Item_Azure" xml:space="preserve">
+	  <value>&lt;strong&gt;Microsoft Azure&lt;/strong&gt; — the application is hosted on Azure infrastructure. Data is stored in Azure SQL Database. Azure Communication Services is used for email delivery.</value>
+	</data>
+	<data name="Privacy_S5_Title" xml:space="preserve">
+	  <value>5. Data Retention</value>
+	</data>
+	<data name="Privacy_S5_Body" xml:space="preserve">
+	  <value>Operational data is retained for the duration of your subscription. On account closure, data is deleted within 30 days. Demo tenant data is purged automatically after 2 hours.</value>
+	</data>
+	<data name="Privacy_S6_Title" xml:space="preserve">
+	  <value>6. Security</value>
+	</data>
+	<data name="Privacy_S6_Body" xml:space="preserve">
+	  <value>All data is transmitted over HTTPS. Authentication uses ASP.NET Core Identity with hashed credentials. API keys and secrets are stored in Azure Key Vault or environment-level secrets — never in source code.</value>
+	</data>
+	<data name="Privacy_S7_Title" xml:space="preserve">
+	  <value>7. Your Rights</value>
+	</data>
+	<data name="Privacy_S7_Body" xml:space="preserve">
+	  <value>You may request a copy of your data, correction of inaccurate data, or deletion of your account by contacting your organisation's administrator or reaching us at the address below.</value>
+	</data>
+	<data name="Privacy_S8_Title" xml:space="preserve">
+	  <value>8. Contact</value>
+	</data>
+	<data name="Privacy_S8_Intro" xml:space="preserve">
+	  <value>For privacy enquiries, contact us at</value>
+	</data>
+
+	<!-- Navbar auth buttons -->
+  <data name="Nav_SignOut" xml:space="preserve">
+	<value>Sign out</value>
+  </data>
+  <data name="Nav_SignIn" xml:space="preserve">
+	<value>Sign in</value>
+  </data>
+  <data name="Nav_DemoShare" xml:space="preserve">
+	<value>📧 Share</value>
+  </data>
+
+  <!-- AI Assist modal -->
+  <data name="AiAssist_Title" xml:space="preserve">
+	<value>AI Assist</value>
+  </data>
+  <data name="AiAssist_Subtitle" xml:space="preserve">
+	<value>Ask about incidents, search history, or draft a new report.</value>
+  </data>
+  <data name="AiAssist_Mode_Ask" xml:space="preserve">
+	<value>Ask</value>
+  </data>
+  <data name="AiAssist_Mode_Command" xml:space="preserve">
+	<value>Command</value>
+  </data>
+  <data name="AiAssist_Mode_Troubleshoot" xml:space="preserve">
+	<value>Troubleshoot</value>
+  </data>
+  <data name="AiAssist_Input_Placeholder" xml:space="preserve">
+	<value>Ask about incidents, equipment status, or history… (Enter to send)</value>
+  </data>
+  <data name="AiAssist_Button_Send" xml:space="preserve">
+	<value>Send</value>
+  </data>
+  <data name="AiAssist_Thinking" xml:space="preserve">
+	<value>✦ Thinking…</value>
+  </data>
+  <data name="AiAssist_Checklist_Label" xml:space="preserve">
+	<value>Inspection checklist</value>
   </data>
 
 </root>

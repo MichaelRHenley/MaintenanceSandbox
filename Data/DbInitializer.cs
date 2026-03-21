@@ -92,6 +92,12 @@ public static class DbInitializer
                 db.MaintenanceRequests.RemoveRange(
                     db.MaintenanceRequests.IgnoreQueryFilters()
                         .Where(r => reqIds.Contains(r.Id)));
+                db.IncidentEmbeddings.RemoveRange(
+                    db.IncidentEmbeddings
+                        .Where(e => e.TenantId == tid));
+                db.IncidentAiInsights.RemoveRange(
+                    db.IncidentAiInsights
+                        .Where(i => i.TenantId == tid));
                 await db.SaveChangesAsync();
             }
 
@@ -105,6 +111,95 @@ public static class DbInitializer
             if (tenant != null) db.Tenants.Remove(tenant);
             await db.SaveChangesAsync();
         }
+    }
+
+    // ============================================================
+    // RAG TABLE SETUP
+    // ============================================================
+
+    public static async Task EnsureRagTablesAsync(AppDbContext db)
+    {
+        await db.Database.ExecuteSqlRawAsync("""
+            IF NOT EXISTS (
+                SELECT 1 FROM sys.tables
+                WHERE object_id = OBJECT_ID(N'[dbo].[IncidentEmbeddings]')
+            )
+            BEGIN
+                CREATE TABLE [dbo].[IncidentEmbeddings] (
+                    [Id]            INT              NOT NULL IDENTITY(1,1),
+                    [TenantId]      UNIQUEIDENTIFIER NOT NULL,
+                    [IncidentId]    INT              NOT NULL,
+                    [TextChunk]     NVARCHAR(2000)   NOT NULL DEFAULT '',
+                    [EmbeddingJson] NVARCHAR(MAX)    NOT NULL DEFAULT '',
+                    [CreatedAt]     DATETIME2        NOT NULL DEFAULT GETUTCDATE(),
+                    CONSTRAINT [PK_IncidentEmbeddings] PRIMARY KEY ([Id]),
+                    CONSTRAINT [UQ_IncidentEmbeddings_Tenant_Incident]
+                        UNIQUE ([TenantId], [IncidentId])
+                );
+                CREATE INDEX [IX_IncidentEmbeddings_TenantId]
+                    ON [dbo].[IncidentEmbeddings] ([TenantId]);
+            END
+            """);
+
+        await db.Database.ExecuteSqlRawAsync("""
+            IF NOT EXISTS (
+                SELECT 1 FROM sys.tables
+                WHERE object_id = OBJECT_ID(N'[dbo].[IncidentAiInsights]')
+            )
+            BEGIN
+                CREATE TABLE [dbo].[IncidentAiInsights] (
+                    [Id]          INT              NOT NULL IDENTITY(1,1),
+                    [TenantId]    UNIQUEIDENTIFIER NOT NULL,
+                    [IncidentId]  INT              NOT NULL,
+                    [Language]    NVARCHAR(10)     NOT NULL DEFAULT 'en',
+                    [InsightText] NVARCHAR(MAX)    NOT NULL DEFAULT '',
+                    [ModelUsed]   NVARCHAR(100)    NOT NULL DEFAULT '',
+                    [CreatedUtc]  DATETIME2        NOT NULL DEFAULT GETUTCDATE(),
+                    CONSTRAINT [PK_IncidentAiInsights] PRIMARY KEY ([Id]),
+                    CONSTRAINT [UQ_IncidentAiInsights_Tenant_Incident_Lang]
+                        UNIQUE ([TenantId], [IncidentId], [Language])
+                );
+                CREATE INDEX [IX_IncidentAiInsights_TenantId]
+                    ON [dbo].[IncidentAiInsights] ([TenantId]);
+            END
+            """);
+
+        // Migrate existing IncidentAiInsights tables that pre-date multi-language support.
+        await db.Database.ExecuteSqlRawAsync("""
+            IF EXISTS (
+                SELECT 1 FROM sys.tables
+                WHERE object_id = OBJECT_ID(N'[dbo].[IncidentAiInsights]')
+            )
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 FROM sys.columns
+                    WHERE object_id = OBJECT_ID(N'[dbo].[IncidentAiInsights]') AND name = 'Language'
+                )
+                BEGIN
+                    ALTER TABLE [dbo].[IncidentAiInsights]
+                        ADD [Language] NVARCHAR(10) NOT NULL DEFAULT 'en';
+                END
+
+                IF EXISTS (
+                    SELECT 1 FROM sys.key_constraints
+                    WHERE name = 'UQ_IncidentAiInsights_Tenant_Incident' AND type = 'UQ'
+                )
+                BEGIN
+                    ALTER TABLE [dbo].[IncidentAiInsights]
+                        DROP CONSTRAINT [UQ_IncidentAiInsights_Tenant_Incident];
+                END
+
+                IF NOT EXISTS (
+                    SELECT 1 FROM sys.key_constraints
+                    WHERE name = 'UQ_IncidentAiInsights_Tenant_Incident_Lang' AND type = 'UQ'
+                )
+                BEGIN
+                    ALTER TABLE [dbo].[IncidentAiInsights]
+                        ADD CONSTRAINT [UQ_IncidentAiInsights_Tenant_Incident_Lang]
+                        UNIQUE ([TenantId], [IncidentId], [Language]);
+                END
+            END
+            """);
     }
 
     // ============================================================
@@ -134,12 +229,16 @@ public static class DbInitializer
 
         var statuses = new[] { "New", "In Progress", "Waiting on Parts", "Resolved", "Closed" };
         var priorities = new[] { "Low", "Medium", "High" };
+        var areas = new[] { "Area 1", "Area 2" };
+        var sites = new[] { "Site Alpha", "Site Beta" };
 
         Randomizer.Seed = new Random(randomSeed);
         var rand = new Random(randomSeed);
 
         var requestFaker = new Faker<MaintenanceRequest>("en")
             .RuleFor(r => r.TenantId, _ => tenantId)
+            .RuleFor(r => r.Site, f => f.PickRandom(sites))
+            .RuleFor(r => r.Area, f => f.PickRandom(areas))
             .RuleFor(r => r.WorkCenterId, f => f.PickRandom(workCenters).Id)
             .RuleFor(r => r.EquipmentId, (f, r) =>
             {
@@ -289,6 +388,9 @@ public static class DbInitializer
             .IgnoreQueryFilters()
             .Where(r => reqIds.Contains(r.Id));
         db.MaintenanceRequests.RemoveRange(reqs);
+
+        db.IncidentEmbeddings.RemoveRange(
+            db.IncidentEmbeddings.Where(e => e.TenantId == tenantId));
 
         await db.SaveChangesAsync();
     }

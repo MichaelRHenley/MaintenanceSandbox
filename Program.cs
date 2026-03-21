@@ -8,6 +8,7 @@ using MaintenanceSandbox.Services;
 using MaintenanceSandbox.Services.Ai;
 using MaintenanceSandbox.Services.Onboarding;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +32,11 @@ var supportedCultures = new[]
 {
     new CultureInfo("en-CA"),
     new CultureInfo("fr-CA"),
-    new CultureInfo("es-MX")
+    new CultureInfo("es-MX"),
+    new CultureInfo("de-DE"),
+    new CultureInfo("it-IT"),
+    new CultureInfo("sv-SE"),
+    new CultureInfo("fi-FI")
 };
 
 builder.Services.AddRazorPages();
@@ -65,6 +70,11 @@ var businessConn = builder.Configuration.GetConnectionString("DefaultConnection"
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(businessConn));
+
+// Factory used by IncidentVectorSearch for background/concurrent DB access
+// without sharing the request-scoped AppDbContext.
+builder.Services.AddDbContextFactory<AppDbContext>(options =>
+    options.UseSqlServer(businessConn), ServiceLifetime.Scoped);
 
 // =====================================================
 // 2) DIRECTORY DB (new) - Identity + Tenants + Subs
@@ -115,6 +125,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ITenantProvider, TenantProvider>();
 builder.Services.AddScoped<RequireTenantFilter>();
 builder.Services.AddScoped<MaintenanceSandbox.Filters.BlockDemoFilter>();
+builder.Services.AddScoped<ITenantProvisioningAuditLogger, TenantProvisioningAuditLogger>();
+builder.Services.AddScoped<ITenantOperationalProvisioner, TenantOperationalProvisioner>();
+builder.Services.AddScoped<TenantContext>();
+builder.Services.AddScoped<ITenantContext>(sp => sp.GetRequiredService<TenantContext>());
+builder.Services.AddScoped<ITenantLifecycleService, TenantLifecycleService>();
 
 
 
@@ -163,10 +178,24 @@ builder.Services.AddHttpClient<IOllamaService, OllamaService>((sp, client) =>
     var cfg = sp.GetRequiredService<IConfiguration>();
     var baseUrl = cfg["Ollama:BaseUrl"] ?? "http://localhost:11434";
     client.BaseAddress = new Uri(baseUrl);
-    client.Timeout = TimeSpan.FromMinutes(2);
+    // Keep a short timeout so production (no local Ollama) fails fast into
+    // the orchestrator's catch block instead of hanging for 2 minutes.
+    var isLocal = baseUrl.Contains("localhost") || baseUrl.Contains("127.0.0.1");
+    client.Timeout = isLocal ? TimeSpan.FromMinutes(2) : TimeSpan.FromSeconds(12);
 });
 
 builder.Services.AddScoped<IIncidentAiTools, IncidentAiTools>();
+builder.Services.AddScoped<IIncidentVectorSearch, IncidentVectorSearch>();
+
+builder.Services.AddScoped<IIncidentContextProvider, IncidentContextProvider>();
+builder.Services.AddScoped<IEquipmentContextProvider, EquipmentContextProvider>();
+builder.Services.AddScoped<IPartsContextProvider, PartsContextProvider>();
+builder.Services.AddScoped<IWorkforceContextProvider, WorkforceContextProvider>();
+builder.Services.AddScoped<IKnowledgeContextProvider, KnowledgeContextProvider>();
+builder.Services.AddScoped<IAiContextBuilder, AiContextBuilder>();
+builder.Services.AddSingleton<IAiPromptComposer, AiPromptComposer>();
+builder.Services.AddScoped<IAiIncidentInsightService, AiIncidentInsightService>();
+
 builder.Services.AddScoped<IAiOrchestrator, AiOrchestrator>();
 
 builder.Services.Configure<MaintenanceSandbox.Demo.DemoOptions>(
@@ -195,6 +224,22 @@ else
 
 
 builder.Services.AddAuthorization();
+
+// -------------------------------------------------
+// DATA PROTECTION — must persist keys across IIS restarts.
+// Without this, every app restart invalidates all auth cookies
+// and session tokens, logging everyone out.
+// KeysPath is read from config (appsettings.Production.json or env var).
+// The configured directory must be writable by the IIS app pool identity.
+// -------------------------------------------------
+var dpKeysPath = builder.Configuration["DataProtection:KeysPath"]
+    ?? Path.Combine(
+           Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+           "MaintenanceSandbox", "dpkeys");
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(dpKeysPath))
+    .SetApplicationName("MaintenanceSandbox");
+
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -214,12 +259,18 @@ using (var scope = app.Services.CreateScope())
     // Business DB - skip migration, database already exists on Azure
     var businessDb = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     // businessDb.Database.Migrate(); // Commented out - Azure DB already exists
+    DbInitializer.EnsureRagTablesAsync(businessDb).GetAwaiter().GetResult();
     DbInitializer.PurgeExpiredDemoTenantsAsync(businessDb, TimeSpan.FromHours(2)).GetAwaiter().GetResult();
     DbInitializer.SeedAsync(businessDb).GetAwaiter().GetResult();
 
     // Directory DB - skip migration, database already exists on Azure
     var directoryDb = scope.ServiceProvider.GetRequiredService<DirectoryDbContext>();
     // directoryDb.Database.Migrate(); // Commented out - Azure DB already exists
+
+    // Ensure the SentinelAdmin role exists so it can be assigned to Sentinel operators.
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    if (!await roleManager.RoleExistsAsync("SentinelAdmin"))
+        await roleManager.CreateAsync(new IdentityRole("SentinelAdmin"));
 
     // Optional: seed demo tenant/user later via a seeder you control
     // DirectorySeeder.Seed(directoryDb, scope.ServiceProvider);
@@ -246,6 +297,8 @@ app.UseSession();
 app.MapHub<MaintenanceSandbox.Hubs.MaintenanceHub>("/hubs/maintenance");
 
 app.UseAuthentication();
+app.UseMiddleware<TenantContextMiddleware>();
+app.UseMiddleware<ProvisioningStatusGateMiddleware>();
 
 app.Use(async (ctx, next) =>
 {

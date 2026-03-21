@@ -1,16 +1,12 @@
-﻿using MaintenanceSandbox.Data;
-using MaintenanceSandbox.Directory.Data;
+﻿using MaintenanceSandbox.Directory.Data;
 using MaintenanceSandbox.Directory.Models;
 using MaintenanceSandbox.Directory.Models.Tenants;
 using MaintenanceSandbox.Models;
-using MaintenanceSandbox.Models.MasterData;
+using MaintenanceSandbox.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Area = MaintenanceSandbox.Models.MasterData.Area;
-using Site = MaintenanceSandbox.Models.MasterData.Site;
-using WorkCenter = MaintenanceSandbox.Models.MasterData.WorkCenter;
 using DirectoryTenant = MaintenanceSandbox.Directory.Models.Tenants.Tenant;
 using DirectoryTenantSubscription = MaintenanceSandbox.Directory.Models.Tenants.TenantSubscription;
 using DirectoryTenantUserRole = MaintenanceSandbox.Directory.Models.Tenants.TenantUserRole;
@@ -22,21 +18,21 @@ public sealed class SubscribeController : Controller
     private readonly DirectoryDbContext _dir;
     private readonly UserManager<ApplicationUser> _users;
     private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly AppDbContext _appDb;
     private readonly RoleManager<IdentityRole> _roles;
+    private readonly ITenantOperationalProvisioner _provisioner;
 
     public SubscribeController(
-    DirectoryDbContext dir,
-    UserManager<ApplicationUser> users,
-    SignInManager<ApplicationUser> signInManager,
-    AppDbContext appDb,
-    RoleManager<IdentityRole> roles)
+        DirectoryDbContext dir,
+        UserManager<ApplicationUser> users,
+        SignInManager<ApplicationUser> signInManager,
+        RoleManager<IdentityRole> roles,
+        ITenantOperationalProvisioner provisioner)
     {
         _dir = dir;
         _users = users;
         _signInManager = signInManager;
-        _appDb = appDb;
         _roles = roles;
+        _provisioner = provisioner;
     }
 
 
@@ -106,10 +102,10 @@ public sealed class SubscribeController : Controller
         // ✅ Make tenant creator an admin (Identity role)
         await EnsureUserInRoleAsync(user, "MaintenanceAdmin");
 
-        // If you want, you can also do this, but I recommend admin-only for now:
-        // await EnsureUserInRoleAsync(user, "Supervisor");
+        // Provision the operational DB side: Tenant record + default Site.
+        // Plant admin configures Areas / Work Centers / Equipment via MasterDataAdmin.
+        await _provisioner.ProvisionAsync(tenant.Id, vm.CompanyName.Trim(), User.Identity?.Name);
 
-        // await EnsureDefaultMasterDataAsync(tenant.Id);
         await _signInManager.RefreshSignInAsync(user);
 
         return Redirect("/onboarding");
@@ -130,53 +126,6 @@ public sealed class SubscribeController : Controller
             await _users.AddToRoleAsync(user, roleName);
     }
 
-
-    private async Task EnsureDefaultMasterDataAsync(Guid tenantId)
-    {
-        var anySite = await _appDb.Sites.IgnoreQueryFilters()
-            .AnyAsync(s => s.TenantId == tenantId);
-
-        if (anySite) return;
-
-        var site = new MaintenanceSandbox.Models.MasterData.Site
-        {
-            TenantId = tenantId,
-            Name = "Default Site"
-        };
-
-        _appDb.Sites.Add(site);
-        await _appDb.SaveChangesAsync(); // site.Id (int) now populated
-
-        var area = new Area
-        {
-            TenantId = tenantId,
-            SiteId = site.Id,          // int -> int
-            Name = "Default Area"
-        };
-        _appDb.Areas.Add(area);
-        await _appDb.SaveChangesAsync(); // area.Id (int)
-
-        var wc = new WorkCenter
-        {
-            TenantId = tenantId,
-            AreaId = area.Id,          // int -> int
-            Code = "WC-01",
-            DisplayName = "Work Center 01"
-        };
-        _appDb.WorkCenters.Add(wc);
-        await _appDb.SaveChangesAsync(); // wc.Id (int)
-
-        var eq = new Equipment
-        {
-            TenantId = tenantId,
-            WorkCenterId = wc.Id,      // int -> int
-            Code = "EQ-01",
-            DisplayName = "Equipment 01"
-        };
-        _appDb.Equipment.Add(eq);
-
-        await _appDb.SaveChangesAsync();
-    }
 
     public IActionResult DebugTenant()
     {

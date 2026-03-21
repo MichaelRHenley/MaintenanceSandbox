@@ -1,0 +1,102 @@
+@model MaintenanceSandbox.ViewModels.TenantStatusVm
+@using MaintenanceSandbox.Models
+
+@{
+    ViewData["Title"] = "Workspace Status";
+
+    var (badgeClass, icon) = Model.ProvisioningStatus switch
+    {
+        TenantProvisioningStatus.Ready        => ("bg-success",           "✅"),
+        TenantProvisioningStatus.Provisioning => ("bg-info text-dark",    "⚙️"),
+        TenantProvisioningStatus.Pending      => ("bg-secondary",         "⏳"),
+        TenantProvisioningStatus.Failed       => ("bg-danger",            "❌"),
+        TenantProvisioningStatus.Suspended    => ("bg-warning text-dark", "⛔"),
+        _                                     => ("bg-secondary",         "❓")
+    };
+
+    var isTransient = Model.ProvisioningStatus is
+        TenantProvisioningStatus.Pending or
+        TenantProvisioningStatus.Provisioning;
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="sentinel-card text-center p-4 p-md-5">
+
+                <div style="font-size: 3rem; line-height: 1; margin-bottom: 1.25rem;">@icon</div>
+
+                @if (!string.IsNullOrEmpty(Model.TenantName))
+                {
+                    <h2 class="mb-2">@Model.TenantName</h2>
+                }
+
+                <span class="badge @badgeClass fs-6 mb-4">@Model.ProvisioningStatus</span>
+
+                <p class="text-muted mb-4">@Model.DisplayMessage</p>
+
+                @if (isTransient)
+                {
+                    <p class="small text-muted mb-2">
+                        This page will refresh automatically in <span id="countdown">15</span> seconds.
+                    </p>
+                    <div class="progress mb-4" style="height: 4px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                             style="width: 100%"></div>
+                    </div>
+                }
+
+                @if (Model.ProvisioningStatus == TenantProvisioningStatus.Failed
+                     && !string.IsNullOrEmpty(Model.LastProvisioningError))
+                {
+                    <details class="text-start mb-4">
+                        <summary class="small text-muted" style="cursor: pointer;">Technical details</summary>
+                        <pre class="bg-dark text-danger p-3 rounded small mt-2"
+                             style="overflow-x: auto; white-space: pre-wrap;">@Model.LastProvisioningError</pre>
+                    </details>
+                }
+
+                @if (Model.ProvisionedAt.HasValue)
+                {
+                    <p class="small text-muted mb-3">
+                        Last provisioned: @Model.ProvisionedAt.Value.ToString("yyyy-MM-dd HH:mm") UTC
+                    </p>
+                }
+
+                @if (Model.ProvisioningStatus is
+                     TenantProvisioningStatus.Failed or
+                     TenantProvisioningStatus.Suspended)
+                {
+                    <hr class="border-secondary my-3" />
+                    <p class="small text-muted mb-0">
+                        Need help? Contact
+                        <a href="mailto:support@sentinel.ai" class="text-info">Sentinel Support</a>.
+                    </p>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@if (isTransient)
+{
+    @section Scripts {
+        <script>
+            (function () {
+                var remaining = 15;
+                var el = document.getElementById('countdown');
+                var timer = setInterval(function () {
+                    remaining--;
+                    if (el) el.textContent = remaining;
+                    if (remaining <= 0) {
+                        clearInterval(timer);
+                        window.location.reload();
+                    }
+                }, 1000);
+            })();
+        </script>
+    }
+}

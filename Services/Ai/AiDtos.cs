@@ -43,6 +43,9 @@ public sealed class AiParsedIntent
     [JsonPropertyName("equipment")]
     public string? Equipment { get; set; }
 
+    [JsonPropertyName("workCenter")]
+    public string? WorkCenter { get; set; }
+
     [JsonPropertyName("area")]
     public string? Area { get; set; }
 

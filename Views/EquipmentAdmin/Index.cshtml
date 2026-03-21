@@ -1,0 +1,112 @@
+@model IList<MaintenanceSandbox.Models.MasterData.Equipment>
+@using MaintenanceSandbox.Models.MasterData
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = "Equipment Admin";
+    var workCenters = ViewBag.WorkCenters as List<WorkCenter> ?? new List<WorkCenter>();
+    var selectedId = ViewBag.WorkCenterId as int?;
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Equipment Admin</div>
+                <div class="sentinel-page-subtitle">@SR["App_Title"] · Settings</div>
+            </div>
+            <div class="d-flex gap-2">
+                @if (selectedId.HasValue)
+                {
+                    <a class="btn btn-sentinel-primary btn-sm"
+                       asp-action="Create"
+                       asp-route-workCenterId="@selectedId">+ New Equipment</a>
+                }
+                <a class="btn btn-sentinel-ghost btn-sm"
+                   asp-controller="Settings"
+                   asp-action="Index">Back</a>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+
+            @if (TempData["ok"] is string ok)
+            {
+                <div class="alert alert-success">@ok</div>
+            }
+            @if (TempData["err"] is string err)
+            {
+                <div class="alert alert-danger">@err</div>
+            }
+
+            @if (workCenters.Count == 0)
+            {
+                <p class="text-muted">No work centers found. Add plant structure first.</p>
+            }
+            else
+            {
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    @foreach (var wc in workCenters)
+                    {
+                        <a class="btn btn-sm @(wc.Id == selectedId ? "btn-sentinel-primary" : "btn-sentinel-ghost")"
+                           asp-action="Index"
+                           asp-route-workCenterId="@wc.Id">
+                            @wc.Code@(wc.DisplayName != null ? $" — {wc.DisplayName}" : "")
+                        </a>
+                    }
+                </div>
+
+                @if (Model.Count == 0)
+                {
+                    <p class="text-muted">No equipment for this work center yet.</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Display Name</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var eq in Model)
+                                {
+                                    <tr>
+                                        <td><code>@eq.Code</code></td>
+                                        <td>@(eq.DisplayName ?? "—")</td>
+                                        <td>
+                                            @if (eq.IsActive)
+                                            {
+                                                <span class="badge bg-success">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Inactive</span>
+                                            }
+                                        </td>
+                                        <td class="text-end">
+                                            @if (eq.IsActive)
+                                            {
+                                                <form asp-action="Deactivate" method="post" class="d-inline">
+                                                    @Html.AntiForgeryToken()
+                                                    <input type="hidden" name="id" value="@eq.Id" />
+                                                    <input type="hidden" name="workCenterId" value="@selectedId" />
+                                                    <button type="submit" class="btn btn-sm btn-outline-warning">Deactivate</button>
+                                                </form>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>

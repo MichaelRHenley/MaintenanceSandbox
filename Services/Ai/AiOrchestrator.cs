@@ -1,5 +1,6 @@
 using MaintenanceSandbox.Data;
 using MaintenanceSandbox.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 namespace MaintenanceSandbox.Services.Ai;
@@ -8,6 +9,9 @@ public sealed class AiOrchestrator : IAiOrchestrator
 {
     private readonly IOllamaService _ollama;
     private readonly IIncidentAiTools _tools;
+    private readonly IIncidentVectorSearch _vectorSearch;
+    private readonly IAiContextBuilder _contextBuilder;
+    private readonly IAiPromptComposer _promptComposer;
     private readonly AppDbContext _db;
     private readonly IConfiguration _config;
     private readonly ILogger<AiOrchestrator> _logger;
@@ -20,12 +24,18 @@ public sealed class AiOrchestrator : IAiOrchestrator
     public AiOrchestrator(
         IOllamaService ollama,
         IIncidentAiTools tools,
+        IIncidentVectorSearch vectorSearch,
+        IAiContextBuilder contextBuilder,
+        IAiPromptComposer promptComposer,
         AppDbContext db,
         IConfiguration config,
         ILogger<AiOrchestrator> logger)
     {
         _ollama = ollama;
         _tools = tools;
+        _vectorSearch = vectorSearch;
+        _contextBuilder = contextBuilder;
+        _promptComposer = promptComposer;
         _db = db;
         _config = config;
         _logger = logger;
@@ -45,6 +55,8 @@ public sealed class AiOrchestrator : IAiOrchestrator
 
         try
         {
+            if (request.Mode == "Troubleshoot")
+                return await HandleTroubleshootAsync(request, tenantId, userName, sessionId, chatModel, ct);
             // Turn 1 — extract structured intent from user text
             var intentMessages = new[]
             {
@@ -122,6 +134,117 @@ public sealed class AiOrchestrator : IAiOrchestrator
                 Success = false,
                 ErrorMessage = "AI assistant is temporarily unavailable. Please try again."
             };
+        }
+    }
+
+    private async Task<AiQueryResponse> HandleTroubleshootAsync(
+        AiQueryRequest request,
+        Guid tenantId,
+        string userName,
+        string sessionId,
+        string chatModel,
+        CancellationToken ct)
+    {
+        // Fire-and-forget: index any new incidents without blocking the response.
+        _ = _vectorSearch.IndexRecentAsync(tenantId, CancellationToken.None)
+            .ContinueWith(
+                t => _logger.LogWarning(t.Exception, "Background RAG indexing failed"),
+                TaskContinuationOptions.OnlyOnFaulted);
+
+        // Extract intent from user text so the context builder can filter by equipment/area.
+        var intentRaw = await _ollama.ChatAsync(
+            chatModel,
+            new[] { new OllamaMessage("system", PromptLibrary.IntentExtractionSystem), new OllamaMessage("user", request.UserText) },
+            0.05, 250, ct);
+
+        var intent = ParseIntent(intentRaw);
+        intent.Intent = "Troubleshoot";
+
+        var context = await _contextBuilder.BuildAsync(request, intent, ct);
+        var composedPrompt = _promptComposer.Compose(context, intent);
+
+        var messages = new[]
+        {
+            new OllamaMessage("system", PromptLibrary.TroubleshootSystem),
+            new OllamaMessage("user", composedPrompt)
+        };
+
+        var answer = await _ollama.ChatAsync(chatModel, messages, 0.3, 500, ct);
+
+        var checks = await ExtractChecksAsync(chatModel, answer, ct);
+
+        var suggestedActions = checks
+            .Select(c => new AiSuggestedAction { Label = c, Action = "check" })
+            .ToList();
+
+        var bestEquipment = context.EquipmentSnapshot?.Equipment
+            ?? context.KnowledgeHits.FirstOrDefault()?.Text.Split('\n')
+                .FirstOrDefault(l => l.StartsWith("Equipment: "))
+                ?.Replace("Equipment: ", "").Trim();
+
+        suggestedActions.Add(new AiSuggestedAction
+        {
+            Label = "Create Incident",
+            Action = "create_incident",
+            Payload = JsonSerializer.Serialize(new
+            {
+                issueSummary = request.UserText.Length > 200 ? request.UserText[..200] : request.UserText,
+                equipment = bestEquipment,
+                priority = "High"
+            })
+        });
+
+        var citations = context.KnowledgeHits
+            .Select(h =>
+            {
+                var firstLine = h.Text.Split('\n').FirstOrDefault() ?? "";
+                return $"#{h.SourceId} — {firstLine.Replace("Equipment: ", "")}";
+            })
+            .ToList();
+
+        var response = new AiQueryResponse
+        {
+            SessionId = sessionId,
+            Answer = answer,
+            DetectedLanguage = intent.Language,
+            Intent = "Troubleshoot",
+            Citations = citations,
+            SuggestedActions = suggestedActions,
+            Success = true
+        };
+
+        try
+        {
+            var stubTool = new AiToolResult { ToolName = "context_builder", Success = true, Summary = composedPrompt };
+            await LogAsync(sessionId, tenantId, userName, request, intent, stubTool, response);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "AI audit log failed for troubleshoot session {Session}", sessionId);
+        }
+
+        return response;
+    }
+
+    private async Task<List<string>> ExtractChecksAsync(
+        string model, string answer, CancellationToken ct)
+    {
+        try
+        {
+            var messages = new[]
+            {
+                new OllamaMessage("system", PromptLibrary.ChecklistExtractionSystem),
+                new OllamaMessage("user", answer)
+            };
+
+            var raw = await _ollama.ChatAsync(model, messages, 0.0, 150, ct);
+            var json = StripCodeFences(raw.Trim());
+            return JsonSerializer.Deserialize<List<string>>(json, _jsonOptions) ?? new();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Checklist extraction failed, returning empty list");
+            return new();
         }
     }
 

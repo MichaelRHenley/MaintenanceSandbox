@@ -1,0 +1,45 @@
+@model MaintenanceSandbox.ViewModels.EquipmentCreateVm
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = "New Equipment";
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">New Equipment</div>
+                <div class="sentinel-page-subtitle">@SR["App_Title"] · Equipment Admin</div>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <form method="post" class="row g-3">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="WorkCenterId" />
+
+                <div class="col-md-4">
+                    <label class="form-label small text-uppercase text-muted mb-1">Equipment Code</label>
+                    <input asp-for="Code" class="form-control" placeholder="e.g. EQ-1001" />
+                    <span asp-validation-for="Code" class="text-danger small"></span>
+                    <small class="text-muted">Stored as uppercase. Must be unique per work center.</small>
+                </div>
+
+                <div class="col-md-8">
+                    <label class="form-label small text-uppercase text-muted mb-1">Display Name <span class="text-muted fw-normal">(optional)</span></label>
+                    <input asp-for="DisplayName" class="form-control" placeholder="e.g. Conveyor Belt" />
+                    <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12 d-flex justify-content-between mt-3">
+                    <a asp-action="Index" asp-route-workCenterId="@Model.WorkCenterId"
+                       class="btn btn-sentinel-ghost">Cancel</a>
+                    <button type="submit" class="btn btn-sentinel-primary">Create Equipment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

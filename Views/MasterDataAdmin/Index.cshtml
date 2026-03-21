@@ -1,0 +1,82 @@
+@model IList<MaintenanceSandbox.Models.MasterData.Site>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = "Plant Structure";
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Plant Structure</div>
+                <div class="sentinel-page-subtitle">@SR["App_Title"] · Settings — Sites → Areas → Work Centers</div>
+            </div>
+            <div class="d-flex gap-2">
+                <a class="btn btn-sentinel-ghost btn-sm"
+                   asp-controller="Settings"
+                   asp-action="Index">Back</a>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+
+            @if (TempData["ok"] is string ok)
+            {
+                <div class="alert alert-success">@ok</div>
+            }
+            @if (TempData["err"] is string err)
+            {
+                <div class="alert alert-danger">@err</div>
+            }
+
+            @if (Model.Count == 0)
+            {
+                <p class="text-muted mb-4">No sites yet. Create the first one below.</p>
+            }
+            else
+            {
+                <div class="table-responsive mb-4">
+                    <table class="table table-dark table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Site Name</th>
+                                <th>Areas</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var site in Model)
+                            {
+                                <tr>
+                                    <td>@site.Name</td>
+                                    <td>@site.Areas.Count</td>
+                                    <td class="text-end">
+                                        <a class="btn btn-sm btn-sentinel-ghost"
+                                           asp-action="Areas"
+                                           asp-route-siteId="@site.Id">Manage Areas →</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+            <div class="glass-card--accent glass-card">
+                <div class="fw-semibold small text-uppercase text-muted mb-3">Add Site</div>
+                <form asp-action="CreateSite" method="post" class="row g-2 align-items-end">
+                    @Html.AntiForgeryToken()
+                    <div class="col-md-6">
+                        <label class="form-label small text-uppercase text-muted mb-1">Site Name</label>
+                        <input type="text" name="name" class="form-control" placeholder="e.g. Main Plant" maxlength="120" required />
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-sentinel-primary">Add Site</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -8,4 +8,6 @@ public interface IOllamaService
         double temperature,
         int maxTokens,
         CancellationToken ct = default);
+
+    Task<float[]> EmbedAsync(string model, string text, CancellationToken ct = default);
 }

@@ -1,0 +1,1301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+
+	<!-- Basic shared strings -->
+
+	<data name="App_Title" xml:space="preserve">
+		<value>Manufacturing Core Suite</value>
+	</data>
+	<data name="Nav_Home" xml:space="preserve">
+		<value>Hem</value>
+	</data>
+	<data name="Nav_ActiveEMs" xml:space="preserve">
+		<value>Aktiva EM-förfrågningar</value>
+	</data>
+	<data name="Button_Submit" xml:space="preserve">
+		<value>Skicka</value>
+	</data>
+	<data name="Button_Cancel" xml:space="preserve">
+		<value>Avbryt</value>
+	</data>
+	<data name="Nav_Privacy" xml:space="preserve">
+		<value>Integritet</value>
+	</data>
+	<data name="Nav_Maintenance" xml:space="preserve">
+		<value>Underhåll</value>
+	</data>
+	<data name="Nav_Settings" xml:space="preserve">
+		<value>Inställningar</value>
+	</data>
+
+	<!-- Maintenance Index page -->
+
+	<data name="Maint_Index_Title" xml:space="preserve">
+		<value>Underhållsförfrågningar</value>
+	</data>
+	<data name="Maint_Index_Badge_Tier" xml:space="preserve">
+		<value>Nivå:</value>
+	</data>
+	<data name="Maint_Index_Button_NewRequest" xml:space="preserve">
+		<value>+ Ny förfrågan</value>
+	</data>
+	<data name="Maint_Index_Filter_Site" xml:space="preserve">
+		<value>Anläggning</value>
+	</data>
+	<data name="Maint_Index_Filter_Area" xml:space="preserve">
+		<value>Område</value>
+	</data>
+	<data name="Maint_Index_Filter_WorkCenter" xml:space="preserve">
+		<value>Arbetscentrum</value>
+	</data>
+	<data name="Maint_Index_Filter_Search" xml:space="preserve">
+		<value>Sök</value>
+	</data>
+	<data name="Maint_Index_Filter_All" xml:space="preserve">
+		<value>Alla</value>
+	</data>
+	<data name="Maint_Index_Filter_SearchPlaceholder" xml:space="preserve">
+		<value>Utrustning, arbetscentrum eller text</value>
+	</data>
+	<data name="Maint_Index_Filter_IncludeClosed" xml:space="preserve">
+		<value>Inkludera avslutade förfrågningar</value>
+	</data>
+	<data name="Maint_Index_Button_ApplyFilters" xml:space="preserve">
+		<value>Använd filter</value>
+	</data>
+	<data name="Maint_Index_NoResults" xml:space="preserve">
+		<value>Inga underhållsförfrågningar hittades.</value>
+	</data>
+	<data name="Maint_Index_Label_Status" xml:space="preserve">
+		<value>Status:</value>
+	</data>
+	<data name="Maint_Index_Label_Priority" xml:space="preserve">
+		<value>Prioritet:</value>
+	</data>
+	<data name="Maint_Index_Label_RequestedBy" xml:space="preserve">
+		<value>Begärd av:</value>
+	</data>
+	<data name="Maint_Index_Label_Description" xml:space="preserve">
+		<value>Beskrivning:</value>
+	</data>
+	<data name="Maint_Index_Label_LatestComment" xml:space="preserve">
+		<value>Senaste kommentar</value>
+	</data>
+	<data name="Maint_Index_Button_ViewDetails" xml:space="preserve">
+		<value>Visa detaljer</value>
+	</data>
+	<data name="Maint_Index_KPI_Open" xml:space="preserve">
+		<value>Öppna</value>
+	</data>
+	<data name="Maint_Index_KPI_Waiting" xml:space="preserve">
+		<value>Väntar på delar</value>
+	</data>
+	<data name="Maint_Index_KPI_ResolvedToday" xml:space="preserve">
+		<value>Lösta idag</value>
+	</data>
+	<data name="Maint_Index_Badge_NewComment" xml:space="preserve">
+		<value>Ny kommentar</value>
+	</data>
+	<data name="Maint_Index_LastUpdated_Label" xml:space="preserve">
+		<value>Senast uppdaterad:</value>
+	</data>
+
+	<!-- Maintenance Details page -->
+
+	<data name="Maint_Details_Title" xml:space="preserve">
+		<value>Underhållsförfrågan</value>
+	</data>
+	<data name="Maint_Details_Header_Request" xml:space="preserve">
+		<value>Förfrågan #{0}</value>
+	</data>
+	<data name="Maint_Details_Label_Site" xml:space="preserve">
+		<value>Anläggning</value>
+	</data>
+	<data name="Maint_Details_Label_Area" xml:space="preserve">
+		<value>Område</value>
+	</data>
+	<data name="Maint_Details_Label_WorkCenter" xml:space="preserve">
+		<value>Arbetscentrum</value>
+	</data>
+	<data name="Maint_Details_Label_Equipment" xml:space="preserve">
+		<value>Utrustning</value>
+	</data>
+	<data name="Maint_Details_Label_Status" xml:space="preserve">
+		<value>Status</value>
+	</data>
+	<data name="Maint_Details_Label_Priority" xml:space="preserve">
+		<value>Prioritet</value>
+	</data>
+	<data name="Maint_Details_Label_RequestedBy" xml:space="preserve">
+		<value>Begärd av</value>
+	</data>
+	<data name="Maint_Details_Label_CreatedAt" xml:space="preserve">
+		<value>Skapad</value>
+	</data>
+	<data name="Maint_Details_Label_ResolvedAt" xml:space="preserve">
+		<value>Löst</value>
+	</data>
+	<data name="Maint_Details_Label_Description" xml:space="preserve">
+		<value>Beskrivning</value>
+	</data>
+	<data name="Maint_Details_Section_Activity" xml:space="preserve">
+		<value>Aktivitet</value>
+	</data>
+	<data name="Maint_Details_Section_Comments" xml:space="preserve">
+		<value>Kommentarer</value>
+	</data>
+	<data name="Maint_Details_Section_NoComments" xml:space="preserve">
+		<value>Inga kommentarer ännu.</value>
+	</data>
+	<data name="Maint_Details_Label_CommentAt" xml:space="preserve">
+		<value>{0} · {1}</value>
+	</data>
+	<data name="Maint_Details_Label_NewComment" xml:space="preserve">
+		<value>Ny kommentar</value>
+	</data>
+	<data name="Maint_Details_Placeholder_NewComment" xml:space="preserve">
+		<value>Skriv din kommentar här…</value>
+	</data>
+	<data name="Maint_Details_Button_AddComment" xml:space="preserve">
+		<value>Lägg till kommentar</value>
+	</data>
+	<data name="Maint_Details_Button_MarkResolved" xml:space="preserve">
+		<value>Markera som löst</value>
+	</data>
+	<data name="Maint_Details_Button_BackToList" xml:space="preserve">
+		<value>Tillbaka till listan</value>
+	</data>
+	<data name="Maint_Details_Section_UpdateWorkflow" xml:space="preserve">
+		<value>Uppdatera arbetsflöde</value>
+	</data>
+	<data name="Maint_Details_Hint_WorkflowForLeads" xml:space="preserve">
+		<value>Handledare och tekniker kan justera status och prioritet här.</value>
+	</data>
+	<data name="Maint_Details_Button_UpdateStatus" xml:space="preserve">
+		<value>Uppdatera</value>
+	</data>
+	<data name="Maint_Details_Label_RespondersPresent" xml:space="preserve">
+		<value>Respondenter närvarande</value>
+	</data>
+	<data name="Maint_Details_Label_RespondersConnecting" xml:space="preserve">
+		<value>Kontrollerar aktiva respondenter…</value>
+	</data>
+	<data name="Maint_Details_Label_NoResponders" xml:space="preserve">
+		<value>Inga respondenter tittar på denna förfrågan just nu.</value>
+	</data>
+	<data name="Maint_Details_Section_Suggestions" xml:space="preserve">
+		<value>Spelbok-förslag</value>
+	</data>
+	<data name="Maint_Details_Hint_Suggestions" xml:space="preserve">
+		<value>Baserat på liknande problem, här är några snabba åtgärder att prova.</value>
+	</data>
+	<data name="Maint_Details_Label_Confidence" xml:space="preserve">
+		<value>Konfidensgrad</value>
+	</data>
+	<data name="Maint_Comments_None" xml:space="preserve">
+		<value>Inga kommentarer ännu.</value>
+	</data>
+	<data name="Maint_Comments_SystemLabel" xml:space="preserve">
+		<value>System</value>
+	</data>
+	<data name="Maint_Comments_SystemBadge" xml:space="preserve">
+		<value>Arbetsflöde</value>
+	</data>
+
+	<data name="Role_Technician" xml:space="preserve">
+		<value>Tekniker</value>
+	</data>
+
+	<!-- Parts Index -->
+
+	<data name="Parts_Index_Title" xml:space="preserve">
+		<value>Delar</value>
+	</data>
+	<data name="Parts_Index_Header" xml:space="preserve">
+		<value>Delkatalog</value>
+	</data>
+	<data name="Parts_Index_Stats" xml:space="preserve">
+		<value>{0} totalt • {1} aktiva • {2} inaktiva</value>
+	</data>
+	<data name="Parts_Index_Created_Label" xml:space="preserve">
+		<value>Del skapad:</value>
+	</data>
+	<data name="Parts_Index_Created_NewPartPlaceholder" xml:space="preserve">
+		<value>(ny del)</value>
+	</data>
+	<data name="Parts_Index_Button_ViewDetails" xml:space="preserve">
+		<value>Visa detaljer</value>
+	</data>
+	<data name="Parts_Index_Button_CreateAnother" xml:space="preserve">
+		<value>+ Skapa ytterligare en del</value>
+	</data>
+	<data name="Parts_Index_Button_NewPart" xml:space="preserve">
+		<value>+ Ny del</value>
+	</data>
+	<data name="Parts_Index_Filter_Search_Label" xml:space="preserve">
+		<value>Sök</value>
+	</data>
+	<data name="Parts_Index_Filter_Search_Placeholder" xml:space="preserve">
+		<value>Delnr, beskrivning, AI-beskrivning...</value>
+	</data>
+	<data name="Parts_Index_Filter_Status_Label" xml:space="preserve">
+		<value>Status</value>
+	</data>
+	<data name="Parts_Index_Filter_Status_All" xml:space="preserve">
+		<value>Alla delar</value>
+	</data>
+	<data name="Parts_Index_Filter_Status_ActiveOnly" xml:space="preserve">
+		<value>Endast aktiva</value>
+	</data>
+	<data name="Parts_Index_Filter_Status_InactiveOnly" xml:space="preserve">
+		<value>Endast inaktiva</value>
+	</data>
+	<data name="Parts_Index_Filter_Button_Apply" xml:space="preserve">
+		<value>Använd</value>
+	</data>
+	<data name="Parts_Index_Filter_Button_Reset" xml:space="preserve">
+		<value>Återställ</value>
+	</data>
+	<data name="Parts_Index_Empty_Title" xml:space="preserve">
+		<value>Inga delar hittades.</value>
+	</data>
+	<data name="Parts_Index_Empty_Body" xml:space="preserve">
+		<value>Prova att justera sökningen eller skapa en ny del.</value>
+	</data>
+	<data name="Parts_Index_Table_PartNumber" xml:space="preserve">
+		<value>Delnr</value>
+	</data>
+	<data name="Parts_Index_Table_Description" xml:space="preserve">
+		<value>Beskrivning</value>
+	</data>
+	<data name="Parts_Index_Table_Manufacturer" xml:space="preserve">
+		<value>Tillverkare</value>
+	</data>
+	<data name="Parts_Index_Table_OnHand" xml:space="preserve">
+		<value>I lager</value>
+	</data>
+	<data name="Parts_Index_Table_Status" xml:space="preserve">
+		<value>Status</value>
+	</data>
+	<data name="Parts_Index_Label_MfgNumber" xml:space="preserve">
+		<value>Tillv.nr:</value>
+	</data>
+	<data name="Parts_Index_Badge_NoStock" xml:space="preserve">
+		<value>Inget lager</value>
+	</data>
+	<data name="Parts_Index_Status_Active" xml:space="preserve">
+		<value>Aktiv</value>
+	</data>
+	<data name="Parts_Index_Status_Inactive" xml:space="preserve">
+		<value>Inaktiv</value>
+	</data>
+	<data name="Parts_Index_Button_View" xml:space="preserve">
+		<value>Visa</value>
+	</data>
+	<data name="Parts_Index_Button_Edit" xml:space="preserve">
+		<value>Redigera</value>
+	</data>
+
+	<!-- Field labels -->
+
+	<data name="Parts_Field_PartNumber" xml:space="preserve">
+		<value>Delnummer</value>
+	</data>
+	<data name="Parts_Field_ShortDescription" xml:space="preserve">
+		<value>Kortbeskrivning</value>
+	</data>
+	<data name="Parts_Field_LongDescription" xml:space="preserve">
+		<value>Långbeskrivning</value>
+	</data>
+	<data name="Parts_Field_AiCleanDescription" xml:space="preserve">
+		<value>AI-beskrivning</value>
+	</data>
+	<data name="Parts_Field_Manufacturer" xml:space="preserve">
+		<value>Tillverkare</value>
+	</data>
+	<data name="Parts_Field_ManufacturerPartNumber" xml:space="preserve">
+		<value>Tillverkarens delnummer</value>
+	</data>
+	<data name="Parts_Field_IsActive" xml:space="preserve">
+		<value>Aktiv</value>
+	</data>
+	<data name="Parts_Field_EnhancedDescription" xml:space="preserve">
+		<value>Förbättrad beskrivning</value>
+	</data>
+
+	<!-- Validation -->
+
+	<data name="Parts_Validation_PartNumber_Required" xml:space="preserve">
+		<value>Delnummer krävs.</value>
+	</data>
+	<data name="Parts_Validation_PartNumber_MaxLength" xml:space="preserve">
+		<value>Delnummer får innehålla max 64 tecken.</value>
+	</data>
+	<data name="Parts_Validation_ShortDescription_MaxLength" xml:space="preserve">
+		<value>Kortbeskrivning får innehålla max 128 tecken.</value>
+	</data>
+	<data name="Parts_Validation_LongDescription_MaxLength" xml:space="preserve">
+		<value>Långbeskrivning får innehålla max 512 tecken.</value>
+	</data>
+	<data name="Parts_Validation_AiCleanDescription_MaxLength" xml:space="preserve">
+		<value>AI-beskrivning får innehålla max 512 tecken.</value>
+	</data>
+	<data name="Parts_Validation_Manufacturer_MaxLength" xml:space="preserve">
+		<value>Tillverkare får innehålla max 128 tecken.</value>
+	</data>
+	<data name="Parts_Validation_ManufacturerPartNumber_MaxLength" xml:space="preserve">
+		<value>Tillverkarens delnummer får innehålla max 128 tecken.</value>
+	</data>
+
+	<data name="Parts_Edit_Title" xml:space="preserve">
+		<value>Redigera del {0}</value>
+	</data>
+	<data name="Parts_Edit_Heading" xml:space="preserve">
+		<value>Redigera del {0}</value>
+	</data>
+	<data name="Parts_Edit_Label_PartNumber" xml:space="preserve">
+		<value>Delnummer</value>
+	</data>
+	<data name="Parts_Edit_Label_ShortDescription" xml:space="preserve">
+		<value>Kortbeskrivning</value>
+	</data>
+	<data name="Parts_Edit_Label_LongDescription" xml:space="preserve">
+		<value>Långbeskrivning</value>
+	</data>
+	<data name="Parts_Edit_Label_Manufacturer" xml:space="preserve">
+		<value>Tillverkare</value>
+	</data>
+	<data name="Parts_Edit_Label_ManufacturerPartNumber" xml:space="preserve">
+		<value>Tillverkarens delnummer</value>
+	</data>
+	<data name="Parts_Edit_Label_IsActive" xml:space="preserve">
+		<value>Aktiv</value>
+	</data>
+	<data name="Parts_Edit_Button_BackToList" xml:space="preserve">
+		<value>Tillbaka till listan</value>
+	</data>
+	<data name="Parts_Edit_Button_SaveChanges" xml:space="preserve">
+		<value>Spara ändringar</value>
+	</data>
+	<data name="Parts_Edit_Button_Cancel" xml:space="preserve">
+		<value>Avbryt</value>
+	</data>
+
+	<!-- Settings page -->
+
+	<data name="Settings_Title" xml:space="preserve">
+		<value>Inställningar</value>
+	</data>
+	<data name="Settings_Section_Notifications_Title" xml:space="preserve">
+		<value>Aviseringar och larm</value>
+	</data>
+	<data name="Settings_Section_Notifications_Description" xml:space="preserve">
+		<value>Styr siren, signal och haptik för live-underhållsuppdateringar.</value>
+	</data>
+	<data name="Settings_Notifications_Toggle_Help" xml:space="preserve">
+		<value>Använder samma inställning som navigeringsknappen högst upp.</value>
+	</data>
+	<data name="Settings_Notifications_TestSiren" xml:space="preserve">
+		<value>Testa EM-siren</value>
+	</data>
+	<data name="Settings_Notifications_TestChime" xml:space="preserve">
+		<value>Testa kommentarssignal</value>
+	</data>
+	<data name="Settings_Notifications_Test_Help" xml:space="preserve">
+		<value>Se till att enhetsvolymen är på en bekväm nivå innan du testar.</value>
+	</data>
+	<data name="Settings_Section_Language_Title" xml:space="preserve">
+		<value>Språk</value>
+	</data>
+	<data name="Settings_Section_Language_Description" xml:space="preserve">
+		<value>Välj ditt föredragna språk för programmet.</value>
+	</data>
+	<data name="Settings_Section_Tier_Label" xml:space="preserve">
+		<value>Produktnivå</value>
+	</data>
+	<data name="Settings_Section_Tier_HelpText" xml:space="preserve">
+		<value>Styr vilken nivå som är aktiv för denna sandbox-instans.</value>
+	</data>
+	<data name="Settings_Button_Save" xml:space="preserve">
+		<value>Spara</value>
+	</data>
+	<data name="Settings_Button_Cancel" xml:space="preserve">
+		<value>Avbryt</value>
+	</data>
+
+	<!-- Maintenance Create page -->
+
+	<data name="Maint_Create_Title" xml:space="preserve">
+		<value>Skapa underhållsförfrågan</value>
+	</data>
+	<data name="Maint_Create_Label_Site" xml:space="preserve">
+		<value>Anläggning</value>
+	</data>
+	<data name="Maint_Create_Placeholder_Site" xml:space="preserve">
+		<value>t.ex. Anläggning Alfa</value>
+	</data>
+	<data name="Maint_Create_Label_Area" xml:space="preserve">
+		<value>Område</value>
+	</data>
+	<data name="Maint_Create_Placeholder_Area" xml:space="preserve">
+		<value>t.ex. Område 2</value>
+	</data>
+	<data name="Maint_Create_Label_WorkCenter" xml:space="preserve">
+		<value>Arbetscentrum</value>
+	</data>
+	<data name="Maint_Create_Placeholder_WorkCenter" xml:space="preserve">
+		<value>t.ex. AC-03</value>
+	</data>
+	<data name="Maint_Create_Label_Equipment" xml:space="preserve">
+		<value>Utrustning</value>
+	</data>
+	<data name="Maint_Create_Placeholder_Equipment" xml:space="preserve">
+		<value>t.ex. UTR-2001</value>
+	</data>
+	<data name="Maint_Create_Label_Priority" xml:space="preserve">
+		<value>Prioritet</value>
+	</data>
+	<data name="Maint_Create_Priority_Low" xml:space="preserve">
+		<value>Låg</value>
+	</data>
+	<data name="Maint_Create_Priority_Medium" xml:space="preserve">
+		<value>Medel</value>
+	</data>
+	<data name="Maint_Create_Priority_High" xml:space="preserve">
+		<value>Hög</value>
+	</data>
+	<data name="Maint_Create_Label_RequestedBy" xml:space="preserve">
+		<value>Begärd av</value>
+	</data>
+	<data name="Maint_Create_Label_Description" xml:space="preserve">
+		<value>Beskrivning</value>
+	</data>
+	<data name="Maint_Create_Placeholder_Description" xml:space="preserve">
+		<value>Beskriv problemet</value>
+	</data>
+	<data name="Maint_Create_Button_Submit" xml:space="preserve">
+		<value>Skicka förfrågan</value>
+	</data>
+	<data name="Maint_Create_Button_Cancel" xml:space="preserve">
+		<value>Avbryt</value>
+	</data>
+
+	<!-- Home page -->
+
+	<data name="Home_Title" xml:space="preserve">
+		<value>Sentinel Underhåll – Hem</value>
+	</data>
+	<data name="Home_Hero_Title" xml:space="preserve">
+		<value>Live-underhållssystem</value>
+	</data>
+	<data name="Home_Hero_Subtitle" xml:space="preserve">
+		<value>Underhållsförfrågningar, larm och samarbete i en live-vy.</value>
+	</data>
+	<data name="Home_Hero_Button_GoToMaintenance" xml:space="preserve">
+		<value>Öppna underhållstavlan</value>
+	</data>
+	<data name="Home_Hero_Button_Settings" xml:space="preserve">
+		<value>Konfigurera larm och språk</value>
+	</data>
+	<data name="Home_Hero_Feature_LiveFeed" xml:space="preserve">
+		<value>Live EM / underhållsflöde</value>
+	</data>
+	<data name="Home_Hero_Feature_RealTimeComments" xml:space="preserve">
+		<value>Operatör ↔ teknikerkommentarer i realtid</value>
+	</data>
+	<data name="Home_Hero_Feature_TierAwareAI" xml:space="preserve">
+		<value>Nivåanpassade AI-förslag (vägkarta)</value>
+	</data>
+	<data name="Home_Hero_Feature_MultiLanguage" xml:space="preserve">
+		<value>Flerspråkig grund (en / fr / es)</value>
+	</data>
+	<data name="Home_Hero_Feature_AlertsHaptics" xml:space="preserve">
+		<value>Konfigurerbara larm och haptik</value>
+	</data>
+	<data name="Home_Hero_Feature_MultiTenant" xml:space="preserve">
+		<value>Redo för multi-tenant SaaS-lansering</value>
+	</data>
+	<data name="Home_Telemetry_Title" xml:space="preserve">
+		<value>Live-telemetri</value>
+	</data>
+	<data name="Home_Telemetry_Description" xml:space="preserve">
+		<value>När EM-tavlan är öppen förblir denna indikator och sidfotsmärket synkroniserade.</value>
+	</data>
+	<data name="Home_Telemetry_Item_Live" xml:space="preserve">
+		<value>Grön "Live" = ansluten till SignalR-nav</value>
+	</data>
+	<data name="Home_Telemetry_Item_Reconnecting" xml:space="preserve">
+		<value>Gul "Återansluter…" = försöker ansluta igen</value>
+	</data>
+	<data name="Home_Telemetry_Item_Offline" xml:space="preserve">
+		<value>Röd "Offline" = inga live-uppdateringar (säker fallback)</value>
+	</data>
+	<data name="Home_Alerts_Title" xml:space="preserve">
+		<value>Larmkontroll</value>
+	</data>
+	<data name="Home_Alerts_Description" xml:space="preserve">
+		<value>Använd Inställningar för att testa sirenen och signalen innan du går live på golvet.</value>
+	</data>
+	<data name="Home_Alerts_Button_OpenSettings" xml:space="preserve">
+		<value>Öppna larminställningar</value>
+	</data>
+
+	<!-- Tier pill -->
+
+	<data name="Tier_Label_Standard" xml:space="preserve">
+		<value>Standard</value>
+	</data>
+	<data name="Tier_Label_Enhanced" xml:space="preserve">
+		<value>Förbättrad</value>
+	</data>
+	<data name="Tier_Label_Premium" xml:space="preserve">
+		<value>Premium</value>
+	</data>
+	<data name="Tier_Label_TierSuffix" xml:space="preserve">
+		<value>nivå</value>
+	</data>
+
+	<!-- Layout / auth / tenant -->
+
+	<data name="Auth_SignIn" xml:space="preserve">
+		<value>Logga in</value>
+	</data>
+	<data name="Auth_SignOut" xml:space="preserve">
+		<value>Logga ut</value>
+	</data>
+	<data name="Auth_Email" xml:space="preserve">
+		<value>E-post</value>
+	</data>
+	<data name="Auth_Password" xml:space="preserve">
+		<value>Lösenord</value>
+	</data>
+	<data name="Auth_TryDemo" xml:space="preserve">
+		<value>Prova demo</value>
+	</data>
+	<data name="Layout_TenantLabel" xml:space="preserve">
+		<value>Klient</value>
+	</data>
+
+	<!-- Live indicator labels -->
+
+	<data name="LiveIndicator_Label_Connecting" xml:space="preserve">
+		<value>Ansluter…</value>
+	</data>
+	<data name="LiveIndicator_Label_Live" xml:space="preserve">
+		<value>Live</value>
+	</data>
+	<data name="LiveIndicator_Label_Reconnecting" xml:space="preserve">
+		<value>Återansluter…</value>
+	</data>
+	<data name="LiveIndicator_Label_Offline" xml:space="preserve">
+		<value>Offline</value>
+	</data>
+
+	<!-- Toast messages -->
+
+	<data name="Toast_Reconnected" xml:space="preserve">
+		<value>Återansluten till live-uppdateringar.</value>
+	</data>
+	<data name="Toast_Reconnecting" xml:space="preserve">
+		<value>Anslutningen avbruten. Försöker återansluta…</value>
+	</data>
+	<data name="Toast_Offline" xml:space="preserve">
+		<value>Live-uppdateringar är offline. Ändringar kanske inte visas i realtid.</value>
+	</data>
+
+	<!-- Sound toggle -->
+
+	<data name="Nav_SoundOn" xml:space="preserve">
+		<value>Ljud på</value>
+	</data>
+	<data name="Nav_SoundOff" xml:space="preserve">
+		<value>Ljud av</value>
+	</data>
+
+	<!-- Maintenance index: banner + last updated helpers -->
+
+	<data name="Maint_Index_UpdatesBanner_Main" xml:space="preserve">
+		<value>Ny underhållsaktivitet upptäckt.</value>
+	</data>
+	<data name="Maint_Index_UpdatesBanner_Click" xml:space="preserve">
+		<value>Klicka för att uppdatera.</value>
+	</data>
+	<data name="Maint_Index_LastUpdated_JustNow" xml:space="preserve">
+		<value>Senast uppdaterad: Precis nu</value>
+	</data>
+
+	<!-- Localized status values -->
+
+	<data name="Maint_Status_New" xml:space="preserve">
+		<value>Ny</value>
+	</data>
+	<data name="Maint_Status_InProgress" xml:space="preserve">
+		<value>Pågående</value>
+	</data>
+	<data name="Maint_Status_WaitingOnParts" xml:space="preserve">
+		<value>Väntar på delar</value>
+	</data>
+	<data name="Maint_Status_Resolved" xml:space="preserve">
+		<value>Löst</value>
+	</data>
+	<data name="Maint_Status_Closed" xml:space="preserve">
+		<value>Stängt</value>
+	</data>
+
+	<data name="Settings_TierChanged_Message" xml:space="preserve">
+		<value>Nivå ändrad till {0}.</value>
+	</data>
+	<data name="Maint_Create_Notice_RealTime" xml:space="preserve">
+		<value>Att skicka denna förfrågan meddelar underhållet i realtid.</value>
+	</data>
+
+	<!-- Role labels -->
+
+	<data name="Auth_Login_Try" xml:space="preserve">
+		<value>Prova dessa demokonton:</value>
+	</data>
+	<data name="Auth_Login_DemoSupervisor" xml:space="preserve">
+		<value>Handledare · supervisor@sentinel-demo.local / demo</value>
+	</data>
+	<data name="Auth_Login_DemoOperator" xml:space="preserve">
+		<value>Operatör · operator@sentinel-demo.local / demo</value>
+	</data>
+	<data name="Role_Operator" xml:space="preserve">
+		<value>Operatör</value>
+	</data>
+	<data name="Role_Supervisor" xml:space="preserve">
+		<value>Handledare</value>
+	</data>
+	<data name="Role_Tech" xml:space="preserve">
+		<value>Tekniker</value>
+	</data>
+	<data name="Role_MaintenanceManager" xml:space="preserve">
+		<value>Underhållschef</value>
+	</data>
+
+	<data name="Parts_Details_Title" xml:space="preserve">
+		<value>Deldetaljer – {0}</value>
+	</data>
+	<data name="Parts_Details_Label_Header" xml:space="preserve">
+		<value>Deldetaljer</value>
+	</data>
+	<data name="Parts_Status_Active" xml:space="preserve">
+		<value>Aktiv</value>
+	</data>
+	<data name="Parts_Status_Inactive" xml:space="preserve">
+		<value>Inaktiv</value>
+	</data>
+	<data name="Parts_Details_Button_Edit" xml:space="preserve">
+		<value>Redigera</value>
+	</data>
+	<data name="Parts_Details_Button_BackToList" xml:space="preserve">
+		<value>Tillbaka till listan</value>
+	</data>
+	<data name="Parts_Details_Section_Descriptions" xml:space="preserve">
+		<value>Beskrivningar</value>
+	</data>
+	<data name="Parts_Details_Label_ShortDescription" xml:space="preserve">
+		<value>Kortbeskrivning</value>
+	</data>
+	<data name="Parts_Details_Label_LongDescription" xml:space="preserve">
+		<value>Långbeskrivning</value>
+	</data>
+	<data name="Parts_Details_Label_AiDescription" xml:space="preserve">
+		<value>AI-beskrivning</value>
+	</data>
+	<data name="Parts_AiDescription_Empty" xml:space="preserve">
+		<value>Ingen förbättrad beskrivning ännu.</value>
+	</data>
+	<data name="Parts_AiDescription_Button_Enhance" xml:space="preserve">
+		<value>Förbättra</value>
+	</data>
+	<data name="Parts_Details_Section_Manufacturer" xml:space="preserve">
+		<value>Tillverkare</value>
+	</data>
+	<data name="Parts_Details_Label_ManufacturerName" xml:space="preserve">
+		<value>Namn</value>
+	</data>
+	<data name="Parts_Details_Label_ManufacturerPartNumber" xml:space="preserve">
+		<value>Tillv. delnr</value>
+	</data>
+	<data name="Parts_Details_Section_InventorySummary" xml:space="preserve">
+		<value>Lageröversikt</value>
+	</data>
+	<data name="Parts_Details_Label_TotalOnHand" xml:space="preserve">
+		<value>Totalt i lager</value>
+	</data>
+	<data name="Parts_Details_Badge_Locations" xml:space="preserve">
+		<value>platser</value>
+	</data>
+	<data name="Parts_Details_Badge_Assets" xml:space="preserve">
+		<value>tillgångar</value>
+	</data>
+	<data name="Parts_Details_Section_AssetUsageSummary" xml:space="preserve">
+		<value>Sammanfattning av tillgångsanvändning</value>
+	</data>
+	<data name="Parts_Details_AssetUsageSummary_Subtitle" xml:space="preserve">
+		<value>Var denna del används i dina tillgångar.</value>
+	</data>
+	<data name="Parts_Details_Label_Assets" xml:space="preserve">
+		<value>tillgångar</value>
+	</data>
+	<data name="Parts_Details_Label_TotalUnitsAcrossBoms" xml:space="preserve">
+		<value>totala enheter i styckelistan</value>
+	</data>
+	<data name="Parts_Details_Card_AssetsUsing_Title" xml:space="preserve">
+		<value>Tillgångar som använder denna del</value>
+	</data>
+	<data name="Parts_Details_Card_AssetsUsing_Subtitle" xml:space="preserve">
+		<value>Unika tillgångar som kräver denna del i sin styckelista.</value>
+	</data>
+	<data name="Parts_Details_Card_TotalBomQty_Title" xml:space="preserve">
+		<value>Total styckelista-kvantitet</value>
+	</data>
+	<data name="Parts_Details_Card_TotalBomQty_Subtitle" xml:space="preserve">
+		<value>Summa kvantitet per tillgång över alla styckelista-länkar.</value>
+	</data>
+	<data name="Parts_Details_Card_TopWorkCenters_Title" xml:space="preserve">
+		<value>Topp arbetscentrum</value>
+	</data>
+	<data name="Parts_Details_Card_TopWorkCenters_None" xml:space="preserve">
+		<value>Ingen information om arbetscentrum tillgänglig.</value>
+	</data>
+	<data name="Parts_Details_Section_InventoryByLocation" xml:space="preserve">
+		<value>Lager per plats</value>
+	</data>
+	<data name="Parts_Details_Badge_Records" xml:space="preserve">
+		<value>poster</value>
+	</data>
+	<data name="Parts_Details_Button_AddInventory" xml:space="preserve">
+		<value>Lägg till lager</value>
+	</data>
+	<data name="Parts_Details_Inventory_Empty" xml:space="preserve">
+		<value>Inga lagerposter för denna del.</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_Location" xml:space="preserve">
+		<value>Plats</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_Site" xml:space="preserve">
+		<value>Anläggning</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_OnHand" xml:space="preserve">
+		<value>I lager</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_ReorderPoint" xml:space="preserve">
+		<value>Beställningspunkt</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_TargetQty" xml:space="preserve">
+		<value>Målkvantitet</value>
+	</data>
+	<data name="Parts_Details_Section_UsedOnAssets" xml:space="preserve">
+		<value>Används i tillgångar (styckelista)</value>
+	</data>
+	<data name="Parts_Details_Button_AddBomItem" xml:space="preserve">
+		<value>Lägg till styckelista-post</value>
+	</data>
+	<data name="Parts_Details_Bom_Empty" xml:space="preserve">
+		<value>Denna del är ännu inte länkad till några tillgångar.</value>
+	</data>
+	<data name="Parts_Details_Bom_Col_AssetCode" xml:space="preserve">
+		<value>Tillgångskod</value>
+	</data>
+	<data name="Parts_Details_Bom_Col_AssetName" xml:space="preserve">
+		<value>Tillgångsnamn</value>
+	</data>
+	<data name="Parts_Details_Bom_Col_WorkCenter" xml:space="preserve">
+		<value>Arbetscentrum</value>
+	</data>
+	<data name="Parts_Details_Bom_Col_QtyPerAsset" xml:space="preserve">
+		<value>Antal / tillgång</value>
+	</data>
+	<data name="Parts_Details_Similar_Title" xml:space="preserve">
+		<value>Liknande delar</value>
+	</data>
+	<data name="Parts_Details_Similar_Subtitle" xml:space="preserve">
+		<value>Andra delar med liknande tillverkare/beskrivning.</value>
+	</data>
+	<data name="Parts_Details_Similar_Badge_Suggestions" xml:space="preserve">
+		<value>förslag</value>
+	</data>
+	<data name="Parts_Details_Similar_Col_PartNumber" xml:space="preserve">
+		<value>Delnr</value>
+	</data>
+	<data name="Parts_Details_Similar_Col_Description" xml:space="preserve">
+		<value>Beskrivning</value>
+	</data>
+	<data name="Parts_Details_Similar_Col_Manufacturer" xml:space="preserve">
+		<value>Tillverkare</value>
+	</data>
+	<data name="Parts_Details_Similar_Col_Status" xml:space="preserve">
+		<value>Status</value>
+	</data>
+	<data name="Parts_Common_Button_View" xml:space="preserve">
+		<value>Visa</value>
+	</data>
+	<data name="Parts_Common_Button_Edit" xml:space="preserve">
+		<value>Redigera</value>
+	</data>
+
+	<data name="Parts_Create_Title" xml:space="preserve">
+		<value>Ny del</value>
+	</data>
+	<data name="Parts_Create_Breadcrumb_BackToParts" xml:space="preserve">
+		<value>Tillbaka till delar</value>
+	</data>
+	<data name="Parts_Create_Header_WizardTitle" xml:space="preserve">
+		<value>Guide för att skapa del</value>
+	</data>
+	<data name="Parts_Create_Header_NewPart" xml:space="preserve">
+		<value>Ny del</value>
+	</data>
+	<data name="Parts_Create_Step1_Label" xml:space="preserve">
+		<value>1. Grundinfo</value>
+	</data>
+	<data name="Parts_Create_Step2_Label" xml:space="preserve">
+		<value>2. Tillverkare</value>
+	</data>
+	<data name="Parts_Create_Step3_Label" xml:space="preserve">
+		<value>3. Granska och spara</value>
+	</data>
+	<data name="Parts_Create_Step1_Title" xml:space="preserve">
+		<value>Steg 1 – Grundläggande information</value>
+	</data>
+	<data name="Parts_Create_Step1_Intro" xml:space="preserve">
+		<value>Börja med att definiera kärnidentiteten för denna del.</value>
+	</data>
+	<data name="Parts_Create_Step2_Title" xml:space="preserve">
+		<value>Steg 2 – Tillverkardetaljer</value>
+	</data>
+	<data name="Parts_Create_Step2_Intro" xml:space="preserve">
+		<value>Ange varifrån denna del kommer och om den är aktiv i din katalog.</value>
+	</data>
+	<data name="Parts_Create_IsActive_Label" xml:space="preserve">
+		<value>Aktiv i katalog</value>
+	</data>
+	<data name="Parts_Create_Step3_Title" xml:space="preserve">
+		<value>Steg 3 – Granska och spara</value>
+	</data>
+	<data name="Parts_Create_Step3_Intro" xml:space="preserve">
+		<value>Bekräfta detaljerna innan du skapar denna del. Du kan sedan lägga till lager och styckelista-länkar från Deldetaljer-skärmen.</value>
+	</data>
+	<data name="Parts_Create_Review_BasicInfo" xml:space="preserve">
+		<value>Grundinfo</value>
+	</data>
+	<data name="Parts_Create_Review_PartNumber" xml:space="preserve">
+		<value>Delnummer</value>
+	</data>
+	<data name="Parts_Create_Review_ShortDescription" xml:space="preserve">
+		<value>Kortbeskrivning</value>
+	</data>
+	<data name="Parts_Create_Review_LongDescription" xml:space="preserve">
+		<value>Långbeskrivning</value>
+	</data>
+	<data name="Parts_Create_Review_ManufacturerSection" xml:space="preserve">
+		<value>Tillverkare</value>
+	</data>
+	<data name="Parts_Create_Review_Manufacturer" xml:space="preserve">
+		<value>Tillverkare</value>
+	</data>
+	<data name="Parts_Create_Review_MfgPart" xml:space="preserve">
+		<value>Tillv. delnr</value>
+	</data>
+	<data name="Parts_Create_Review_Status" xml:space="preserve">
+		<value>Status</value>
+	</data>
+	<data name="Parts_Create_InfoPanel_Intro" xml:space="preserve">
+		<value>Efter att ha sparat kan du:</value>
+	</data>
+	<data name="Parts_Create_InfoPanel_Item_AddInventory" xml:space="preserve">
+		<value>Lägga till lagerplatser och lagernivåer.</value>
+	</data>
+	<data name="Parts_Create_InfoPanel_Item_LinkBom" xml:space="preserve">
+		<value>Länka denna del till tillgångar via styckelista.</value>
+	</data>
+	<data name="Parts_Create_InfoPanel_Item_Enhance" xml:space="preserve">
+		<value>Använda Förbättra-knappen för att generera en AI-beskrivning.</value>
+	</data>
+	<data name="Parts_Create_Button_Back" xml:space="preserve">
+		<value>Tillbaka</value>
+	</data>
+	<data name="Parts_Create_Button_Next" xml:space="preserve">
+		<value>Nästa</value>
+	</data>
+	<data name="Parts_Create_Button_CreatePart" xml:space="preserve">
+		<value>Skapa del</value>
+	</data>
+	<data name="Parts_Create_Review_NotSet" xml:space="preserve">
+		<value>(ej angivet)</value>
+	</data>
+	<data name="Parts_Create_Validation_PartNumberRequired" xml:space="preserve">
+		<value>Delnummer krävs.</value>
+	</data>
+	<data name="Maint_Details_Button_AskAiFix" xml:space="preserve">
+		<value>Be AI om lösningsförslag</value>
+	</data>
+
+	<data name="Maint_System_StatusChanged">
+		<value>Status ändrad från {0} till {1} av {2}</value>
+	</data>
+	<data name="Maint_System_PriorityChanged">
+		<value>Prioritet ändrad från {0} till {1} av {2}</value>
+	</data>
+	<data name="Maint_System_Resolved">
+		<value>Status ändrad från {0} till Löst av {1}</value>
+	</data>
+
+	<data name="Maint_Suggestion_StopIfUnsafe" xml:space="preserve">
+		<value>Stoppa utrustningen om den är osäker att använda och rapportera problemet omedelbart.</value>
+	</data>
+	<data name="Maint_Suggestion_ConfirmSymptoms" xml:space="preserve">
+		<value>Bekräfta symtomen (ljud, lukter, felmeddelanden) och uppdatera beskrivningen vid behov.</value>
+	</data>
+	<data name="Maint_Suggestion_VerifyParts" xml:space="preserve">
+		<value>Kontrollera att de nödvändiga delarna är korrekt specificerade och beställda och planera reparationsfönstret.</value>
+	</data>
+	<data name="Maint_Suggestion_ReviewHistory" xml:space="preserve">
+		<value>Granska den senaste underhållshistoriken på detta arbetscentrum för återkommande mönster.</value>
+	</data>
+	<data name="Maint_Suggestion_CheckElectrical" xml:space="preserve">
+		<value>Kontrollera ström- och sensoranslutningar för lösa eller skadade kablar innan djupare diagnostik.</value>
+	</data>
+	<data name="Maint_Suggestion_FallbackChecklist" xml:space="preserve">
+		<value>Följ den grundläggande felsökningschecklistan för denna utrustning och rapportera dina iakttagelser.</value>
+	</data>
+
+	<data name="AiHelp_Tooltip" xml:space="preserve">
+		<value>AI-hjälp</value>
+	</data>
+	<data name="AiHelp_Title" xml:space="preserve">
+		<value>Behöver du hjälp?</value>
+	</data>
+	<data name="AiHelp_ExplainScreen" xml:space="preserve">
+		<value>Förklara denna skärm</value>
+	</data>
+	<data name="AiHelp_ExplainFields" xml:space="preserve">
+		<value>Förklara varje fält</value>
+	</data>
+	<data name="AiHelp_ShowExamples" xml:space="preserve">
+		<value>Visa exempel</value>
+	</data>
+	<data name="AiHelp_WhatFirst" xml:space="preserve">
+		<value>Vad gör jag först?</value>
+	</data>
+	<data name="AiHelp_Thinking" xml:space="preserve">
+		<value>Tänker…</value>
+	</data>
+	<data name="AiHelp_Error" xml:space="preserve">
+		<value>Tyvärr, jag kunde inte generera hjälp just nu.</value>
+	</data>
+
+	<data name="Maint_Priority_Low" xml:space="preserve">
+		<value>Låg</value>
+	</data>
+	<data name="Maint_Priority_Medium" xml:space="preserve">
+		<value>Medel</value>
+	</data>
+	<data name="Maint_Priority_High" xml:space="preserve">
+		<value>Hög</value>
+	</data>
+
+	<!-- EM Dashboard -->
+
+	<data name="Nav_EmDashboard" xml:space="preserve">
+		<value>EM-tavla</value>
+	</data>
+	<data name="EM_Dashboard_Title" xml:space="preserve">
+		<value>EM Live-tavla</value>
+	</data>
+	<data name="EM_Dashboard_Subtitle" xml:space="preserve">
+		<value>Live-driftstavla</value>
+	</data>
+	<data name="EM_Dashboard_UpdateBanner" xml:space="preserve">
+		<value>Ny EM-aktivitet upptäckt.</value>
+	</data>
+	<data name="EM_Dashboard_KPI_Active" xml:space="preserve">
+		<value>Aktiva EM:ar</value>
+	</data>
+	<data name="EM_Dashboard_KPI_MachineDown" xml:space="preserve">
+		<value>Maskiner nere</value>
+	</data>
+	<data name="EM_Dashboard_KPI_Investigating" xml:space="preserve">
+		<value>Under utredning</value>
+	</data>
+	<data name="EM_Dashboard_KPI_Running" xml:space="preserve">
+		<value>I drift</value>
+	</data>
+	<data name="EM_Dashboard_KPI_AvgResponse" xml:space="preserve">
+		<value>Snitt svarstid</value>
+	</data>
+	<data name="EM_Dashboard_Min" xml:space="preserve">
+		<value>min</value>
+	</data>
+	<data name="EM_Dashboard_Filter_All" xml:space="preserve">
+		<value>Alla</value>
+	</data>
+	<data name="EM_Dashboard_Filter_MachineDown" xml:space="preserve">
+		<value>Maskin nere</value>
+	</data>
+	<data name="EM_Dashboard_Filter_Investigating" xml:space="preserve">
+		<value>Under utredning</value>
+	</data>
+	<data name="EM_Dashboard_Filter_Running" xml:space="preserve">
+		<value>I drift</value>
+	</data>
+	<data name="EM_Dashboard_Label_Opened" xml:space="preserve">
+		<value>Öppnad</value>
+	</data>
+	<data name="EM_Dashboard_Label_Issue" xml:space="preserve">
+		<value>Problem</value>
+	</data>
+	<data name="EM_Dashboard_Label_OpsComment" xml:space="preserve">
+		<value>Drift</value>
+	</data>
+	<data name="EM_Dashboard_Label_MaintComment" xml:space="preserve">
+		<value>Underhåll</value>
+	</data>
+	<data name="EM_Dashboard_Label_Responder" xml:space="preserve">
+		<value>Respondent</value>
+	</data>
+	<data name="EM_Dashboard_Label_LastUpdate" xml:space="preserve">
+		<value>Senaste uppdatering</value>
+	</data>
+	<data name="EM_Dashboard_Label_NoEquipment" xml:space="preserve">
+		<value>Okänd utrustning</value>
+	</data>
+	<data name="EM_Dashboard_Button_Open" xml:space="preserve">
+		<value>Öppna</value>
+	</data>
+	<data name="EM_Dashboard_Label_ResponseTime" xml:space="preserve">
+		<value>Svarstid</value>
+	</data>
+	<data name="EM_Dashboard_Label_NoResponse" xml:space="preserve">
+		<value>Inget svar</value>
+	</data>
+	<data name="EM_Dashboard_Label_AwaitingResponse" xml:space="preserve">
+		<value>Väntar på svar</value>
+	</data>
+	<data name="EM_Dashboard_AllClear" xml:space="preserve">
+		<value>Allt klart</value>
+	</data>
+	<data name="EM_Dashboard_NoRequests" xml:space="preserve">
+		<value>Inga aktiva EM-förfrågningar — anläggningen driftar normalt.</value>
+	</data>
+	<data name="EM_Status_MachineDown" xml:space="preserve">
+		<value>MASKIN NERE</value>
+	</data>
+	<data name="EM_Status_Investigating" xml:space="preserve">
+		<value>UNDER UTREDNING</value>
+	</data>
+	<data name="EM_Status_Running" xml:space="preserve">
+		<value>I DRIFT</value>
+	</data>
+
+	<data name="AccessDenied_Title" xml:space="preserve">
+		<value>Åtkomst nekad</value>
+	</data>
+	<data name="AccessDenied_Heading" xml:space="preserve">
+		<value>Du har inte behörighet att göra det</value>
+	</data>
+	<data name="AccessDenied_Body" xml:space="preserve">
+		<value>Din nuvarande roll tillåter inte denna åtgärd. Byt roll eller kontakta din administratör.</value>
+	</data>
+	<data name="AccessDenied_Button" xml:space="preserve">
+		<value>Tillbaka till instrumentpanelen</value>
+	</data>
+
+	<!-- AI Insight panel -->
+
+	<data name="AiInsight_Title" xml:space="preserve">
+		<value>AI-felsökningsanalys</value>
+	</data>
+	<data name="AiInsight_Button_Refresh" xml:space="preserve">
+		<value>Uppdatera</value>
+	</data>
+	<data name="AiInsight_Tooltip_Refresh" xml:space="preserve">
+		<value>Återgenerera analys</value>
+	</data>
+	<data name="AiInsight_Loading" xml:space="preserve">
+		<value>Bygger AI-felsökningsanalys…</value>
+	</data>
+	<data name="AiInsight_Button_ViewSimilar" xml:space="preserve">
+		<value>Visa liknande incidenter</value>
+	</data>
+	<data name="AiInsight_Error_Unavailable" xml:space="preserve">
+		<value>AI-analys är tillfälligt otillgänglig.</value>
+	</data>
+	<data name="AiInsight_Link_TryAgain" xml:space="preserve">
+		<value>Försök igen</value>
+	</data>
+	<data name="AiInsight_Demo_Limit" xml:space="preserve">
+		<value>Demo AI-gräns nådd — analyskvot använd för denna session.</value>
+	</data>
+	<data name="AiInsight_Generated" xml:space="preserve">
+		<value>Genererad</value>
+	</data>
+
+	<!-- Settings: Admin section -->
+
+	<data name="Settings_Section_Admin_Title" xml:space="preserve">
+		<value>Administration</value>
+	</data>
+	<data name="Settings_Section_Admin_Description" xml:space="preserve">
+		<value>Stamdata och godkännanden.</value>
+	</data>
+	<data name="Settings_Admin_EquipmentAdmin" xml:space="preserve">
+		<value>Utrustningsadmin</value>
+	</data>
+	<data name="Settings_Admin_EquipmentRequests" xml:space="preserve">
+		<value>Utrustningsförfrågningar</value>
+	</data>
+	<data name="Settings_Admin_UserAdmin" xml:space="preserve">
+		<value>Användaradmin</value>
+	</data>
+	<data name="Settings_Admin_PlantStructure" xml:space="preserve">
+		<value>Anläggningsstruktur</value>
+	</data>
+	<data name="Settings_Tier_ComingSoon" xml:space="preserve">
+		<value>Ytterligare nivåer kommer snart.</value>
+	</data>
+
+	<!-- Privacy page -->
+
+	<data name="Privacy_Title" xml:space="preserve">
+		<value>Integritetspolicy</value>
+	</data>
+	<data name="Privacy_LastUpdated" xml:space="preserve">
+		<value>Senast uppdaterad: juni 2025</value>
+	</data>
+	<data name="Privacy_S1_Title" xml:space="preserve">
+		<value>1. Vad vi samlar in</value>
+	</data>
+	<data name="Privacy_S1_Intro" xml:space="preserve">
+		<value>När du använder Sentinel samlar vi in:</value>
+	</data>
+	<data name="Privacy_S1_Item_Account" xml:space="preserve">
+		<value>&lt;strong&gt;Kontoinformation&lt;/strong&gt; — namn, e-postadress och din roll i din organisation.</value>
+	</data>
+	<data name="Privacy_S1_Item_Operational" xml:space="preserve">
+		<value>&lt;strong&gt;Driftdata&lt;/strong&gt; — underhållsförfrågningar, kommentarer, statusuppdateringar, utrustningsposter och arbetscentrumstilldelningar som du och ditt team anger i applikationen.</value>
+	</data>
+	<data name="Privacy_S1_Item_Usage" xml:space="preserve">
+		<value>&lt;strong&gt;Användningsdata&lt;/strong&gt; — sidbesök, funktionsinteraktioner och webbläsar-/enhetstyp för prestandaövervakning och produktförbättring.</value>
+	</data>
+	<data name="Privacy_S1_Item_Ai" xml:space="preserve">
+		<value>&lt;strong&gt;AI-interaktionsinnehåll&lt;/strong&gt; — när du använder AI-hjälp- eller AI-förslagsfunktionerna skickas texten i din begäran (inklusive relevant underhållskontext) till Anthropics Claude API för bearbetning. Inga personligt identifierbara uppgifter inkluderas avsiktligt i AI-uppmaningar.</value>
+	</data>
+	<data name="Privacy_S2_Title" xml:space="preserve">
+		<value>2. Hur vi använder dina data</value>
+	</data>
+	<data name="Privacy_S2_Item1" xml:space="preserve">
+		<value>För att tillhandahålla och driva Sentinel-applikationen för din klient.</value>
+	</data>
+	<data name="Privacy_S2_Item2" xml:space="preserve">
+		<value>För att tillhandahålla realtidssamarbetesfunktioner (kommentarer, statusuppdateringar) via SignalR.</value>
+	</data>
+	<data name="Privacy_S2_Item3" xml:space="preserve">
+		<value>För att generera AI-assisterade underhållsförslag och kontextuell hjälp.</value>
+	</data>
+	<data name="Privacy_S2_Item4" xml:space="preserve">
+		<value>För att skicka transaktionsmeddelanden (inbjudningslänkar, aviseringar) via Azure Communication Services.</value>
+	</data>
+	<data name="Privacy_S2_Item5" xml:space="preserve">
+		<value>För att förbättra produktens tillförlitlighet och prestanda.</value>
+	</data>
+	<data name="Privacy_S2_NoSell" xml:space="preserve">
+		<value>Vi säljer inte dina data till tredje part.</value>
+	</data>
+	<data name="Privacy_S3_Title" xml:space="preserve">
+		<value>3. Klientisolering</value>
+	</data>
+	<data name="Privacy_S3_Body" xml:space="preserve">
+		<value>Alla driftdata är begränsade till din organisations klient. Radnivåisolering tillämpas på databasnivå — ingen klient kan komma åt en annan klients data. Demosessioner är isolerade på samma sätt och rensas automatiskt efter två timmar.</value>
+	</data>
+	<data name="Privacy_S4_Title" xml:space="preserve">
+		<value>4. Tredjepartstjänster</value>
+	</data>
+	<data name="Privacy_S4_Item_Anthropic" xml:space="preserve">
+		<value>&lt;strong&gt;Anthropic (Claude)&lt;/strong&gt; — AI-funktioner skickar anonymiserad underhållskontext till Claudes API. Anthropics databehandlingsavtal gäller. Uppmaningar används inte för att träna modeller.</value>
+	</data>
+	<data name="Privacy_S4_Item_Azure" xml:space="preserve">
+		<value>&lt;strong&gt;Microsoft Azure&lt;/strong&gt; — applikationen är värd på Azure-infrastruktur. Data lagras i Azure SQL Database. Azure Communication Services används för e-postleverans.</value>
+	</data>
+	<data name="Privacy_S5_Title" xml:space="preserve">
+		<value>5. Datalagring</value>
+	</data>
+	<data name="Privacy_S5_Body" xml:space="preserve">
+		<value>Driftdata bevaras under prenumerationens löptid. Vid kontoavstängning raderas data inom 30 dagar. Demoklientdata rensas automatiskt efter 2 timmar.</value>
+	</data>
+	<data name="Privacy_S6_Title" xml:space="preserve">
+		<value>6. Säkerhet</value>
+	</data>
+	<data name="Privacy_S6_Body" xml:space="preserve">
+		<value>All data överförs via HTTPS. Autentisering använder ASP.NET Core Identity med hashade uppgifter. API-nycklar och hemligheter lagras i Azure Key Vault eller miljönivåhemligheter — aldrig i källkod.</value>
+	</data>
+	<data name="Privacy_S7_Title" xml:space="preserve">
+		<value>7. Dina rättigheter</value>
+	</data>
+	<data name="Privacy_S7_Body" xml:space="preserve">
+		<value>Du kan begära en kopia av dina data, korrigering av felaktiga data eller radering av ditt konto genom att kontakta din organisations administratör eller nå oss på adressen nedan.</value>
+	</data>
+	<data name="Privacy_S8_Title" xml:space="preserve">
+		<value>8. Kontakt</value>
+	</data>
+	<data name="Privacy_S8_Intro" xml:space="preserve">
+		<value>För integritetsfrågor, kontakta oss på</value>
+	</data>
+
+	<!-- Navbar auth buttons -->
+
+	<data name="Nav_SignOut" xml:space="preserve">
+		<value>Logga ut</value>
+	</data>
+	<data name="Nav_SignIn" xml:space="preserve">
+		<value>Logga in</value>
+	</data>
+	<data name="Nav_DemoShare" xml:space="preserve">
+		<value>📧 Dela</value>
+	</data>
+
+	<!-- AI Assist modal -->
+
+	<data name="AiAssist_Title" xml:space="preserve">
+		<value>AI-assistent</value>
+	</data>
+	<data name="AiAssist_Subtitle" xml:space="preserve">
+		<value>Fråga om incidenter, sök historik eller skapa en ny rapport.</value>
+	</data>
+	<data name="AiAssist_Mode_Ask" xml:space="preserve">
+		<value>Fråga</value>
+	</data>
+	<data name="AiAssist_Mode_Command" xml:space="preserve">
+		<value>Kommando</value>
+	</data>
+	<data name="AiAssist_Mode_Troubleshoot" xml:space="preserve">
+		<value>Felsökning</value>
+	</data>
+	<data name="AiAssist_Input_Placeholder" xml:space="preserve">
+		<value>Fråga om incidenter, utrustningsstatus eller historik… (Enter för att skicka)</value>
+	</data>
+	<data name="AiAssist_Button_Send" xml:space="preserve">
+		<value>Skicka</value>
+	</data>
+	<data name="AiAssist_Thinking" xml:space="preserve">
+		<value>✦ Tänker…</value>
+	</data>
+	<data name="AiAssist_Checklist_Label" xml:space="preserve">
+		<value>Inspektionschecklista</value>
+	</data>
+
+</root>

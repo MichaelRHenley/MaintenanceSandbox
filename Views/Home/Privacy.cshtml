@@ -2,8 +2,69 @@
 @inject IStringLocalizer<SharedResource> SR
 
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = SR["Privacy_Title"];
 }
+
+<div class="container py-4" style="max-width: 780px;">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">@SR["Privacy_Title"]</div>
+                <div class="sentinel-page-subtitle">@SR["App_Title"]</div>
+            </div>
+        </div>
+
+        <div class="glass-card m-3" style="color: rgba(255,255,255,0.85); line-height: 1.7;">
+
+            <p class="text-muted small mb-4">@SR["Privacy_LastUpdated"]</p>
+
+            <h5 class="text-uppercase small text-muted mb-2">@SR["Privacy_S1_Title"]</h5>
+            <p>@SR["Privacy_S1_Intro"]</p>
+            <ul>
+                <li>@Html.Raw(SR["Privacy_S1_Item_Account"])</li>
+                <li>@Html.Raw(SR["Privacy_S1_Item_Operational"])</li>
+                <li>@Html.Raw(SR["Privacy_S1_Item_Usage"])</li>
+                <li>@Html.Raw(SR["Privacy_S1_Item_Ai"])</li>
+            </ul>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">@SR["Privacy_S2_Title"]</h5>
+            <ul>
+                <li>@SR["Privacy_S2_Item1"]</li>
+                <li>@SR["Privacy_S2_Item2"]</li>
+                <li>@SR["Privacy_S2_Item3"]</li>
+                <li>@SR["Privacy_S2_Item4"]</li>
+                <li>@SR["Privacy_S2_Item5"]</li>
+            </ul>
+            <p>@SR["Privacy_S2_NoSell"]</p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">@SR["Privacy_S3_Title"]</h5>
+            <p>@SR["Privacy_S3_Body"]</p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">@SR["Privacy_S4_Title"]</h5>
+            <ul>
+                <li>@Html.Raw(SR["Privacy_S4_Item_Anthropic"])</li>
+                <li>@Html.Raw(SR["Privacy_S4_Item_Azure"])</li>
+            </ul>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">@SR["Privacy_S5_Title"]</h5>
+            <p>@SR["Privacy_S5_Body"]</p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">@SR["Privacy_S6_Title"]</h5>
+            <p>@SR["Privacy_S6_Body"]</p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">@SR["Privacy_S7_Title"]</h5>
+            <p>@SR["Privacy_S7_Body"]</p>
+
+            <h5 class="text-uppercase small text-muted mb-2 mt-4">@SR["Privacy_S8_Title"]</h5>
+            <p>
+                @SR["Privacy_S8_Intro"]
+                <a href="mailto:privacy@sentinelmfg.com" class="text-info">privacy@sentinelmfg.com</a>.
+            </p>
+
+        </div>
+    </div>
+</div>
+
 
 <div class="container py-4" style="max-width: 780px;">
     <div class="sentinel-card">

@@ -16,6 +16,7 @@
         "in progress" => "Maint_Status_InProgress",
         "waiting on parts" => "Maint_Status_WaitingOnParts",
         "resolved" => "Maint_Status_Resolved",
+        "closed" => "Maint_Status_Closed",
         _ => null
     };
     var localizedStatus = statusKey is null ? rawStatus : SR[statusKey];
@@ -139,6 +140,9 @@
                                 <dt class="col-4">@SR["Maint_Details_Label_ResolvedAt"]</dt>
                                 <dd class="col-8">@FormatDate(Model.ResolvedAt.Value)</dd>
                             }
+
+                            <dt class="col-4">@SR["Maint_Details_Label_Description"]</dt>
+                            <dd class="col-8">@Model.Description</dd>
                         </dl>
                     </div>
 
@@ -206,21 +210,6 @@
                     }
 
 
-                    <!-- DESCRIPTION -->
-                    <div class="glass-card mt-3">
-                        <h6 class="glass-card-label">@SR["Maint_Details_Label_Description"]</h6>
-                        <p class="small mb-2">@Model.Description</p>
-                        <form id="suggestFixForm" asp-controller="Maintenance"
-                              asp-action="SuggestFix"
-                              method="post"
-                              class="mb-0">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="id" value="@Model.Id" />
-                            <button type="button" id="askAiBtn" class="btn btn-outline-info btn-sm">
-                                @SR["Maint_Details_Button_AskAiFix"]
-                            </button>
-                        </form>
-                    </div>
                     <div id="ai-fix-result"></div>
 
                     @{
@@ -290,12 +279,53 @@
                             <button type="submit" class="btn btn-sentinel-primary btn-sm px-3">
                                 @SR["Maint_Details_Button_AddComment"]
                             </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- AI TROUBLESHOOTING INSIGHT (full-width, auto-loads on open) -->
+                                <div class="mt-4">
+                                    <div id="ai-insight-panel" class="glass-card glass-card--accent">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="glass-card-label mb-0">
+                                                <span class="me-2">🤖</span>@SR["AiInsight_Title"]
+                                            </h6>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <span id="ai-insight-timestamp" class="text-muted" style="font-size:0.72rem;"></span>
+                                                <button id="ai-insight-refresh"
+                                                        class="btn btn-sentinel-ghost btn-sm py-0"
+                                                        title="@SR["AiInsight_Tooltip_Refresh"]"
+                                                        style="font-size:0.78rem;">
+                                                    🔄 @SR["AiInsight_Button_Refresh"]
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div id="ai-insight-loading" class="text-center py-3">
+                                            <span class="spinner-border spinner-border-sm me-2" role="status"
+                                                  style="color:var(--sentinel-accent);"></span>
+                                            <span class="text-muted small">@SR["AiInsight_Loading"]</span>
+                                        </div>
+
+                                        <div id="ai-insight-content" class="small d-none"></div>
+
+                                        <div id="ai-insight-error" class="small text-muted py-2 d-none">
+                                            ⚠️ @SR["AiInsight_Error_Unavailable"] <a href="#" id="ai-insight-retry" class="text-info">@SR["AiInsight_Link_TryAgain"]</a>
+                                        </div>
+
+                                        <div id="ai-insight-actions" class="d-none mt-3 d-flex gap-2 flex-wrap">
+                                            <a asp-action="Index"
+                                               asp-route-search="@(Model.Equipment?.DisplayName ?? "")"
+                                               class="btn btn-sentinel-ghost btn-sm" style="font-size:0.78rem;">
+                                                🔍 @SR["AiInsight_Button_ViewSimilar"]
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            </div>
+                        </div>
     </div>
 
 
@@ -562,6 +592,72 @@
                     .catch(err => console.error("CommentsPartial load error:", err));
             });
 
+        })();
+    </script>
+
+    <script>
+        (function () {
+            const incidentId = @Model.Id;
+            const uiLang     = '@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName';
+            const labelGenerated  = '@Html.Raw(SR["AiInsight_Generated"].Value)';
+            const labelDemoLimit  = '@Html.Raw(SR["AiInsight_Demo_Limit"].Value)';
+            const loading    = document.getElementById("ai-insight-loading");
+            const content    = document.getElementById("ai-insight-content");
+            const error      = document.getElementById("ai-insight-error");
+            const actions    = document.getElementById("ai-insight-actions");
+            const timestamp  = document.getElementById("ai-insight-timestamp");
+            const refreshBtn = document.getElementById("ai-insight-refresh");
+            const retryLink  = document.getElementById("ai-insight-retry");
+
+            function showState(state) {
+                loading.classList.toggle("d-none", state !== "loading");
+                content.classList.toggle("d-none", state !== "done");
+                error.classList.toggle("d-none", state !== "error");
+                actions.classList.toggle("d-none", state !== "done");
+            }
+
+            async function loadInsight(force) {
+                showState("loading");
+                refreshBtn.disabled = true;
+
+                try {
+                    const url = `/api/ai/insight/incident/${incidentId}?lang=${uiLang}${force ? "&force=true" : ""}`;
+                    const resp = await fetch(url);
+
+                    if (resp.status === 429) {
+                        content.innerHTML = `<div class="text-warning">⚠️ ${labelDemoLimit}</div>`;
+                        showState("done");
+                        return;
+                    }
+
+                    if (!resp.ok) throw new Error(resp.status);
+
+                    const data = await resp.json();
+
+                    // Escape and convert newlines to <br>
+                    const tmp = document.createElement("div");
+                    tmp.textContent = data.insightText;
+                    const safe = tmp.innerHTML.replace(/\n/g, "<br>");
+                    content.innerHTML = safe;
+
+                    if (data.createdUtc) {
+                        const dt = new Date(data.createdUtc);
+                        timestamp.textContent = `${labelGenerated} ${dt.toLocaleString()}`;
+                    }
+
+                    showState("done");
+                } catch {
+                    showState("error");
+                } finally {
+                    refreshBtn.disabled = false;
+                }
+            }
+
+            refreshBtn.addEventListener("click", () => loadInsight(true));
+            retryLink.addEventListener("click", e => { e.preventDefault(); loadInsight(false); });
+
+            // Auto-load on page open
+            loadInsight(false);
         })();
     </script>
 }

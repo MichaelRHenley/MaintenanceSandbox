@@ -1,0 +1,99 @@
+@model IList<MaintenanceSandbox.Models.MasterData.WorkCenter>
+@using MaintenanceSandbox.Models.MasterData
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = "Work Centers";
+    var area = ViewBag.Area as Area;
+    var site = area?.Site;
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Work Centers — @area?.Name</div>
+                <div class="sentinel-page-subtitle">
+                    @SR["App_Title"] ·
+                    <a asp-action="Index" class="text-reset text-decoration-none">Plant Structure</a> →
+                    <a asp-action="Areas" asp-route-siteId="@site?.Id" class="text-reset text-decoration-none">@site?.Name</a> →
+                    @area?.Name
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <a class="btn btn-sentinel-ghost btn-sm"
+                   asp-action="Areas"
+                   asp-route-siteId="@site?.Id">← Areas</a>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+
+            @if (TempData["ok"] is string ok)
+            {
+                <div class="alert alert-success">@ok</div>
+            }
+            @if (TempData["err"] is string err)
+            {
+                <div class="alert alert-danger">@err</div>
+            }
+
+            @if (Model.Count == 0)
+            {
+                <p class="text-muted mb-4">No work centers yet. Create the first one below.</p>
+            }
+            else
+            {
+                <div class="table-responsive mb-4">
+                    <table class="table table-dark table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Display Name</th>
+                                <th>Equipment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var wc in Model)
+                            {
+                                <tr>
+                                    <td><code>@wc.Code</code></td>
+                                    <td>@(wc.DisplayName ?? "—")</td>
+                                    <td>
+                                        <a asp-controller="EquipmentAdmin"
+                                           asp-action="Index"
+                                           asp-route-workCenterId="@wc.Id"
+                                           class="text-muted small">
+                                            @wc.Equipment.Count equipment →
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+            <div class="glass-card--accent glass-card">
+                <div class="fw-semibold small text-uppercase text-muted mb-3">Add Work Center</div>
+                <form asp-action="CreateWorkCenter" method="post" class="row g-2 align-items-end">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="areaId" value="@area?.Id" />
+                    <div class="col-md-3">
+                        <label class="form-label small text-uppercase text-muted mb-1">Code</label>
+                        <input type="text" name="code" class="form-control" placeholder="e.g. WC-01" maxlength="50" required />
+                        <small class="text-muted">Stored as uppercase. Must be unique per area.</small>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label small text-uppercase text-muted mb-1">Display Name <span class="fw-normal">(optional)</span></label>
+                        <input type="text" name="displayName" class="form-control" placeholder="e.g. Packaging Line A" maxlength="200" />
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-sentinel-primary">Add Work Center</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

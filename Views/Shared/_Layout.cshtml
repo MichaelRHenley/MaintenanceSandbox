@@ -133,6 +133,16 @@
                             </a>
                         </li>
                         @await Component.InvokeAsync("OnboardingNav")
+                        @if (User.IsInRole("SentinelAdmin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @IsActive("SentinelAdmin", "Index") text-warning"
+                                   asp-controller="SentinelAdmin"
+                                   asp-action="Index">
+                                    ⬡ Sentinel Admin
+                                </a>
+                            </li>
+                        }
                     </ul>
 
                     <div class="d-flex align-items-center gap-3">
@@ -161,6 +171,7 @@
                             {
                                 "Supervisor" => "Role_Supervisor",
                                 "Operator" => "Role_Operator",
+                                "Tech" => "Role_Tech",
                                 "MaintenanceManager" => "Role_MaintenanceManager",
                                 "Manager" => "Role_MaintenanceManager",
                                 _ => null
@@ -177,21 +188,21 @@
                                         <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
                                         <button type="submit" name="role" value="Supervisor"
                                                 class="sentinel-signout-btn @(roleClaim == "Supervisor" ? "active" : "")">
-                                            Supervisor
+                                            @SR["Role_Supervisor"]
                                         </button>
                                         <button type="submit" name="role" value="Operator"
                                                 class="sentinel-signout-btn @(roleClaim == "Operator" ? "active" : "")">
-                                                    Operator
+                                                    @SR["Role_Operator"]
                                                 </button>
                                         <button type="submit" name="role" value="Tech"
                                                 class="sentinel-signout-btn @(roleClaim == "Tech" ? "active" : "")">
-                                                    Tech
+                                                    @SR["Role_Tech"]
                                                 </button>
                                                     </form>
                                     <button type="button"
                                             class="sentinel-signout-btn"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#demo-share-modal">📧 Share</button>
+                                            data-bs-target="#demo-share-modal">@SR["Nav_DemoShare"]</button>
                                 </div>
                             }
                             else
@@ -201,7 +212,7 @@
                                     <span class="sentinel-role-badge">@localizedRole</span>
                                     <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
                                         @Html.AntiForgeryToken()
-                                        <button type="submit" class="sentinel-signout-btn">Sign out</button>
+                                        <button type="submit" class="sentinel-signout-btn">@SR["Nav_SignOut"]</button>
                                     </form>
                                 </div>
                             }
@@ -209,7 +220,7 @@
                         else
                         {
                             <div class="sentinel-user-pill">
-                                <a href="/Account/Login" class="sentinel-signout-btn">Sign in</a>
+                                <a href="/Account/Login" class="sentinel-signout-btn">@SR["Nav_SignIn"]</a>
                             </div>
                         }
                     </div>

@@ -1,0 +1,168 @@
+@model IList<MaintenanceSandbox.ViewModels.Admin.TenantHealthSummaryVm>
+@using MaintenanceSandbox.Models
+
+@{
+    ViewData["Title"] = "Sentinel Admin — Tenant Health";
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Tenant Health Dashboard</div>
+                <div class="sentinel-page-subtitle">Sentinel Operations · Provisioning observability across all tenants</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-success">@Model.Count(t => t.ProvisioningStatus == TenantProvisioningStatus.Ready) ready</span>
+                <span class="badge bg-primary">@Model.Count(t => t.ProvisioningStatus == TenantProvisioningStatus.Provisioning) provisioning</span>
+                <span class="badge bg-danger">@Model.Count(t => t.ProvisioningStatus == TenantProvisioningStatus.Failed) failed</span>
+                <span class="badge bg-warning text-dark">@Model.Count(t => t.IsProvisioningStale) stale</span>
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary ms-2">← Tenant List</a>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+            @if (TempData["ok"] is string ok)
+            {
+                <div class="alert alert-success">@ok</div>
+            }
+            @if (TempData["err"] is string err)
+            {
+                <div class="alert alert-danger">@err</div>
+            }
+            @if (!Model.Any())
+            {
+                <p class="text-muted">No tenants found.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Tenant</th>
+                                <th>Status</th>
+                                <th>Started At</th>
+                                <th>Completed At</th>
+                                <th class="text-center">Retries</th>
+                                <th class="text-center">Users</th>
+                                <th>Actor</th>
+                                <th>Last Error</th>
+                                <th>Last Activity</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var t in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="fw-semibold">@t.Name</div>
+                                        <small class="text-muted font-monospace">@t.TenantId.ToString("D")[..8]…</small>
+                                    </td>
+                                    <td>
+                                        @{
+                                            var (badgeClass, label) = t.ProvisioningStatus switch
+                                            {
+                                                TenantProvisioningStatus.Ready       => ("bg-success",           "Ready"),
+                                                TenantProvisioningStatus.Provisioning => ("bg-primary",          "Provisioning"),
+                                                TenantProvisioningStatus.Failed      => ("bg-danger",            "Failed"),
+                                                TenantProvisioningStatus.Suspended   => ("bg-warning text-dark", "Suspended"),
+                                                _                                    => ("bg-secondary",         "Pending")
+                                            };
+                                        }
+                                        <span class="badge @badgeClass">@label</span>
+                                        @if (t.IsProvisioningStale)
+                                        {
+                                            <span class="ms-1" title="Provisioning has been running longer than expected">⚠️</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (t.ProvisioningStartedAt.HasValue)
+                                        {
+                                            <small>@t.ProvisioningStartedAt.Value.ToString("MMM d, yyyy HH:mm")</small>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (t.ProvisioningCompletedAt.HasValue)
+                                        {
+                                            <small>@t.ProvisioningCompletedAt.Value.ToString("MMM d, yyyy HH:mm")</small>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        @if (t.ProvisioningRetryCount > 0)
+                                        {
+                                            <span class="badge bg-warning text-dark">@t.ProvisioningRetryCount</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">0</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">@t.UserCount</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(t.ProvisioningActor))
+                                        {
+                                            <small class="text-muted">@t.ProvisioningActor</small>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(t.LastProvisioningError))
+                                        {
+                                            <span class="text-danger small" title="@t.LastProvisioningError">
+                                                @(t.LastProvisioningError.Length > 60
+                                                    ? t.LastProvisioningError[..60] + "…"
+                                                    : t.LastProvisioningError)
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (t.LastActivityAt.HasValue)
+                                        {
+                                            <small class="text-muted">@t.LastActivityAt.Value.ToString("MMM d, yyyy HH:mm")</small>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">—</span>
+                                        }
+                                    </td>
+                                    <td class="text-end">
+                                        <a asp-action="TenantProvisioningHistory" asp-route-tenantId="@t.TenantId"
+                                           class="btn btn-sm btn-outline-secondary me-1">📋 History</a>
+                                        @if (t.ProvisioningStatus == TenantProvisioningStatus.Failed || t.IsProvisioningStale)
+                                        {
+                                            <form asp-action="RetryProvision" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="tenantId" value="@t.TenantId" />
+                                                <button type="submit" class="btn btn-sm btn-outline-warning"
+                                                        title="Retry provisioning for @t.Name">
+                                                    ↻ Retry
+                                                </button>
+                                            </form>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

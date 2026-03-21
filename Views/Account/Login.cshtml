@@ -18,13 +18,13 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="mb-3">
-                            <label asp-for="Email" class="form-label"></label>
+                            <label asp-for="Email" class="form-label">@SR["Auth_Email"]</label>
                             <input asp-for="Email" class="form-control" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Password" class="form-label"></label>
+                            <label asp-for="Password" class="form-label">@SR["Auth_Password"]</label>
                             <input asp-for="Password" class="form-control" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
@@ -41,7 +41,7 @@
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="role" value="Supervisor" />
                     <button type="submit" class="btn btn-outline-secondary btn-sm">
-                        Try Demo
+                        @SR["Auth_TryDemo"]
                     </button>
                 </form>
             </div>

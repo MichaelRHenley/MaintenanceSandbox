@@ -1,0 +1,94 @@
+@model IList<MaintenanceSandbox.Models.MasterData.EquipmentRequest>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> SR
+
+@{
+    ViewData["Title"] = "Equipment Requests";
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Equipment Requests</div>
+                <div class="sentinel-page-subtitle">@SR["App_Title"] · Settings — Pending operator requests</div>
+            </div>
+            <div class="d-flex gap-2">
+                <a class="btn btn-sentinel-ghost btn-sm"
+                   asp-controller="Settings"
+                   asp-action="Index">Back</a>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+
+            @if (TempData["ok"] is string ok)
+            {
+                <div class="alert alert-success">@ok</div>
+            }
+            @if (TempData["err"] is string err)
+            {
+                <div class="alert alert-danger">@err</div>
+            }
+
+            @if (Model.Count == 0)
+            {
+                <p class="text-muted">No pending equipment requests.</p>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Requested Code</th>
+                                <th>Display Name</th>
+                                <th>Work Center</th>
+                                <th>Requested By</th>
+                                <th>Notes</th>
+                                <th>Submitted</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var req in Model)
+                            {
+                                <tr>
+                                    <td><code>@req.RequestedCode</code></td>
+                                    <td>@(req.RequestedDisplayName ?? "—")</td>
+                                    <td>@req.WorkCenter.Code</td>
+                                    <td>@(string.IsNullOrEmpty(req.RequestedByDisplayName) ? req.RequestedByUserId : req.RequestedByDisplayName)</td>
+                                    <td>@(req.Notes ?? "—")</td>
+                                    <td><small class="text-muted">@req.CreatedUtc.ToString("MMM d, yyyy")</small></td>
+                                    <td class="text-end">
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <form asp-action="Approve" asp-route-id="@req.Id" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-sm btn-sentinel-primary">Approve</button>
+                                            </form>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#reject-@req.Id">
+                                                Reject
+                                            </button>
+                                        </div>
+                                        <div class="collapse mt-2" id="reject-@req.Id">
+                                            <form asp-action="Reject" asp-route-id="@req.Id" method="post">
+                                                @Html.AntiForgeryToken()
+                                                <textarea name="note" rows="2"
+                                                          class="form-control form-control-sm mb-2"
+                                                          placeholder="Rejection reason (optional)"></textarea>
+                                                <button type="submit" class="btn btn-sm btn-danger w-100">Confirm Reject</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

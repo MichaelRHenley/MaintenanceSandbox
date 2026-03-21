@@ -17,6 +17,32 @@
   },
   {
     "ContainingType": "MaintenanceSandbox.Controllers.Api.AiController",
+    "Method": "GetIncidentInsight",
+    "RelativePath": "api/ai/insight/incident/{incidentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "incidentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "force",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "lang",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MaintenanceSandbox.Controllers.Api.AiController",
     "Method": "Query",
     "RelativePath": "api/ai/query",
     "HttpMethod": "POST",

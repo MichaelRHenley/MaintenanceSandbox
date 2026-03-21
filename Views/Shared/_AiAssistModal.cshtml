@@ -1,3 +1,5 @@
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResource> SR
 @if (User.Identity?.IsAuthenticated ?? false)
 {
     <!-- ✦ AI Assist FAB -->
@@ -6,7 +8,7 @@
             class="ai-assist-fab"
             data-bs-toggle="modal"
             data-bs-target="#aiAssistModal"
-            title="AI Assist">
+            title="@SR["AiAssist_Title"]">
         ✦
     </button>
 
@@ -15,17 +17,17 @@
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content ai-assist-modal-content">
                 <div class="modal-header ai-assist-modal-header">
-                    <span class="modal-title fw-semibold" id="aiAssistModalLabel">✦ AI Assist</span>
+                    <span class="modal-title fw-semibold" id="aiAssistModalLabel">✦ @SR["AiAssist_Title"]</span>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body ai-assist-modal-body">
-                    <p class="text-muted small mb-3">Ask about incidents, search history, or draft a new report.</p>
+                    <p class="text-muted small mb-3">@SR["AiAssist_Subtitle"]</p>
 
                     <!-- Mode tabs -->
                     <div class="d-flex gap-2 flex-wrap mb-3">
-                        <button class="btn btn-sm btn-sentinel-primary ai-mode-btn" data-mode="Ask">Ask</button>
-                        <button class="btn btn-sm btn-sentinel-ghost ai-mode-btn" data-mode="Command">Command</button>
-                        <button class="btn btn-sm btn-sentinel-ghost ai-mode-btn" data-mode="Troubleshoot">Troubleshoot</button>
+                        <button class="btn btn-sm btn-sentinel-primary ai-mode-btn" data-mode="Ask">@SR["AiAssist_Mode_Ask"]</button>
+                        <button class="btn btn-sm btn-sentinel-ghost ai-mode-btn" data-mode="Command">@SR["AiAssist_Mode_Command"]</button>
+                        <button class="btn btn-sm btn-sentinel-ghost ai-mode-btn" data-mode="Troubleshoot">@SR["AiAssist_Mode_Troubleshoot"]</button>
                     </div>
 
                     <div class="border-bottom border-secondary mb-3"></div>
@@ -35,13 +37,13 @@
                         <textarea id="ai-input"
                                   class="form-control"
                                   rows="2"
-                                  placeholder="Ask about incidents, equipment status, or history… (Enter to send)"
+                                  placeholder="@SR["AiAssist_Input_Placeholder"]"
                                   style="resize:none;"></textarea>
-                        <button id="ai-send-btn" class="btn btn-sentinel-primary flex-shrink-0">Send</button>
+                        <button id="ai-send-btn" class="btn btn-sentinel-primary flex-shrink-0">@SR["AiAssist_Button_Send"]</button>
                     </div>
 
                     <!-- Loading -->
-                    <div id="ai-loading" class="mt-2 text-muted small" style="display:none;">✦ Thinking…</div>
+                    <div id="ai-loading" class="mt-2 text-muted small" style="display:none;">@SR["AiAssist_Thinking"]</div>
 
                     <!-- Error -->
                     <div id="ai-error" class="mt-2 small text-danger" style="display:none;"></div>
@@ -52,6 +54,12 @@
                              class="p-3 rounded"
                              style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); white-space:pre-wrap; line-height:1.6;"></div>
                         <div id="ai-citations" class="mt-2 d-flex flex-wrap gap-1"></div>
+                        <!-- Checklist (check actions) -->
+                        <div id="ai-checklist" class="mt-3" style="display:none;">
+                            <div class="small text-muted mb-1" style="opacity:0.7;">@SR["AiAssist_Checklist_Label"]</div>
+                            <ul id="ai-checklist-items" class="list-unstyled mb-0"></ul>
+                        </div>
+                        <!-- Button actions (view_incident, create_incident, etc.) -->
                         <div id="ai-actions" class="mt-2 d-flex flex-wrap gap-2"></div>
                     </div>
                 </div>
@@ -109,15 +117,17 @@
         let sessionId = null;
         let currentMode = 'Ask';
 
-        const modalEl    = document.getElementById('aiAssistModal');
-        const input      = document.getElementById('ai-input');
-        const sendBtn    = document.getElementById('ai-send-btn');
-        const loadingEl  = document.getElementById('ai-loading');
-        const errorEl    = document.getElementById('ai-error');
-        const responseEl = document.getElementById('ai-response-area');
-        const answerEl   = document.getElementById('ai-answer');
-        const citeEl     = document.getElementById('ai-citations');
-        const actionsEl  = document.getElementById('ai-actions');
+        const modalEl      = document.getElementById('aiAssistModal');
+        const input        = document.getElementById('ai-input');
+        const sendBtn      = document.getElementById('ai-send-btn');
+        const loadingEl    = document.getElementById('ai-loading');
+        const errorEl      = document.getElementById('ai-error');
+        const responseEl   = document.getElementById('ai-response-area');
+        const answerEl     = document.getElementById('ai-answer');
+        const citeEl       = document.getElementById('ai-citations');
+        const actionsEl    = document.getElementById('ai-actions');
+        const checklistEl  = document.getElementById('ai-checklist');
+        const checkItemsEl = document.getElementById('ai-checklist-items');
 
         if (!input) return;
 
@@ -167,8 +177,12 @@
                 });
 
                 if (!res.ok) {
-                    const msg = await res.text().catch(() => `HTTP ${res.status}`);
-                    throw new Error(msg);
+                    let errMsg = `HTTP ${res.status}`;
+                    try {
+                        const body = await res.json();
+                        errMsg = body.errorMessage || body.title || errMsg;
+                    } catch { errMsg = await res.text().catch(() => errMsg); }
+                    throw new Error(errMsg);
                 }
 
                 const data = await res.json();
@@ -188,10 +202,36 @@
                     });
                 }
 
-                // Suggested actions
+                // Suggested actions — split into checklist vs buttons
                 actionsEl.innerHTML = '';
+                checkItemsEl.innerHTML = '';
+                checklistEl.style.display = 'none';
+
                 if (data.suggestedActions && data.suggestedActions.length) {
-                    data.suggestedActions.forEach(a => {
+                    const checks  = data.suggestedActions.filter(a => a.action === 'check');
+                    const buttons = data.suggestedActions.filter(a => a.action !== 'check');
+
+                    if (checks.length) {
+                        checks.forEach(a => {
+                            const li = document.createElement('li');
+                            li.className = 'ai-check-item d-flex align-items-center gap-2 py-1';
+                            li.style.cssText = 'cursor:pointer; user-select:none;';
+                            li.innerHTML =
+                                `<span class="ai-check-icon" style="font-size:1rem; color:rgba(0,200,255,0.5);">☐</span>` +
+                                `<span class="small">${a.label}</span>`;
+                            li.addEventListener('click', () => {
+                                const icon = li.querySelector('.ai-check-icon');
+                                const checked = icon.textContent === '☑';
+                                icon.textContent = checked ? '☐' : '☑';
+                                icon.style.color = checked ? 'rgba(0,200,255,0.5)' : 'rgba(0,200,255,1)';
+                                li.querySelector('span:last-child').style.textDecoration = checked ? '' : 'line-through';
+                            });
+                            checkItemsEl.appendChild(li);
+                        });
+                        checklistEl.style.display = 'block';
+                    }
+
+                    buttons.forEach(a => {
                         const btn = document.createElement('button');
                         btn.className = 'btn btn-sm btn-sentinel-ghost';
                         btn.textContent = a.label;
@@ -203,7 +243,7 @@
                 responseEl.style.display = 'block';
 
             } catch (err) {
-                errorEl.textContent = 'Could not reach AI assistant. Make sure Ollama is running locally.';
+                errorEl.textContent = err.message || 'Could not reach AI assistant. Make sure Ollama is running locally.';
                 errorEl.style.display = 'block';
                 console.error('AI query error:', err);
             } finally {

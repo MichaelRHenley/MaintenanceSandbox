@@ -1,0 +1,202 @@
+@model MaintenanceSandbox.ViewModels.Admin.TenantProvisioningHistoryVm
+@using MaintenanceSandbox.Models
+
+@{
+    ViewData["Title"] = "Provisioning History";
+}
+
+@functions {
+    static string ActionBadgeClass(string action) => action switch
+    {
+        "ProvisionStart"   => "bg-primary",
+        "ProvisionSuccess" => "bg-success",
+        "ProvisionFailed"  => "bg-danger",
+        "RetryRequested"   => "bg-info text-dark",
+        "RetrySucceeded"   => "bg-success",
+        "RetryFailed"      => "bg-danger",
+        _                  => "bg-secondary"
+    };
+
+    static string StatusBadgeClass(TenantProvisioningStatus s) => s switch
+    {
+        TenantProvisioningStatus.Ready        => "bg-success",
+        TenantProvisioningStatus.Provisioning => "bg-primary",
+        TenantProvisioningStatus.Failed       => "bg-danger",
+        TenantProvisioningStatus.Suspended    => "bg-warning text-dark",
+        _                                     => "bg-secondary"
+    };
+
+    static string AttemptBorderClass(bool isSuccessful, bool hasFailure) =>
+        isSuccessful ? "border-success" : hasFailure ? "border-danger" : "border-primary";
+
+    static string AttemptHeaderClass(bool isSuccessful, bool hasFailure) =>
+        isSuccessful ? "bg-success bg-opacity-10" : hasFailure ? "bg-danger bg-opacity-10" : "bg-primary bg-opacity-10";
+}
+
+<div class="container py-4">
+    <div class="sentinel-card">
+        <div class="sentinel-page-header">
+            <div>
+                <div class="sentinel-page-title">Provisioning History</div>
+                <div class="sentinel-page-subtitle">@Model.TenantName · append-only audit log</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-success">@Model.Attempts.Count(a => a.IsSuccessful) succeeded</span>
+                <span class="badge bg-danger">@Model.Attempts.Count(a => a.HasFailure) failed</span>
+                <span class="badge bg-secondary">@Model.Attempts.Count total attempts</span>
+                <a asp-action="TenantHealth" class="btn btn-sm btn-outline-secondary ms-2">← Health Dashboard</a>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+            @if (!Model.Attempts.Any())
+            {
+                <p class="text-muted">No provisioning events recorded for this tenant yet.</p>
+            }
+            else
+            {
+                var attemptNumber = Model.Attempts.Count;
+                foreach (var attempt in Model.Attempts)
+                {
+                    var borderClass = AttemptBorderClass(attempt.IsSuccessful, attempt.HasFailure);
+                    var headerClass = AttemptHeaderClass(attempt.IsSuccessful, attempt.HasFailure);
+                    var collapseId = $"attempt-{attempt.CorrelationId.Replace("-", "")[..16]}";
+
+                    <div class="card border @borderClass mb-3">
+                        <!-- Attempt header -->
+                        <div class="card-header @headerClass d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <span class="fw-semibold text-muted small">Attempt #@attemptNumber</span>
+
+                                @if (attempt.IsSuccessful)
+                                {
+                                    <span class="badge bg-success">✓ Succeeded</span>
+                                }
+                                else if (attempt.HasFailure)
+                                {
+                                    <span class="badge bg-danger">✗ Failed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-primary">⏳ In Progress</span>
+                                }
+
+                                <span class="font-monospace small text-muted"
+                                      title="@attempt.CorrelationId">
+                                    @attempt.CorrelationId[..Math.Min(8, attempt.CorrelationId.Length)]…
+                                </span>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3 flex-wrap small text-muted">
+                                <span title="Started">
+                                    🕐 @attempt.StartedAtUtc.ToString("MMM d, yyyy HH:mm:ss") UTC
+                                </span>
+                                @if (attempt.CompletedAtUtc.HasValue && attempt.DurationSeconds > 0)
+                                {
+                                    <span title="Duration">⏱ @attempt.DurationSeconds s</span>
+                                }
+                                @if (!string.IsNullOrEmpty(attempt.Actor))
+                                {
+                                    <span title="Actor">👤 @attempt.Actor</span>
+                                }
+                                <button class="btn btn-sm btn-link p-0 text-muted text-decoration-none"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#@collapseId"
+                                        aria-expanded="true">
+                                    @attempt.Events.Count event@(attempt.Events.Count == 1 ? "" : "s") ▾
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Event table (collapsible) -->
+                        <div class="collapse show" id="@collapseId">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover align-middle mb-0 small">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Timestamp (UTC)</th>
+                                            <th>Action</th>
+                                            <th>Status Before</th>
+                                            <th>Status After</th>
+                                            <th class="text-center">Result</th>
+                                            <th class="text-center">Duration</th>
+                                            <th>Actor</th>
+                                            <th>Error</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var e in attempt.Events)
+                                        {
+                                            <tr>
+                                                <td class="font-monospace text-nowrap">
+                                                    @e.TimestampUtc.ToString("MMM d HH:mm:ss")
+                                                </td>
+                                                <td>
+                                                    <span class="badge @ActionBadgeClass(e.Action)">@e.Action</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge @StatusBadgeClass(e.StatusBefore)">@e.StatusBefore</span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge @StatusBadgeClass(e.StatusAfter)">@e.StatusAfter</span>
+                                                </td>
+                                                <td class="text-center">
+                                                    @if (e.Success)
+                                                    {
+                                                        <span class="badge bg-success">✓</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-danger">✗</span>
+                                                    }
+                                                </td>
+                                                <td class="text-center text-nowrap">
+                                                    @if (e.DurationSeconds.HasValue)
+                                                    {
+                                                        <span>@e.DurationSeconds s</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">—</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(e.Actor))
+                                                    {
+                                                        <small class="text-muted">@e.Actor</small>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">—</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(e.ErrorMessage))
+                                                    {
+                                                        <small class="text-danger font-monospace"
+                                                               title="@e.ErrorMessage">
+                                                            @(e.ErrorMessage.Length > 60
+                                                                ? e.ErrorMessage[..60] + "…"
+                                                                : e.ErrorMessage)
+                                                        </small>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">—</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    attemptNumber--;
+                }
+            }
+        </div>
+    </div>
+</div>

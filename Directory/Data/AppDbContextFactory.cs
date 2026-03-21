@@ -10,8 +10,10 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
+        // Design-time only — used by `dotnet ef migrations add`.
+        // Matches appsettings.json DefaultConnection for local development.
         optionsBuilder.UseSqlServer(
-            "YOUR-CONNECTION-STRING-HERE");
+            "Server=(localdb)\\MSSQLLocalDB;Database=MaintenanceSandbox;Trusted_Connection=True;MultipleActiveResultSets=true");
 
         return new AppDbContext(
             optionsBuilder.Options,

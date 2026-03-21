@@ -15,6 +15,7 @@ public class AiController : ControllerBase
 {
     private readonly IAiAssistantClient _aiClient;
     private readonly IAiOrchestrator _orchestrator;
+    private readonly IAiIncidentInsightService _insightService;
     private readonly IStringLocalizer<SharedResource> _localizer;
     private readonly ILogger<AiController> _logger;
     private readonly IDemoAiRateLimiter _rateLimiter;
@@ -22,12 +23,14 @@ public class AiController : ControllerBase
     public AiController(
         IAiAssistantClient aiClient,
         IAiOrchestrator orchestrator,
+        IAiIncidentInsightService insightService,
         IStringLocalizer<SharedResource> localizer,
         ILogger<AiController> logger,
         IDemoAiRateLimiter rateLimiter)
     {
         _aiClient = aiClient;
         _orchestrator = orchestrator;
+        _insightService = insightService;
         _localizer = localizer;
         _logger = logger;
         _rateLimiter = rateLimiter;
@@ -89,6 +92,52 @@ public class AiController : ControllerBase
             return StatusCode(503, response);
 
         return Ok(response);
+    }
+
+    [HttpGet("insight/incident/{incidentId:int}")]
+    public async Task<IActionResult> GetIncidentInsight(
+        int incidentId,
+        [FromQuery] bool force = false,
+        [FromQuery] string? lang = null,
+        CancellationToken ct = default)
+    {
+        var tenantIdStr = User.FindFirstValue("tenant_id");
+        if (!Guid.TryParse(tenantIdStr, out var tenantId) || tenantId == Guid.Empty)
+            return Unauthorized();
+
+        if (User.HasClaim("is_demo", "true"))
+        {
+            if (!_rateLimiter.TryConsume(tenantIdStr!))
+                return StatusCode(429, "Demo AI limit reached — please try again later.");
+        }
+
+        var language = lang
+            ?? Request.GetTypedHeaders().AcceptLanguage
+                .OrderByDescending(x => x.Quality.GetValueOrDefault(1))
+                .Select(x => x.Value.Value?.Split('-')[0])
+                .FirstOrDefault(x => !string.IsNullOrEmpty(x))
+            ?? "en";
+
+        try
+        {
+            var insight = await _insightService.GetOrGenerateAsync(incidentId, tenantId, force, language, ct);
+
+            if (insight is null)
+                return NotFound();
+
+            return Ok(new
+            {
+                incidentId = insight.IncidentId,
+                insightText = insight.InsightText,
+                modelUsed = insight.ModelUsed,
+                createdUtc = insight.CreatedUtc
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Incident insight failed for incident {IncidentId}", incidentId);
+            return StatusCode(503, "AI insight is temporarily unavailable.");
+        }
     }
 
     private static AiHelpIntent ParseIntent(string? intent)

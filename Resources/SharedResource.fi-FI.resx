@@ -1,0 +1,1301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+
+	<!-- Basic shared strings -->
+
+	<data name="App_Title" xml:space="preserve">
+		<value>Manufacturing Core Suite</value>
+	</data>
+	<data name="Nav_Home" xml:space="preserve">
+		<value>Koti</value>
+	</data>
+	<data name="Nav_ActiveEMs" xml:space="preserve">
+		<value>Aktiiviset EM-pyynnöt</value>
+	</data>
+	<data name="Button_Submit" xml:space="preserve">
+		<value>Lähetä</value>
+	</data>
+	<data name="Button_Cancel" xml:space="preserve">
+		<value>Peruuta</value>
+	</data>
+	<data name="Nav_Privacy" xml:space="preserve">
+		<value>Tietosuoja</value>
+	</data>
+	<data name="Nav_Maintenance" xml:space="preserve">
+		<value>Kunnossapito</value>
+	</data>
+	<data name="Nav_Settings" xml:space="preserve">
+		<value>Asetukset</value>
+	</data>
+
+	<!-- Maintenance Index page -->
+
+	<data name="Maint_Index_Title" xml:space="preserve">
+		<value>Kunnossapitopyynnöt</value>
+	</data>
+	<data name="Maint_Index_Badge_Tier" xml:space="preserve">
+		<value>Taso:</value>
+	</data>
+	<data name="Maint_Index_Button_NewRequest" xml:space="preserve">
+		<value>+ Uusi pyyntö</value>
+	</data>
+	<data name="Maint_Index_Filter_Site" xml:space="preserve">
+		<value>Toimipaikka</value>
+	</data>
+	<data name="Maint_Index_Filter_Area" xml:space="preserve">
+		<value>Alue</value>
+	</data>
+	<data name="Maint_Index_Filter_WorkCenter" xml:space="preserve">
+		<value>Työkeskus</value>
+	</data>
+	<data name="Maint_Index_Filter_Search" xml:space="preserve">
+		<value>Hae</value>
+	</data>
+	<data name="Maint_Index_Filter_All" xml:space="preserve">
+		<value>Kaikki</value>
+	</data>
+	<data name="Maint_Index_Filter_SearchPlaceholder" xml:space="preserve">
+		<value>Laite, työkeskus tai teksti</value>
+	</data>
+	<data name="Maint_Index_Filter_IncludeClosed" xml:space="preserve">
+		<value>Sisällytä suljetut pyynnöt</value>
+	</data>
+	<data name="Maint_Index_Button_ApplyFilters" xml:space="preserve">
+		<value>Käytä suodattimia</value>
+	</data>
+	<data name="Maint_Index_NoResults" xml:space="preserve">
+		<value>Kunnossapitopyyntöjä ei löytynyt.</value>
+	</data>
+	<data name="Maint_Index_Label_Status" xml:space="preserve">
+		<value>Tila:</value>
+	</data>
+	<data name="Maint_Index_Label_Priority" xml:space="preserve">
+		<value>Prioriteetti:</value>
+	</data>
+	<data name="Maint_Index_Label_RequestedBy" xml:space="preserve">
+		<value>Pyytäjä:</value>
+	</data>
+	<data name="Maint_Index_Label_Description" xml:space="preserve">
+		<value>Kuvaus:</value>
+	</data>
+	<data name="Maint_Index_Label_LatestComment" xml:space="preserve">
+		<value>Uusin kommentti</value>
+	</data>
+	<data name="Maint_Index_Button_ViewDetails" xml:space="preserve">
+		<value>Näytä tiedot</value>
+	</data>
+	<data name="Maint_Index_KPI_Open" xml:space="preserve">
+		<value>Avoimet</value>
+	</data>
+	<data name="Maint_Index_KPI_Waiting" xml:space="preserve">
+		<value>Odottaa osia</value>
+	</data>
+	<data name="Maint_Index_KPI_ResolvedToday" xml:space="preserve">
+		<value>Ratkaistu tänään</value>
+	</data>
+	<data name="Maint_Index_Badge_NewComment" xml:space="preserve">
+		<value>Uusi kommentti</value>
+	</data>
+	<data name="Maint_Index_LastUpdated_Label" xml:space="preserve">
+		<value>Viimeksi päivitetty:</value>
+	</data>
+
+	<!-- Maintenance Details page -->
+
+	<data name="Maint_Details_Title" xml:space="preserve">
+		<value>Kunnossapitopyyntö</value>
+	</data>
+	<data name="Maint_Details_Header_Request" xml:space="preserve">
+		<value>Pyyntö #{0}</value>
+	</data>
+	<data name="Maint_Details_Label_Site" xml:space="preserve">
+		<value>Toimipaikka</value>
+	</data>
+	<data name="Maint_Details_Label_Area" xml:space="preserve">
+		<value>Alue</value>
+	</data>
+	<data name="Maint_Details_Label_WorkCenter" xml:space="preserve">
+		<value>Työkeskus</value>
+	</data>
+	<data name="Maint_Details_Label_Equipment" xml:space="preserve">
+		<value>Laite</value>
+	</data>
+	<data name="Maint_Details_Label_Status" xml:space="preserve">
+		<value>Tila</value>
+	</data>
+	<data name="Maint_Details_Label_Priority" xml:space="preserve">
+		<value>Prioriteetti</value>
+	</data>
+	<data name="Maint_Details_Label_RequestedBy" xml:space="preserve">
+		<value>Pyytäjä</value>
+	</data>
+	<data name="Maint_Details_Label_CreatedAt" xml:space="preserve">
+		<value>Luotu</value>
+	</data>
+	<data name="Maint_Details_Label_ResolvedAt" xml:space="preserve">
+		<value>Ratkaistu</value>
+	</data>
+	<data name="Maint_Details_Label_Description" xml:space="preserve">
+		<value>Kuvaus</value>
+	</data>
+	<data name="Maint_Details_Section_Activity" xml:space="preserve">
+		<value>Toiminta</value>
+	</data>
+	<data name="Maint_Details_Section_Comments" xml:space="preserve">
+		<value>Kommentit</value>
+	</data>
+	<data name="Maint_Details_Section_NoComments" xml:space="preserve">
+		<value>Ei kommentteja vielä.</value>
+	</data>
+	<data name="Maint_Details_Label_CommentAt" xml:space="preserve">
+		<value>{0} · {1}</value>
+	</data>
+	<data name="Maint_Details_Label_NewComment" xml:space="preserve">
+		<value>Uusi kommentti</value>
+	</data>
+	<data name="Maint_Details_Placeholder_NewComment" xml:space="preserve">
+		<value>Kirjoita kommenttisi tähän…</value>
+	</data>
+	<data name="Maint_Details_Button_AddComment" xml:space="preserve">
+		<value>Lisää kommentti</value>
+	</data>
+	<data name="Maint_Details_Button_MarkResolved" xml:space="preserve">
+		<value>Merkitse ratkaistuksi</value>
+	</data>
+	<data name="Maint_Details_Button_BackToList" xml:space="preserve">
+		<value>Takaisin listaan</value>
+	</data>
+	<data name="Maint_Details_Section_UpdateWorkflow" xml:space="preserve">
+		<value>Päivitä työnkulku</value>
+	</data>
+	<data name="Maint_Details_Hint_WorkflowForLeads" xml:space="preserve">
+		<value>Työnjohtajat ja teknikot voivat säätää tilaa ja prioriteettia täällä.</value>
+	</data>
+	<data name="Maint_Details_Button_UpdateStatus" xml:space="preserve">
+		<value>Päivitä</value>
+	</data>
+	<data name="Maint_Details_Label_RespondersPresent" xml:space="preserve">
+		<value>Vastaajat paikalla</value>
+	</data>
+	<data name="Maint_Details_Label_RespondersConnecting" xml:space="preserve">
+		<value>Tarkistetaan aktiivisia vastaajia…</value>
+	</data>
+	<data name="Maint_Details_Label_NoResponders" xml:space="preserve">
+		<value>Kukaan ei tällä hetkellä seuraa tätä pyyntöä.</value>
+	</data>
+	<data name="Maint_Details_Section_Suggestions" xml:space="preserve">
+		<value>Toimintakirjan ehdotukset</value>
+	</data>
+	<data name="Maint_Details_Hint_Suggestions" xml:space="preserve">
+		<value>Samankaltaisten ongelmien perusteella tässä on joitakin nopeita toimenpiteitä kokeiltavaksi.</value>
+	</data>
+	<data name="Maint_Details_Label_Confidence" xml:space="preserve">
+		<value>Luottamustaso</value>
+	</data>
+	<data name="Maint_Comments_None" xml:space="preserve">
+		<value>Ei kommentteja vielä.</value>
+	</data>
+	<data name="Maint_Comments_SystemLabel" xml:space="preserve">
+		<value>Järjestelmä</value>
+	</data>
+	<data name="Maint_Comments_SystemBadge" xml:space="preserve">
+		<value>Työnkulku</value>
+	</data>
+
+	<data name="Role_Technician" xml:space="preserve">
+		<value>Teknikko</value>
+	</data>
+
+	<!-- Parts Index -->
+
+	<data name="Parts_Index_Title" xml:space="preserve">
+		<value>Osat</value>
+	</data>
+	<data name="Parts_Index_Header" xml:space="preserve">
+		<value>Osaluettelo</value>
+	</data>
+	<data name="Parts_Index_Stats" xml:space="preserve">
+		<value>{0} yhteensä • {1} aktiivisia • {2} ei-aktiivisia</value>
+	</data>
+	<data name="Parts_Index_Created_Label" xml:space="preserve">
+		<value>Osa luotu:</value>
+	</data>
+	<data name="Parts_Index_Created_NewPartPlaceholder" xml:space="preserve">
+		<value>(uusi osa)</value>
+	</data>
+	<data name="Parts_Index_Button_ViewDetails" xml:space="preserve">
+		<value>Näytä tiedot</value>
+	</data>
+	<data name="Parts_Index_Button_CreateAnother" xml:space="preserve">
+		<value>+ Luo toinen osa</value>
+	</data>
+	<data name="Parts_Index_Button_NewPart" xml:space="preserve">
+		<value>+ Uusi osa</value>
+	</data>
+	<data name="Parts_Index_Filter_Search_Label" xml:space="preserve">
+		<value>Hae</value>
+	</data>
+	<data name="Parts_Index_Filter_Search_Placeholder" xml:space="preserve">
+		<value>Osanumero, kuvaus, tekoälykuvaus...</value>
+	</data>
+	<data name="Parts_Index_Filter_Status_Label" xml:space="preserve">
+		<value>Tila</value>
+	</data>
+	<data name="Parts_Index_Filter_Status_All" xml:space="preserve">
+		<value>Kaikki osat</value>
+	</data>
+	<data name="Parts_Index_Filter_Status_ActiveOnly" xml:space="preserve">
+		<value>Vain aktiiviset</value>
+	</data>
+	<data name="Parts_Index_Filter_Status_InactiveOnly" xml:space="preserve">
+		<value>Vain ei-aktiiviset</value>
+	</data>
+	<data name="Parts_Index_Filter_Button_Apply" xml:space="preserve">
+		<value>Käytä</value>
+	</data>
+	<data name="Parts_Index_Filter_Button_Reset" xml:space="preserve">
+		<value>Nollaa</value>
+	</data>
+	<data name="Parts_Index_Empty_Title" xml:space="preserve">
+		<value>Osia ei löytynyt.</value>
+	</data>
+	<data name="Parts_Index_Empty_Body" xml:space="preserve">
+		<value>Kokeile muuttaa hakua tai luo uusi osa.</value>
+	</data>
+	<data name="Parts_Index_Table_PartNumber" xml:space="preserve">
+		<value>Osanro</value>
+	</data>
+	<data name="Parts_Index_Table_Description" xml:space="preserve">
+		<value>Kuvaus</value>
+	</data>
+	<data name="Parts_Index_Table_Manufacturer" xml:space="preserve">
+		<value>Valmistaja</value>
+	</data>
+	<data name="Parts_Index_Table_OnHand" xml:space="preserve">
+		<value>Varastossa</value>
+	</data>
+	<data name="Parts_Index_Table_Status" xml:space="preserve">
+		<value>Tila</value>
+	</data>
+	<data name="Parts_Index_Label_MfgNumber" xml:space="preserve">
+		<value>Valm.nro:</value>
+	</data>
+	<data name="Parts_Index_Badge_NoStock" xml:space="preserve">
+		<value>Ei varastoa</value>
+	</data>
+	<data name="Parts_Index_Status_Active" xml:space="preserve">
+		<value>Aktiivinen</value>
+	</data>
+	<data name="Parts_Index_Status_Inactive" xml:space="preserve">
+		<value>Ei aktiivinen</value>
+	</data>
+	<data name="Parts_Index_Button_View" xml:space="preserve">
+		<value>Näytä</value>
+	</data>
+	<data name="Parts_Index_Button_Edit" xml:space="preserve">
+		<value>Muokkaa</value>
+	</data>
+
+	<!-- Field labels -->
+
+	<data name="Parts_Field_PartNumber" xml:space="preserve">
+		<value>Osanumero</value>
+	</data>
+	<data name="Parts_Field_ShortDescription" xml:space="preserve">
+		<value>Lyhyt kuvaus</value>
+	</data>
+	<data name="Parts_Field_LongDescription" xml:space="preserve">
+		<value>Pitkä kuvaus</value>
+	</data>
+	<data name="Parts_Field_AiCleanDescription" xml:space="preserve">
+		<value>Tekoälykuvaus</value>
+	</data>
+	<data name="Parts_Field_Manufacturer" xml:space="preserve">
+		<value>Valmistaja</value>
+	</data>
+	<data name="Parts_Field_ManufacturerPartNumber" xml:space="preserve">
+		<value>Valmistajan osanumero</value>
+	</data>
+	<data name="Parts_Field_IsActive" xml:space="preserve">
+		<value>Aktiivinen</value>
+	</data>
+	<data name="Parts_Field_EnhancedDescription" xml:space="preserve">
+		<value>Parannettu kuvaus</value>
+	</data>
+
+	<!-- Validation -->
+
+	<data name="Parts_Validation_PartNumber_Required" xml:space="preserve">
+		<value>Osanumero vaaditaan.</value>
+	</data>
+	<data name="Parts_Validation_PartNumber_MaxLength" xml:space="preserve">
+		<value>Osanumero saa sisältää enintään 64 merkkiä.</value>
+	</data>
+	<data name="Parts_Validation_ShortDescription_MaxLength" xml:space="preserve">
+		<value>Lyhyt kuvaus saa sisältää enintään 128 merkkiä.</value>
+	</data>
+	<data name="Parts_Validation_LongDescription_MaxLength" xml:space="preserve">
+		<value>Pitkä kuvaus saa sisältää enintään 512 merkkiä.</value>
+	</data>
+	<data name="Parts_Validation_AiCleanDescription_MaxLength" xml:space="preserve">
+		<value>Tekoälykuvaus saa sisältää enintään 512 merkkiä.</value>
+	</data>
+	<data name="Parts_Validation_Manufacturer_MaxLength" xml:space="preserve">
+		<value>Valmistaja saa sisältää enintään 128 merkkiä.</value>
+	</data>
+	<data name="Parts_Validation_ManufacturerPartNumber_MaxLength" xml:space="preserve">
+		<value>Valmistajan osanumero saa sisältää enintään 128 merkkiä.</value>
+	</data>
+
+	<data name="Parts_Edit_Title" xml:space="preserve">
+		<value>Muokkaa osaa {0}</value>
+	</data>
+	<data name="Parts_Edit_Heading" xml:space="preserve">
+		<value>Muokkaa osaa {0}</value>
+	</data>
+	<data name="Parts_Edit_Label_PartNumber" xml:space="preserve">
+		<value>Osanumero</value>
+	</data>
+	<data name="Parts_Edit_Label_ShortDescription" xml:space="preserve">
+		<value>Lyhyt kuvaus</value>
+	</data>
+	<data name="Parts_Edit_Label_LongDescription" xml:space="preserve">
+		<value>Pitkä kuvaus</value>
+	</data>
+	<data name="Parts_Edit_Label_Manufacturer" xml:space="preserve">
+		<value>Valmistaja</value>
+	</data>
+	<data name="Parts_Edit_Label_ManufacturerPartNumber" xml:space="preserve">
+		<value>Valmistajan osanumero</value>
+	</data>
+	<data name="Parts_Edit_Label_IsActive" xml:space="preserve">
+		<value>Aktiivinen</value>
+	</data>
+	<data name="Parts_Edit_Button_BackToList" xml:space="preserve">
+		<value>Takaisin listaan</value>
+	</data>
+	<data name="Parts_Edit_Button_SaveChanges" xml:space="preserve">
+		<value>Tallenna muutokset</value>
+	</data>
+	<data name="Parts_Edit_Button_Cancel" xml:space="preserve">
+		<value>Peruuta</value>
+	</data>
+
+	<!-- Settings page -->
+
+	<data name="Settings_Title" xml:space="preserve">
+		<value>Asetukset</value>
+	</data>
+	<data name="Settings_Section_Notifications_Title" xml:space="preserve">
+		<value>Ilmoitukset ja hälytykset</value>
+	</data>
+	<data name="Settings_Section_Notifications_Description" xml:space="preserve">
+		<value>Hallitse sireeniä, merkkiääntä ja värinää live-kunnossapitopäivityksiä varten.</value>
+	</data>
+	<data name="Settings_Notifications_Toggle_Help" xml:space="preserve">
+		<value>Käyttää samaa asetusta kuin yläosan navigointipainike.</value>
+	</data>
+	<data name="Settings_Notifications_TestSiren" xml:space="preserve">
+		<value>Testaa EM-sireeni</value>
+	</data>
+	<data name="Settings_Notifications_TestChime" xml:space="preserve">
+		<value>Testaa kommenttimerkkiääni</value>
+	</data>
+	<data name="Settings_Notifications_Test_Help" xml:space="preserve">
+		<value>Varmista, että laitteen äänenvoimakkuus on mukavalla tasolla ennen testausta.</value>
+	</data>
+	<data name="Settings_Section_Language_Title" xml:space="preserve">
+		<value>Kieli</value>
+	</data>
+	<data name="Settings_Section_Language_Description" xml:space="preserve">
+		<value>Valitse haluamasi sovelluskieli.</value>
+	</data>
+	<data name="Settings_Section_Tier_Label" xml:space="preserve">
+		<value>Tuotetaso</value>
+	</data>
+	<data name="Settings_Section_Tier_HelpText" xml:space="preserve">
+		<value>Määrittää, mikä taso on aktiivinen tässä sandbox-instanssissa.</value>
+	</data>
+	<data name="Settings_Button_Save" xml:space="preserve">
+		<value>Tallenna</value>
+	</data>
+	<data name="Settings_Button_Cancel" xml:space="preserve">
+		<value>Peruuta</value>
+	</data>
+
+	<!-- Maintenance Create page -->
+
+	<data name="Maint_Create_Title" xml:space="preserve">
+		<value>Luo kunnossapitopyyntö</value>
+	</data>
+	<data name="Maint_Create_Label_Site" xml:space="preserve">
+		<value>Toimipaikka</value>
+	</data>
+	<data name="Maint_Create_Placeholder_Site" xml:space="preserve">
+		<value>esim. Toimipaikka Alfa</value>
+	</data>
+	<data name="Maint_Create_Label_Area" xml:space="preserve">
+		<value>Alue</value>
+	</data>
+	<data name="Maint_Create_Placeholder_Area" xml:space="preserve">
+		<value>esim. Alue 2</value>
+	</data>
+	<data name="Maint_Create_Label_WorkCenter" xml:space="preserve">
+		<value>Työkeskus</value>
+	</data>
+	<data name="Maint_Create_Placeholder_WorkCenter" xml:space="preserve">
+		<value>esim. TK-03</value>
+	</data>
+	<data name="Maint_Create_Label_Equipment" xml:space="preserve">
+		<value>Laite</value>
+	</data>
+	<data name="Maint_Create_Placeholder_Equipment" xml:space="preserve">
+		<value>esim. LAI-2001</value>
+	</data>
+	<data name="Maint_Create_Label_Priority" xml:space="preserve">
+		<value>Prioriteetti</value>
+	</data>
+	<data name="Maint_Create_Priority_Low" xml:space="preserve">
+		<value>Matala</value>
+	</data>
+	<data name="Maint_Create_Priority_Medium" xml:space="preserve">
+		<value>Keskitaso</value>
+	</data>
+	<data name="Maint_Create_Priority_High" xml:space="preserve">
+		<value>Korkea</value>
+	</data>
+	<data name="Maint_Create_Label_RequestedBy" xml:space="preserve">
+		<value>Pyytäjä</value>
+	</data>
+	<data name="Maint_Create_Label_Description" xml:space="preserve">
+		<value>Kuvaus</value>
+	</data>
+	<data name="Maint_Create_Placeholder_Description" xml:space="preserve">
+		<value>Kuvaile ongelma</value>
+	</data>
+	<data name="Maint_Create_Button_Submit" xml:space="preserve">
+		<value>Lähetä pyyntö</value>
+	</data>
+	<data name="Maint_Create_Button_Cancel" xml:space="preserve">
+		<value>Peruuta</value>
+	</data>
+
+	<!-- Home page -->
+
+	<data name="Home_Title" xml:space="preserve">
+		<value>Sentinel Kunnossapito – Koti</value>
+	</data>
+	<data name="Home_Hero_Title" xml:space="preserve">
+		<value>Live-kunnossapitojärjestelmä</value>
+	</data>
+	<data name="Home_Hero_Subtitle" xml:space="preserve">
+		<value>Kunnossapitopyynnöt, hälytykset ja yhteistyö yhdessä live-näkymässä.</value>
+	</data>
+	<data name="Home_Hero_Button_GoToMaintenance" xml:space="preserve">
+		<value>Avaa kunnossapitotaulu</value>
+	</data>
+	<data name="Home_Hero_Button_Settings" xml:space="preserve">
+		<value>Määritä hälytykset ja kieli</value>
+	</data>
+	<data name="Home_Hero_Feature_LiveFeed" xml:space="preserve">
+		<value>Live EM / kunnossapitosyöte</value>
+	</data>
+	<data name="Home_Hero_Feature_RealTimeComments" xml:space="preserve">
+		<value>Operaattori ↔ teknikkokommentit reaaliajassa</value>
+	</data>
+	<data name="Home_Hero_Feature_TierAwareAI" xml:space="preserve">
+		<value>Tasotietoiset tekoälyehdotukset (tiekartta)</value>
+	</data>
+	<data name="Home_Hero_Feature_MultiLanguage" xml:space="preserve">
+		<value>Monikielinen pohja (en / fr / es)</value>
+	</data>
+	<data name="Home_Hero_Feature_AlertsHaptics" xml:space="preserve">
+		<value>Määritettävät hälytykset ja värinä</value>
+	</data>
+	<data name="Home_Hero_Feature_MultiTenant" xml:space="preserve">
+		<value>Valmis monivuokralainen SaaS-julkaisu</value>
+	</data>
+	<data name="Home_Telemetry_Title" xml:space="preserve">
+		<value>Live-telemetria</value>
+	</data>
+	<data name="Home_Telemetry_Description" xml:space="preserve">
+		<value>Kun EM-taulu on auki, tämä ilmaisin ja alatunnistemerkki pysyvät synkronoituina.</value>
+	</data>
+	<data name="Home_Telemetry_Item_Live" xml:space="preserve">
+		<value>Vihreä "Live" = yhdistetty SignalR-hubiin</value>
+	</data>
+	<data name="Home_Telemetry_Item_Reconnecting" xml:space="preserve">
+		<value>Keltainen "Yhdistetään uudelleen…" = yrittää uudelleen</value>
+	</data>
+	<data name="Home_Telemetry_Item_Offline" xml:space="preserve">
+		<value>Punainen "Offline" = ei live-päivityksiä (turvallinen varasuunnitelma)</value>
+	</data>
+	<data name="Home_Alerts_Title" xml:space="preserve">
+		<value>Hälytysten hallinta</value>
+	</data>
+	<data name="Home_Alerts_Description" xml:space="preserve">
+		<value>Käytä Asetuksia testaamaan sireeni ja merkkiääni ennen tuotantoon siirtymistä.</value>
+	</data>
+	<data name="Home_Alerts_Button_OpenSettings" xml:space="preserve">
+		<value>Avaa hälytysasetukset</value>
+	</data>
+
+	<!-- Tier pill -->
+
+	<data name="Tier_Label_Standard" xml:space="preserve">
+		<value>Perus</value>
+	</data>
+	<data name="Tier_Label_Enhanced" xml:space="preserve">
+		<value>Tehostettu</value>
+	</data>
+	<data name="Tier_Label_Premium" xml:space="preserve">
+		<value>Premium</value>
+	</data>
+	<data name="Tier_Label_TierSuffix" xml:space="preserve">
+		<value>taso</value>
+	</data>
+
+	<!-- Layout / auth / tenant -->
+
+	<data name="Auth_SignIn" xml:space="preserve">
+		<value>Kirjaudu sisään</value>
+	</data>
+	<data name="Auth_SignOut" xml:space="preserve">
+		<value>Kirjaudu ulos</value>
+	</data>
+	<data name="Auth_Email" xml:space="preserve">
+		<value>Sähköposti</value>
+	</data>
+	<data name="Auth_Password" xml:space="preserve">
+		<value>Salasana</value>
+	</data>
+	<data name="Auth_TryDemo" xml:space="preserve">
+		<value>Kokeile demoa</value>
+	</data>
+	<data name="Layout_TenantLabel" xml:space="preserve">
+		<value>Vuokralainen</value>
+	</data>
+
+	<!-- Live indicator labels -->
+
+	<data name="LiveIndicator_Label_Connecting" xml:space="preserve">
+		<value>Yhdistetään…</value>
+	</data>
+	<data name="LiveIndicator_Label_Live" xml:space="preserve">
+		<value>Live</value>
+	</data>
+	<data name="LiveIndicator_Label_Reconnecting" xml:space="preserve">
+		<value>Yhdistetään uudelleen…</value>
+	</data>
+	<data name="LiveIndicator_Label_Offline" xml:space="preserve">
+		<value>Offline</value>
+	</data>
+
+	<!-- Toast messages -->
+
+	<data name="Toast_Reconnected" xml:space="preserve">
+		<value>Yhdistetty uudelleen live-päivityksiin.</value>
+	</data>
+	<data name="Toast_Reconnecting" xml:space="preserve">
+		<value>Yhteys katkesi. Yritetään yhdistää uudelleen…</value>
+	</data>
+	<data name="Toast_Offline" xml:space="preserve">
+		<value>Live-päivitykset ovat offline-tilassa. Muutokset eivät välttämättä näy reaaliajassa.</value>
+	</data>
+
+	<!-- Sound toggle -->
+
+	<data name="Nav_SoundOn" xml:space="preserve">
+		<value>Ääni päällä</value>
+	</data>
+	<data name="Nav_SoundOff" xml:space="preserve">
+		<value>Ääni pois</value>
+	</data>
+
+	<!-- Maintenance index: banner + last updated helpers -->
+
+	<data name="Maint_Index_UpdatesBanner_Main" xml:space="preserve">
+		<value>Uutta kunnossapitotoimintaa havaittu.</value>
+	</data>
+	<data name="Maint_Index_UpdatesBanner_Click" xml:space="preserve">
+		<value>Napsauta päivittääksesi.</value>
+	</data>
+	<data name="Maint_Index_LastUpdated_JustNow" xml:space="preserve">
+		<value>Viimeksi päivitetty: Juuri nyt</value>
+	</data>
+
+	<!-- Localized status values -->
+
+	<data name="Maint_Status_New" xml:space="preserve">
+		<value>Uusi</value>
+	</data>
+	<data name="Maint_Status_InProgress" xml:space="preserve">
+		<value>Käynnissä</value>
+	</data>
+	<data name="Maint_Status_WaitingOnParts" xml:space="preserve">
+		<value>Odottaa osia</value>
+	</data>
+	<data name="Maint_Status_Resolved" xml:space="preserve">
+		<value>Ratkaistu</value>
+	</data>
+	<data name="Maint_Status_Closed" xml:space="preserve">
+		<value>Suljettu</value>
+	</data>
+
+	<data name="Settings_TierChanged_Message" xml:space="preserve">
+		<value>Taso vaihdettu: {0}.</value>
+	</data>
+	<data name="Maint_Create_Notice_RealTime" xml:space="preserve">
+		<value>Tämän pyynnön lähettäminen ilmoittaa kunnossapidolle reaaliajassa.</value>
+	</data>
+
+	<!-- Role labels -->
+
+	<data name="Auth_Login_Try" xml:space="preserve">
+		<value>Kokeile näitä demotilejä:</value>
+	</data>
+	<data name="Auth_Login_DemoSupervisor" xml:space="preserve">
+		<value>Työnjohtaja · supervisor@sentinel-demo.local / demo</value>
+	</data>
+	<data name="Auth_Login_DemoOperator" xml:space="preserve">
+		<value>Operaattori · operator@sentinel-demo.local / demo</value>
+	</data>
+	<data name="Role_Operator" xml:space="preserve">
+		<value>Operaattori</value>
+	</data>
+	<data name="Role_Supervisor" xml:space="preserve">
+		<value>Työnjohtaja</value>
+	</data>
+	<data name="Role_Tech" xml:space="preserve">
+		<value>Teknikko</value>
+	</data>
+	<data name="Role_MaintenanceManager" xml:space="preserve">
+		<value>Kunnossapitopäällikkö</value>
+	</data>
+
+	<data name="Parts_Details_Title" xml:space="preserve">
+		<value>Osan tiedot – {0}</value>
+	</data>
+	<data name="Parts_Details_Label_Header" xml:space="preserve">
+		<value>Osan tiedot</value>
+	</data>
+	<data name="Parts_Status_Active" xml:space="preserve">
+		<value>Aktiivinen</value>
+	</data>
+	<data name="Parts_Status_Inactive" xml:space="preserve">
+		<value>Ei aktiivinen</value>
+	</data>
+	<data name="Parts_Details_Button_Edit" xml:space="preserve">
+		<value>Muokkaa</value>
+	</data>
+	<data name="Parts_Details_Button_BackToList" xml:space="preserve">
+		<value>Takaisin listaan</value>
+	</data>
+	<data name="Parts_Details_Section_Descriptions" xml:space="preserve">
+		<value>Kuvaukset</value>
+	</data>
+	<data name="Parts_Details_Label_ShortDescription" xml:space="preserve">
+		<value>Lyhyt kuvaus</value>
+	</data>
+	<data name="Parts_Details_Label_LongDescription" xml:space="preserve">
+		<value>Pitkä kuvaus</value>
+	</data>
+	<data name="Parts_Details_Label_AiDescription" xml:space="preserve">
+		<value>Tekoälykuvaus</value>
+	</data>
+	<data name="Parts_AiDescription_Empty" xml:space="preserve">
+		<value>Ei parannettua kuvausta vielä.</value>
+	</data>
+	<data name="Parts_AiDescription_Button_Enhance" xml:space="preserve">
+		<value>Paranna</value>
+	</data>
+	<data name="Parts_Details_Section_Manufacturer" xml:space="preserve">
+		<value>Valmistaja</value>
+	</data>
+	<data name="Parts_Details_Label_ManufacturerName" xml:space="preserve">
+		<value>Nimi</value>
+	</data>
+	<data name="Parts_Details_Label_ManufacturerPartNumber" xml:space="preserve">
+		<value>Valm. osanro</value>
+	</data>
+	<data name="Parts_Details_Section_InventorySummary" xml:space="preserve">
+		<value>Varastoyhteenveto</value>
+	</data>
+	<data name="Parts_Details_Label_TotalOnHand" xml:space="preserve">
+		<value>Yhteensä varastossa</value>
+	</data>
+	<data name="Parts_Details_Badge_Locations" xml:space="preserve">
+		<value>sijaintia</value>
+	</data>
+	<data name="Parts_Details_Badge_Assets" xml:space="preserve">
+		<value>omaisuuseriä</value>
+	</data>
+	<data name="Parts_Details_Section_AssetUsageSummary" xml:space="preserve">
+		<value>Omaisuuserien käyttöyhteenveto</value>
+	</data>
+	<data name="Parts_Details_AssetUsageSummary_Subtitle" xml:space="preserve">
+		<value>Missä tätä osaa käytetään omaisuuserissäsi.</value>
+	</data>
+	<data name="Parts_Details_Label_Assets" xml:space="preserve">
+		<value>omaisuuseriä</value>
+	</data>
+	<data name="Parts_Details_Label_TotalUnitsAcrossBoms" xml:space="preserve">
+		<value>yksiköitä yhteensä tuoterakenteissa</value>
+	</data>
+	<data name="Parts_Details_Card_AssetsUsing_Title" xml:space="preserve">
+		<value>Omaisuuserät, jotka käyttävät tätä osaa</value>
+	</data>
+	<data name="Parts_Details_Card_AssetsUsing_Subtitle" xml:space="preserve">
+		<value>Yksilölliset omaisuuserät, jotka vaativat tätä osaa tuoterakenteessaan.</value>
+	</data>
+	<data name="Parts_Details_Card_TotalBomQty_Title" xml:space="preserve">
+		<value>Tuoterakenteen kokonaismäärä</value>
+	</data>
+	<data name="Parts_Details_Card_TotalBomQty_Subtitle" xml:space="preserve">
+		<value>Kokonaismäärä omaisuuserittäin kaikkien tuoterakennelinkkien yli.</value>
+	</data>
+	<data name="Parts_Details_Card_TopWorkCenters_Title" xml:space="preserve">
+		<value>Tärkeimmät työkeskukset</value>
+	</data>
+	<data name="Parts_Details_Card_TopWorkCenters_None" xml:space="preserve">
+		<value>Työkeskustietoja ei saatavilla.</value>
+	</data>
+	<data name="Parts_Details_Section_InventoryByLocation" xml:space="preserve">
+		<value>Varasto sijainnin mukaan</value>
+	</data>
+	<data name="Parts_Details_Badge_Records" xml:space="preserve">
+		<value>tietuetta</value>
+	</data>
+	<data name="Parts_Details_Button_AddInventory" xml:space="preserve">
+		<value>Lisää varasto</value>
+	</data>
+	<data name="Parts_Details_Inventory_Empty" xml:space="preserve">
+		<value>Tälle osalle ei ole varastotietueita.</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_Location" xml:space="preserve">
+		<value>Sijainti</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_Site" xml:space="preserve">
+		<value>Toimipaikka</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_OnHand" xml:space="preserve">
+		<value>Varastossa</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_ReorderPoint" xml:space="preserve">
+		<value>Tilausraja</value>
+	</data>
+	<data name="Parts_Details_Inventory_Col_TargetQty" xml:space="preserve">
+		<value>Tavoitemäärä</value>
+	</data>
+	<data name="Parts_Details_Section_UsedOnAssets" xml:space="preserve">
+		<value>Käytetty omaisuuserissä (tuoterakenne)</value>
+	</data>
+	<data name="Parts_Details_Button_AddBomItem" xml:space="preserve">
+		<value>Lisää tuoterakenteen nimike</value>
+	</data>
+	<data name="Parts_Details_Bom_Empty" xml:space="preserve">
+		<value>Tätä osaa ei ole vielä linkitetty omaisuuseriin.</value>
+	</data>
+	<data name="Parts_Details_Bom_Col_AssetCode" xml:space="preserve">
+		<value>Omaisuuserän koodi</value>
+	</data>
+	<data name="Parts_Details_Bom_Col_AssetName" xml:space="preserve">
+		<value>Omaisuuserän nimi</value>
+	</data>
+	<data name="Parts_Details_Bom_Col_WorkCenter" xml:space="preserve">
+		<value>Työkeskus</value>
+	</data>
+	<data name="Parts_Details_Bom_Col_QtyPerAsset" xml:space="preserve">
+		<value>Määrä / omaisuuserä</value>
+	</data>
+	<data name="Parts_Details_Similar_Title" xml:space="preserve">
+		<value>Samankaltaiset osat</value>
+	</data>
+	<data name="Parts_Details_Similar_Subtitle" xml:space="preserve">
+		<value>Muut osat, joilla on samanlainen valmistaja/kuvaus.</value>
+	</data>
+	<data name="Parts_Details_Similar_Badge_Suggestions" xml:space="preserve">
+		<value>ehdotusta</value>
+	</data>
+	<data name="Parts_Details_Similar_Col_PartNumber" xml:space="preserve">
+		<value>Osanro</value>
+	</data>
+	<data name="Parts_Details_Similar_Col_Description" xml:space="preserve">
+		<value>Kuvaus</value>
+	</data>
+	<data name="Parts_Details_Similar_Col_Manufacturer" xml:space="preserve">
+		<value>Valmistaja</value>
+	</data>
+	<data name="Parts_Details_Similar_Col_Status" xml:space="preserve">
+		<value>Tila</value>
+	</data>
+	<data name="Parts_Common_Button_View" xml:space="preserve">
+		<value>Näytä</value>
+	</data>
+	<data name="Parts_Common_Button_Edit" xml:space="preserve">
+		<value>Muokkaa</value>
+	</data>
+
+	<data name="Parts_Create_Title" xml:space="preserve">
+		<value>Uusi osa</value>
+	</data>
+	<data name="Parts_Create_Breadcrumb_BackToParts" xml:space="preserve">
+		<value>Takaisin osiin</value>
+	</data>
+	<data name="Parts_Create_Header_WizardTitle" xml:space="preserve">
+		<value>Osan luontivelho</value>
+	</data>
+	<data name="Parts_Create_Header_NewPart" xml:space="preserve">
+		<value>Uusi osa</value>
+	</data>
+	<data name="Parts_Create_Step1_Label" xml:space="preserve">
+		<value>1. Perustiedot</value>
+	</data>
+	<data name="Parts_Create_Step2_Label" xml:space="preserve">
+		<value>2. Valmistaja</value>
+	</data>
+	<data name="Parts_Create_Step3_Label" xml:space="preserve">
+		<value>3. Tarkista ja tallenna</value>
+	</data>
+	<data name="Parts_Create_Step1_Title" xml:space="preserve">
+		<value>Vaihe 1 – Perustiedot</value>
+	</data>
+	<data name="Parts_Create_Step1_Intro" xml:space="preserve">
+		<value>Aloita määrittämällä tämän osan ydinidentiteetti.</value>
+	</data>
+	<data name="Parts_Create_Step2_Title" xml:space="preserve">
+		<value>Vaihe 2 – Valmistajan tiedot</value>
+	</data>
+	<data name="Parts_Create_Step2_Intro" xml:space="preserve">
+		<value>Anna tiedot siitä, mistä tämä osa on peräisin ja onko se aktiivinen luettelossasi.</value>
+	</data>
+	<data name="Parts_Create_IsActive_Label" xml:space="preserve">
+		<value>Aktiivinen luettelossa</value>
+	</data>
+	<data name="Parts_Create_Step3_Title" xml:space="preserve">
+		<value>Vaihe 3 – Tarkista ja tallenna</value>
+	</data>
+	<data name="Parts_Create_Step3_Intro" xml:space="preserve">
+		<value>Vahvista tiedot ennen tämän osan luomista. Voit sen jälkeen lisätä varaston ja tuoterakennelinkit Osan tiedot -näkymästä.</value>
+	</data>
+	<data name="Parts_Create_Review_BasicInfo" xml:space="preserve">
+		<value>Perustiedot</value>
+	</data>
+	<data name="Parts_Create_Review_PartNumber" xml:space="preserve">
+		<value>Osanumero</value>
+	</data>
+	<data name="Parts_Create_Review_ShortDescription" xml:space="preserve">
+		<value>Lyhyt kuvaus</value>
+	</data>
+	<data name="Parts_Create_Review_LongDescription" xml:space="preserve">
+		<value>Pitkä kuvaus</value>
+	</data>
+	<data name="Parts_Create_Review_ManufacturerSection" xml:space="preserve">
+		<value>Valmistaja</value>
+	</data>
+	<data name="Parts_Create_Review_Manufacturer" xml:space="preserve">
+		<value>Valmistaja</value>
+	</data>
+	<data name="Parts_Create_Review_MfgPart" xml:space="preserve">
+		<value>Valm. osanro</value>
+	</data>
+	<data name="Parts_Create_Review_Status" xml:space="preserve">
+		<value>Tila</value>
+	</data>
+	<data name="Parts_Create_InfoPanel_Intro" xml:space="preserve">
+		<value>Tallennuksen jälkeen voit:</value>
+	</data>
+	<data name="Parts_Create_InfoPanel_Item_AddInventory" xml:space="preserve">
+		<value>Lisätä varastosijainnit ja -tasot.</value>
+	</data>
+	<data name="Parts_Create_InfoPanel_Item_LinkBom" xml:space="preserve">
+		<value>Linkittää tämä osa omaisuuseriin tuoterakenteen kautta.</value>
+	</data>
+	<data name="Parts_Create_InfoPanel_Item_Enhance" xml:space="preserve">
+		<value>Käyttää Paranna-painiketta tekoälykuvauksen luomiseen.</value>
+	</data>
+	<data name="Parts_Create_Button_Back" xml:space="preserve">
+		<value>Takaisin</value>
+	</data>
+	<data name="Parts_Create_Button_Next" xml:space="preserve">
+		<value>Seuraava</value>
+	</data>
+	<data name="Parts_Create_Button_CreatePart" xml:space="preserve">
+		<value>Luo osa</value>
+	</data>
+	<data name="Parts_Create_Review_NotSet" xml:space="preserve">
+		<value>(ei asetettu)</value>
+	</data>
+	<data name="Parts_Create_Validation_PartNumberRequired" xml:space="preserve">
+		<value>Osanumero vaaditaan.</value>
+	</data>
+	<data name="Maint_Details_Button_AskAiFix" xml:space="preserve">
+		<value>Pyydä tekoälyltä korjausehdotusta</value>
+	</data>
+
+	<data name="Maint_System_StatusChanged">
+		<value>Tila muutettu: {0} → {1}, muuttaja: {2}</value>
+	</data>
+	<data name="Maint_System_PriorityChanged">
+		<value>Prioriteetti muutettu: {0} → {1}, muuttaja: {2}</value>
+	</data>
+	<data name="Maint_System_Resolved">
+		<value>Tila muutettu: {0} → Ratkaistu, muuttaja: {1}</value>
+	</data>
+
+	<data name="Maint_Suggestion_StopIfUnsafe" xml:space="preserve">
+		<value>Pysäytä laite, jos sen käyttö on vaarallista, ja ilmoita ongelmasta välittömästi.</value>
+	</data>
+	<data name="Maint_Suggestion_ConfirmSymptoms" xml:space="preserve">
+		<value>Vahvista oireet (äänet, hajut, virheilmoitukset) ja päivitä kuvaus tarvittaessa.</value>
+	</data>
+	<data name="Maint_Suggestion_VerifyParts" xml:space="preserve">
+		<value>Varmista, että tarvittavat osat on määritelty ja tilattu oikein, ja suunnittele korjausikkuna.</value>
+	</data>
+	<data name="Maint_Suggestion_ReviewHistory" xml:space="preserve">
+		<value>Tarkista tämän työkeskuksen viimeaikainen kunnossapitohistoria toistuvien mallien varalta.</value>
+	</data>
+	<data name="Maint_Suggestion_CheckElectrical" xml:space="preserve">
+		<value>Tarkista virta- ja anturiliitännät löysien tai vaurioituneiden kaapeleiden varalta ennen syvempää diagnostiikkaa.</value>
+	</data>
+	<data name="Maint_Suggestion_FallbackChecklist" xml:space="preserve">
+		<value>Noudata tämän laitteen perusvianmääritystarkistuslistaa ja raportoi havaintosi.</value>
+	</data>
+
+	<data name="AiHelp_Tooltip" xml:space="preserve">
+		<value>Tekoälyapu</value>
+	</data>
+	<data name="AiHelp_Title" xml:space="preserve">
+		<value>Tarvitsetko apua?</value>
+	</data>
+	<data name="AiHelp_ExplainScreen" xml:space="preserve">
+		<value>Selitä tämä näyttö</value>
+	</data>
+	<data name="AiHelp_ExplainFields" xml:space="preserve">
+		<value>Selitä jokainen kenttä</value>
+	</data>
+	<data name="AiHelp_ShowExamples" xml:space="preserve">
+		<value>Näytä esimerkkejä</value>
+	</data>
+	<data name="AiHelp_WhatFirst" xml:space="preserve">
+		<value>Mitä teen ensin?</value>
+	</data>
+	<data name="AiHelp_Thinking" xml:space="preserve">
+		<value>Mietitään…</value>
+	</data>
+	<data name="AiHelp_Error" xml:space="preserve">
+		<value>Pahoittelut, en pystynyt luomaan apua juuri nyt.</value>
+	</data>
+
+	<data name="Maint_Priority_Low" xml:space="preserve">
+		<value>Matala</value>
+	</data>
+	<data name="Maint_Priority_Medium" xml:space="preserve">
+		<value>Keskitaso</value>
+	</data>
+	<data name="Maint_Priority_High" xml:space="preserve">
+		<value>Korkea</value>
+	</data>
+
+	<!-- EM Dashboard -->
+
+	<data name="Nav_EmDashboard" xml:space="preserve">
+		<value>EM-taulu</value>
+	</data>
+	<data name="EM_Dashboard_Title" xml:space="preserve">
+		<value>EM Live-taulu</value>
+	</data>
+	<data name="EM_Dashboard_Subtitle" xml:space="preserve">
+		<value>Live-käyttötaulu</value>
+	</data>
+	<data name="EM_Dashboard_UpdateBanner" xml:space="preserve">
+		<value>Uutta EM-toimintaa havaittu.</value>
+	</data>
+	<data name="EM_Dashboard_KPI_Active" xml:space="preserve">
+		<value>Aktiiviset EM:t</value>
+	</data>
+	<data name="EM_Dashboard_KPI_MachineDown" xml:space="preserve">
+		<value>Koneet pysähdyksissä</value>
+	</data>
+	<data name="EM_Dashboard_KPI_Investigating" xml:space="preserve">
+		<value>Tutkinnassa</value>
+	</data>
+	<data name="EM_Dashboard_KPI_Running" xml:space="preserve">
+		<value>Käynnissä</value>
+	</data>
+	<data name="EM_Dashboard_KPI_AvgResponse" xml:space="preserve">
+		<value>Keskim. vastausaika</value>
+	</data>
+	<data name="EM_Dashboard_Min" xml:space="preserve">
+		<value>min</value>
+	</data>
+	<data name="EM_Dashboard_Filter_All" xml:space="preserve">
+		<value>Kaikki</value>
+	</data>
+	<data name="EM_Dashboard_Filter_MachineDown" xml:space="preserve">
+		<value>Kone pysähdyksissä</value>
+	</data>
+	<data name="EM_Dashboard_Filter_Investigating" xml:space="preserve">
+		<value>Tutkinnassa</value>
+	</data>
+	<data name="EM_Dashboard_Filter_Running" xml:space="preserve">
+		<value>Käynnissä</value>
+	</data>
+	<data name="EM_Dashboard_Label_Opened" xml:space="preserve">
+		<value>Avattu</value>
+	</data>
+	<data name="EM_Dashboard_Label_Issue" xml:space="preserve">
+		<value>Ongelma</value>
+	</data>
+	<data name="EM_Dashboard_Label_OpsComment" xml:space="preserve">
+		<value>Käyttö</value>
+	</data>
+	<data name="EM_Dashboard_Label_MaintComment" xml:space="preserve">
+		<value>Kunnossapito</value>
+	</data>
+	<data name="EM_Dashboard_Label_Responder" xml:space="preserve">
+		<value>Vastaaja</value>
+	</data>
+	<data name="EM_Dashboard_Label_LastUpdate" xml:space="preserve">
+		<value>Viimeisin päivitys</value>
+	</data>
+	<data name="EM_Dashboard_Label_NoEquipment" xml:space="preserve">
+		<value>Tuntematon laite</value>
+	</data>
+	<data name="EM_Dashboard_Button_Open" xml:space="preserve">
+		<value>Avaa</value>
+	</data>
+	<data name="EM_Dashboard_Label_ResponseTime" xml:space="preserve">
+		<value>Vastausaika</value>
+	</data>
+	<data name="EM_Dashboard_Label_NoResponse" xml:space="preserve">
+		<value>Ei vastausta</value>
+	</data>
+	<data name="EM_Dashboard_Label_AwaitingResponse" xml:space="preserve">
+		<value>Odottaa vastausta</value>
+	</data>
+	<data name="EM_Dashboard_AllClear" xml:space="preserve">
+		<value>Kaikki selvää</value>
+	</data>
+	<data name="EM_Dashboard_NoRequests" xml:space="preserve">
+		<value>Ei aktiivisia EM-pyyntöjä — laitos toimii normaalisti.</value>
+	</data>
+	<data name="EM_Status_MachineDown" xml:space="preserve">
+		<value>KONE PYSÄHDYKSISSÄ</value>
+	</data>
+	<data name="EM_Status_Investigating" xml:space="preserve">
+		<value>TUTKINNASSA</value>
+	</data>
+	<data name="EM_Status_Running" xml:space="preserve">
+		<value>KÄYNNISSÄ</value>
+	</data>
+
+	<data name="AccessDenied_Title" xml:space="preserve">
+		<value>Pääsy estetty</value>
+	</data>
+	<data name="AccessDenied_Heading" xml:space="preserve">
+		<value>Sinulla ei ole oikeutta tehdä tätä</value>
+	</data>
+	<data name="AccessDenied_Body" xml:space="preserve">
+		<value>Nykyinen roolisi ei salli tätä toimintoa. Vaihda roolia tai ota yhteyttä järjestelmänvalvojaasi.</value>
+	</data>
+	<data name="AccessDenied_Button" xml:space="preserve">
+		<value>Takaisin koontinäyttöön</value>
+	</data>
+
+	<!-- AI Insight panel -->
+
+	<data name="AiInsight_Title" xml:space="preserve">
+		<value>Tekoälyn vianmääritysanalyysi</value>
+	</data>
+	<data name="AiInsight_Button_Refresh" xml:space="preserve">
+		<value>Päivitä</value>
+	</data>
+	<data name="AiInsight_Tooltip_Refresh" xml:space="preserve">
+		<value>Luo analyysi uudelleen</value>
+	</data>
+	<data name="AiInsight_Loading" xml:space="preserve">
+		<value>Rakennetaan tekoälyn vianmääritysanalyysiä…</value>
+	</data>
+	<data name="AiInsight_Button_ViewSimilar" xml:space="preserve">
+		<value>Näytä samankaltaiset tapaukset</value>
+	</data>
+	<data name="AiInsight_Error_Unavailable" xml:space="preserve">
+		<value>Tekoälyanalyysi ei ole väliaikaisesti saatavilla.</value>
+	</data>
+	<data name="AiInsight_Link_TryAgain" xml:space="preserve">
+		<value>Yritä uudelleen</value>
+	</data>
+	<data name="AiInsight_Demo_Limit" xml:space="preserve">
+		<value>Demo-tekoälyraja saavutettu — analyysikiintiö käytetty tässä istunnossa.</value>
+	</data>
+	<data name="AiInsight_Generated" xml:space="preserve">
+		<value>Luotu</value>
+	</data>
+
+	<!-- Settings: Admin section -->
+
+	<data name="Settings_Section_Admin_Title" xml:space="preserve">
+		<value>Hallinto</value>
+	</data>
+	<data name="Settings_Section_Admin_Description" xml:space="preserve">
+		<value>Perustiedot ja hyväksynnät.</value>
+	</data>
+	<data name="Settings_Admin_EquipmentAdmin" xml:space="preserve">
+		<value>Laitehallinta</value>
+	</data>
+	<data name="Settings_Admin_EquipmentRequests" xml:space="preserve">
+		<value>Laitepyynnöt</value>
+	</data>
+	<data name="Settings_Admin_UserAdmin" xml:space="preserve">
+		<value>Käyttäjähallinta</value>
+	</data>
+	<data name="Settings_Admin_PlantStructure" xml:space="preserve">
+		<value>Laitosrakenne</value>
+	</data>
+	<data name="Settings_Tier_ComingSoon" xml:space="preserve">
+		<value>Lisää tasoja tulossa pian.</value>
+	</data>
+
+	<!-- Privacy page -->
+
+	<data name="Privacy_Title" xml:space="preserve">
+		<value>Tietosuojakäytäntö</value>
+	</data>
+	<data name="Privacy_LastUpdated" xml:space="preserve">
+		<value>Viimeksi päivitetty: kesäkuu 2025</value>
+	</data>
+	<data name="Privacy_S1_Title" xml:space="preserve">
+		<value>1. Mitä keräämme</value>
+	</data>
+	<data name="Privacy_S1_Intro" xml:space="preserve">
+		<value>Kun käytät Sentinelia, keräämme:</value>
+	</data>
+	<data name="Privacy_S1_Item_Account" xml:space="preserve">
+		<value>&lt;strong&gt;Tilitiedot&lt;/strong&gt; — nimi, sähköpostiosoite ja roolisi organisaatiossasi.</value>
+	</data>
+	<data name="Privacy_S1_Item_Operational" xml:space="preserve">
+		<value>&lt;strong&gt;Käyttötiedot&lt;/strong&gt; — kunnossapitopyynnöt, kommentit, tilapäivitykset, laitetietueet ja työkeskusmääritykset, jotka sinä ja tiimisi syötätte sovellukseen.</value>
+	</data>
+	<data name="Privacy_S1_Item_Usage" xml:space="preserve">
+		<value>&lt;strong&gt;Käyttödatan&lt;/strong&gt; — sivuvierailut, ominaisuuksien käyttö ja selain-/laitetyyppi suorituskyvyn seurantaan ja tuotteen parantamiseen.</value>
+	</data>
+	<data name="Privacy_S1_Item_Ai" xml:space="preserve">
+		<value>&lt;strong&gt;Tekoälyvuorovaikutuksen sisältö&lt;/strong&gt; — kun käytät tekoälyapu- tai tekoälyehdotusominaisuuksia, pyyntösi teksti (mukaan lukien asiaankuuluva kunnossapitokonteksti) lähetetään Anthropicin Claude-ohjelmointirajapintaan käsittelyä varten. Mitään henkilökohtaisia tunnistetietoja ei tarkoituksellisesti sisällytetä tekoälykehotteisiin.</value>
+	</data>
+	<data name="Privacy_S2_Title" xml:space="preserve">
+		<value>2. Miten käytämme tietojasi</value>
+	</data>
+	<data name="Privacy_S2_Item1" xml:space="preserve">
+		<value>Sentinel-sovelluksen tarjoamiseen ja käyttämiseen vuokralaisellesi.</value>
+	</data>
+	<data name="Privacy_S2_Item2" xml:space="preserve">
+		<value>Reaaliaikaisten yhteistyöominaisuuksien (kommentit, tilapäivitykset) tarjoamiseen SignalR:n kautta.</value>
+	</data>
+	<data name="Privacy_S2_Item3" xml:space="preserve">
+		<value>Tekoälyavusteisten kunnossapitoehdotusten ja kontekstuaalisen avun luomiseen.</value>
+	</data>
+	<data name="Privacy_S2_Item4" xml:space="preserve">
+		<value>Tapahtumaviestien lähettämiseen (kutsulinkit, ilmoitukset) Azure Communication Servicesin kautta.</value>
+	</data>
+	<data name="Privacy_S2_Item5" xml:space="preserve">
+		<value>Tuotteen luotettavuuden ja suorituskyvyn parantamiseen.</value>
+	</data>
+	<data name="Privacy_S2_NoSell" xml:space="preserve">
+		<value>Emme myy tietojasi kolmansille osapuolille.</value>
+	</data>
+	<data name="Privacy_S3_Title" xml:space="preserve">
+		<value>3. Vuokralaisen eristäminen</value>
+	</data>
+	<data name="Privacy_S3_Body" xml:space="preserve">
+		<value>Kaikki käyttötiedot on rajattu organisaatiosi vuokralaiseen. Rivitason eristäminen toteutetaan tietokantatasolla — yksikään vuokralainen ei pääse käsiksi toisen vuokralaisen tietoihin. Demoistunnot ovat samalla tavalla eristettyjä ja tyhjennetään automaattisesti kahden tunnin kuluttua.</value>
+	</data>
+	<data name="Privacy_S4_Title" xml:space="preserve">
+		<value>4. Kolmannen osapuolen palvelut</value>
+	</data>
+	<data name="Privacy_S4_Item_Anthropic" xml:space="preserve">
+		<value>&lt;strong&gt;Anthropic (Claude)&lt;/strong&gt; — Tekoälyominaisuudet lähettävät anonymisoitua kunnossapitokontekstia Clauden ohjelmointirajapintaan. Anthropicin tietojenkäsittelysopimus on voimassa. Kehotteita ei käytetä mallien kouluttamiseen.</value>
+	</data>
+	<data name="Privacy_S4_Item_Azure" xml:space="preserve">
+		<value>&lt;strong&gt;Microsoft Azure&lt;/strong&gt; — Sovellus on isännöity Azure-infrastruktuurissa. Tiedot tallennetaan Azure SQL -tietokantaan. Azure Communication Servicesiä käytetään sähköpostin toimittamiseen.</value>
+	</data>
+	<data name="Privacy_S5_Title" xml:space="preserve">
+		<value>5. Tietojen säilyttäminen</value>
+	</data>
+	<data name="Privacy_S5_Body" xml:space="preserve">
+		<value>Käyttötiedot säilytetään tilauksen voimassaoloajan. Tilin sulkemisen yhteydessä tiedot poistetaan 30 päivän kuluessa. Demovuokralaisen tiedot tyhjennetään automaattisesti 2 tunnin kuluttua.</value>
+	</data>
+	<data name="Privacy_S6_Title" xml:space="preserve">
+		<value>6. Turvallisuus</value>
+	</data>
+	<data name="Privacy_S6_Body" xml:space="preserve">
+		<value>Kaikki tiedot siirretään HTTPS:n kautta. Todennus käyttää ASP.NET Core Identityä hajautetuilla tunnistetiedoilla. API-avaimet ja salaisuudet tallennetaan Azure Key Vaultiin tai ympäristötason salaisuuksiin — ei koskaan lähdekoodiin.</value>
+	</data>
+	<data name="Privacy_S7_Title" xml:space="preserve">
+		<value>7. Oikeutesi</value>
+	</data>
+	<data name="Privacy_S7_Body" xml:space="preserve">
+		<value>Voit pyytää kopiota tiedoistasi, virheellisten tietojen korjaamista tai tilisi poistamista ottamalla yhteyttä organisaatiosi järjestelmänvalvojaan tai ottamalla meihin yhteyttä alla olevaan osoitteeseen.</value>
+	</data>
+	<data name="Privacy_S8_Title" xml:space="preserve">
+		<value>8. Yhteystiedot</value>
+	</data>
+	<data name="Privacy_S8_Intro" xml:space="preserve">
+		<value>Tietosuojaan liittyvissä kysymyksissä ota meihin yhteyttä osoitteessa</value>
+	</data>
+
+	<!-- Navbar auth buttons -->
+
+	<data name="Nav_SignOut" xml:space="preserve">
+		<value>Kirjaudu ulos</value>
+	</data>
+	<data name="Nav_SignIn" xml:space="preserve">
+		<value>Kirjaudu sisään</value>
+	</data>
+	<data name="Nav_DemoShare" xml:space="preserve">
+		<value>📧 Jaa</value>
+	</data>
+
+	<!-- AI Assist modal -->
+
+	<data name="AiAssist_Title" xml:space="preserve">
+		<value>Tekoälyavustaja</value>
+	</data>
+	<data name="AiAssist_Subtitle" xml:space="preserve">
+		<value>Kysy tapauksista, hae historiaa tai luo uusi raportti.</value>
+	</data>
+	<data name="AiAssist_Mode_Ask" xml:space="preserve">
+		<value>Kysy</value>
+	</data>
+	<data name="AiAssist_Mode_Command" xml:space="preserve">
+		<value>Komento</value>
+	</data>
+	<data name="AiAssist_Mode_Troubleshoot" xml:space="preserve">
+		<value>Vianmääritys</value>
+	</data>
+	<data name="AiAssist_Input_Placeholder" xml:space="preserve">
+		<value>Kysy tapauksista, laitteiden tilasta tai historiasta… (Enter lähettää)</value>
+	</data>
+	<data name="AiAssist_Button_Send" xml:space="preserve">
+		<value>Lähetä</value>
+	</data>
+	<data name="AiAssist_Thinking" xml:space="preserve">
+		<value>✦ Mietitään…</value>
+	</data>
+	<data name="AiAssist_Checklist_Label" xml:space="preserve">
+		<value>Tarkistuslista</value>
+	</data>
+
+</root>

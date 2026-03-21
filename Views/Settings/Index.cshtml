@@ -27,7 +27,7 @@
                 <span id="live-indicator"
                       class="sentinel-live-indicator sentinel-live-indicator--offline">
                     <span class="dot"></span>
-                    <span class="label">Connecting…</span>
+                    <span class="label">@SR["LiveIndicator_Label_Connecting"]</span>
                 </span>
             </div>
         </div>
@@ -37,29 +37,35 @@
         {
             <div class="mb-4">
                 <div class="sentinel-settings-section-title">
-                    Admin
+                    @SR["Settings_Section_Admin_Title"]
                 </div>
                 <div class="sentinel-settings-section-subtitle mb-2">
-                    Master data and approvals.
+                    @SR["Settings_Section_Admin_Description"]
                 </div>
 
                 <div class="d-flex flex-wrap gap-2">
                     <a class="btn btn-sentinel-ghost btn-sm"
                        asp-controller="EquipmentAdmin"
                        asp-action="Index">
-                        Equipment Admin
+                        @SR["Settings_Admin_EquipmentAdmin"]
                     </a>
 
                     <a class="btn btn-sentinel-ghost btn-sm"
                        asp-controller="EquipmentRequestsAdmin"
                        asp-action="Index">
-                        Equipment Requests
+                        @SR["Settings_Admin_EquipmentRequests"]
                     </a>
 
                     <a class="btn btn-sentinel-ghost btn-sm"
                        asp-controller="UsersAdmin"
                        asp-action="Index">
-                        User Admin
+                        @SR["Settings_Admin_UserAdmin"]
+                    </a>
+
+                    <a class="btn btn-sentinel-ghost btn-sm"
+                       asp-controller="MasterDataAdmin"
+                       asp-action="Index">
+                        @SR["Settings_Admin_PlantStructure"]
                     </a>
 
                 </div>
@@ -142,6 +148,18 @@
                             <option value="es-MX" selected="@(currentCulture == "es-MX" ? "selected" : null)">
                                 Español (México)
                             </option>
+                            <option value="de-DE" selected="@(currentCulture == "de-DE" ? "selected" : null)">
+                                Deutsch (Deutschland)
+                            </option>
+                            <option value="it-IT" selected="@(currentCulture == "it-IT" ? "selected" : null)">
+                                Italiano (Italia)
+                            </option>
+                            <option value="sv-SE" selected="@(currentCulture == "sv-SE" ? "selected" : null)">
+                                Svenska (Sverige)
+                            </option>
+                            <option value="fi-FI" selected="@(currentCulture == "fi-FI" ? "selected" : null)">
+                                Suomi (Suomi)
+                            </option>
                         </select>
                     </div>
                 </form>
@@ -167,7 +185,7 @@
                             <option value="Enhanced">@SR["Tier_Label_Enhanced"]</option>
                             <option value="Premium">@SR["Tier_Label_Premium"]</option>
                         </select>
-                        <small class="text-muted mt-1 d-block">Additional tiers coming soon.</small>
+                        <small class="text-muted mt-1 d-block">@SR["Settings_Tier_ComingSoon"]</small>
                     </div>
                 </div>
 
