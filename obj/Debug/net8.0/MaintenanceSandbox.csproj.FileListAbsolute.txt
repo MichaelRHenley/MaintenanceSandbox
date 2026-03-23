@@ -613,5 +613,5 @@ C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\de-DE\MaintenanceSandbox.resour
 C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\fi-FI\MaintenanceSandbox.resources.dll
 C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\it-IT\MaintenanceSandbox.resources.dll
 C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\sv-SE\MaintenanceSandbox.resources.dll
-C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Dev\repos\MaintenanceSandbox\bin\Debug\net8.0\web.config
+C:\Dev\repos\MaintenanceSandbox\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

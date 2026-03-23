@@ -347,6 +347,126 @@ body {
         color: #e5e7eb;
         font-weight: 500;
     }
+
+/* ============================================================
+   Session bar — slim utility strip below the primary navbar
+   ============================================================ */
+
+.sentinel-session-bar {
+    background-color: #020617;
+    border-bottom: 1px solid #111827;
+    padding: 0.2rem 0;
+}
+
+.sentinel-session-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    min-height: 1.85rem;
+}
+
+.sentinel-session-bar-left,
+.sentinel-session-bar-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+/* Compact pill button used throughout the session bar */
+.sentinel-session-btn {
+    background: transparent;
+    border: 1px solid #1f2937;
+    color: #6b7280;
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: border-color 0.12s ease, color 0.12s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+    .sentinel-session-btn:hover,
+    .sentinel-session-btn:focus {
+        border-color: var(--sentinel-accent);
+        color: var(--sentinel-accent);
+        outline: none;
+        text-decoration: none;
+    }
+
+    .sentinel-session-btn.dropdown-toggle::after {
+        vertical-align: 0.1em;
+        margin-left: 0.25em;
+    }
+
+/* Role / Demo badge */
+.sentinel-session-badge {
+    padding: 0.1rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    background-color: rgba(15, 23, 42, 0.9);
+    border: 1px solid #374151;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+.sentinel-session-badge--demo {
+    border-color: rgba(250, 204, 21, 0.45);
+    color: #fde68a;
+    background-color: rgba(250, 204, 21, 0.07);
+}
+
+/* Username label in session bar */
+.sentinel-session-username {
+    font-size: 0.72rem;
+    color: #4b5563;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Role-switch dropdown */
+.sentinel-role-menu {
+    font-size: 0.8rem;
+    min-width: 140px;
+    background-color: #0b1628;
+    border: 1px solid #1f2937;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    padding: 0.25rem 0;
+}
+
+    .sentinel-role-menu .dropdown-item {
+        color: #9ca3af;
+        background: none;
+        border: none;
+        width: 100%;
+        text-align: left;
+        padding: 0.3rem 0.9rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: background-color 0.1s ease, color 0.1s ease;
+    }
+
+        .sentinel-role-menu .dropdown-item:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: #e5e7eb;
+        }
+
+        .sentinel-role-menu .dropdown-item.active {
+            background-color: rgba(56, 189, 248, 0.18);
+            color: var(--sentinel-accent);
+        }
 /* Sentinel Settings page */
 
 .sentinel-settings-card {

@@ -142,6 +142,15 @@ builder.Services.AddScoped<ITenantLifecycleService, TenantLifecycleService>();
 // =====================================================
 builder.Services.AddSingleton<IMaintenanceSuggestionService, MaintenanceSuggestionService>();
 builder.Services.AddSingleton<ITierProvider, TierProvider>();
+builder.Services.AddScoped<IPartImageLookupService, PartImageLookupService>();
+// TODO: restore AddHttpClient<SkfImageProvider> when HttpClient constructor is reinstated
+builder.Services.AddScoped<IPartImageProvider, SkfImageProvider>();
+builder.Services.AddHttpClient<GenericDistributorImageProvider>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(8);
+});
+builder.Services.AddScoped<IPartImageProvider, GenericDistributorImageProvider>();
+builder.Services.AddScoped<IPartImageProvider, BingImageProvider>();
 
 // ❌ Demo auth provider: remove once Identity is live
 builder.Services.AddScoped<IDemoUserProvider, DemoUserProvider>();

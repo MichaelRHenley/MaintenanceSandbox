@@ -21,14 +21,26 @@
           "MaintenanceSandbox.dll": {}
         },
         "resources": {
+          "de-DE/MaintenanceSandbox.resources.dll": {
+            "locale": "de-DE"
+          },
           "en-CA/MaintenanceSandbox.resources.dll": {
             "locale": "en-CA"
           },
           "es-MX/MaintenanceSandbox.resources.dll": {
             "locale": "es-MX"
           },
+          "fi-FI/MaintenanceSandbox.resources.dll": {
+            "locale": "fi-FI"
+          },
           "fr-CA/MaintenanceSandbox.resources.dll": {
             "locale": "fr-CA"
+          },
+          "it-IT/MaintenanceSandbox.resources.dll": {
+            "locale": "it-IT"
+          },
+          "sv-SE/MaintenanceSandbox.resources.dll": {
+            "locale": "sv-SE"
           }
         }
       },

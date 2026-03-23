@@ -27,6 +27,11 @@ namespace MaintenanceSandbox.Models
         [MaxLength(128)]
         public string? ManufacturerPartNumber { get; set; }
 
+        // External URL to a manufacturer-hosted or CDN-hosted product image.
+        // Never store image binaries here — only URL references.
+        // Future: Azure Blob Storage / CDN / multi-image gallery per part.
+        public string? ManufacturerImageUrl { get; set; }
+
         public bool IsActive { get; set; } = true;
 
         public ICollection<InventoryLevel> InventoryLevels { get; set; } = new List<InventoryLevel>();

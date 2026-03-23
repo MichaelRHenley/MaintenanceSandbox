@@ -17,19 +17,29 @@ public sealed class TenantStatusController : Controller
 {
     private readonly ITenantContext _tenantContext;
     private readonly AppDbContext _db;
+    private readonly IHostEnvironment _env;
 
-    public TenantStatusController(ITenantContext tenantContext, AppDbContext db)
+    public TenantStatusController(ITenantContext tenantContext, AppDbContext db, IHostEnvironment env)
     {
         _tenantContext = tenantContext;
         _db = db;
+        _env = env;
     }
 
     // GET: /TenantStatus
+    // In Development, append ?preview=<status> to render any state without being redirected.
+    // Example: /TenantStatus?preview=Pending  /TenantStatus?preview=Failed  /TenantStatus?preview=Ready
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index([FromQuery] string? preview = null)
     {
+        var previewStatus = _env.IsDevelopment() && !string.IsNullOrEmpty(preview)
+            ? Enum.TryParse<TenantProvisioningStatus>(preview, ignoreCase: true, out var parsed) ? parsed : (TenantProvisioningStatus?)null
+            : null;
+
         // If the tenant is Ready, there is nothing to show here — send them home.
-        if (_tenantContext.IsResolved
+        // Skip this redirect in Development when ?preview is supplied.
+        if (previewStatus is null
+            && _tenantContext.IsResolved
             && _tenantContext.ProvisioningStatus == TenantProvisioningStatus.Ready)
         {
             return RedirectToAction("Index", "Home");
@@ -50,13 +60,15 @@ public sealed class TenantStatusController : Controller
             lastError = row?.LastProvisioningError;
         }
 
+        var effectiveStatus = previewStatus ?? _tenantContext.ProvisioningStatus;
+
         var vm = new TenantStatusVm(
             TenantId: _tenantContext.TenantId,
             TenantName: _tenantContext.TenantName,
-            ProvisioningStatus: _tenantContext.ProvisioningStatus,
+            ProvisioningStatus: effectiveStatus,
             ProvisionedAt: provisionedAt,
             LastProvisioningError: lastError,
-            DisplayMessage: GetDisplayMessage(_tenantContext.ProvisioningStatus)
+            DisplayMessage: GetDisplayMessage(effectiveStatus)
         );
 
         return View(vm);

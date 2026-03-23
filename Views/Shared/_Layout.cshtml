@@ -88,6 +88,9 @@
 </head>
 <body>
     <header>
+        <!-- ============================================================
+             PRIMARY NAV — brand + module links only
+             ============================================================ -->
         <nav class="navbar navbar-expand-lg sentinel-navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -114,7 +117,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link @IsActive("Maintenance", "EmDashboard")"
-                                       asp-area="" asp-controller="Maintenance" asp-action="EmDashboard">
+                                   asp-area="" asp-controller="Maintenance" asp-action="EmDashboard">
                                     @SR["Nav_EmDashboard"]
                                 </a>
                             </li>
@@ -125,7 +128,15 @@
                                 @SR["Nav_Maintenance"]
                             </a>
                         </li>
-                       
+                        @if (User.IsInRole("Supervisor") || User.IsInRole("Tech"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @IsActive("Parts", "Index")"
+                                   asp-area="" asp-controller="Parts" asp-action="Index">
+                                    Parts
+                                </a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link @IsActive("Settings", "Index")"
                                asp-area="" asp-controller="Settings" asp-action="Index">
@@ -144,94 +155,132 @@
                             </li>
                         }
                     </ul>
-
-                    <div class="d-flex align-items-center gap-3">
-
-                        <!-- Tier badge -->
-                        <div class="sentinel-tier-pill @tierClass">
-                            <span>@tierText</span>
-                            <small>@tierSuffix</small>
-                        </div>
-
-                        <!-- 🔔 Sound toggle -->
-                        <button type="button"
-                                id="sound-toggle-btn"
-                                class="sentinel-sound-btn"
-                                data-text-on="@SR["Nav_SoundOn"]"
-                                data-text-off="@SR["Nav_SoundOff"]">
-                            🔊 @SR["Nav_SoundOn"]
-                        </button>
-
-                        @if (User.Identity?.IsAuthenticated ?? false)
-                        {
-                            var roleClaim = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? "User";
-                            var isDemo = User.HasClaim("is_demo", "true");
-
-                            string? roleKey = roleClaim switch
-                            {
-                                "Supervisor" => "Role_Supervisor",
-                                "Operator" => "Role_Operator",
-                                "Tech" => "Role_Tech",
-                                "MaintenanceManager" => "Role_MaintenanceManager",
-                                "Manager" => "Role_MaintenanceManager",
-                                _ => null
-                            };
-
-                            var localizedRole = roleKey is null ? roleClaim : SR[roleKey];
-
-                            @if (isDemo)
-                            {
-                                <div class="sentinel-user-pill d-flex align-items-center gap-2">
-                                    <span class="sentinel-role-badge">Demo</span>
-                                    <form asp-controller="DemoUser" asp-action="SwitchRole" method="post" class="d-flex gap-1">
-                                        @Html.AntiForgeryToken()
-                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
-                                        <button type="submit" name="role" value="Supervisor"
-                                                class="sentinel-signout-btn @(roleClaim == "Supervisor" ? "active" : "")">
-                                            @SR["Role_Supervisor"]
-                                        </button>
-                                        <button type="submit" name="role" value="Operator"
-                                                class="sentinel-signout-btn @(roleClaim == "Operator" ? "active" : "")">
-                                                    @SR["Role_Operator"]
-                                                </button>
-                                        <button type="submit" name="role" value="Tech"
-                                                class="sentinel-signout-btn @(roleClaim == "Tech" ? "active" : "")">
-                                                    @SR["Role_Tech"]
-                                                </button>
-                                                    </form>
-                                    <button type="button"
-                                            class="sentinel-signout-btn"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#demo-share-modal">@SR["Nav_DemoShare"]</button>
-                                    <form asp-controller="DemoUser" asp-action="Switch" method="post" class="d-inline">
-                                        @Html.AntiForgeryToken()
-                                        <input type="hidden" name="role" value="Supervisor" />
-                                        <button type="submit" class="sentinel-signout-btn" title="Start a fresh demo session">↺ New session</button>
-                                    </form>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="sentinel-user-pill d-flex align-items-center gap-2">
-                                    <span class="sentinel-user-name">@User.Identity!.Name</span>
-                                    <span class="sentinel-role-badge">@localizedRole</span>
-                                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit" class="sentinel-signout-btn">@SR["Nav_SignOut"]</button>
-                                    </form>
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="sentinel-user-pill">
-                                <a href="/Account/Login" class="sentinel-signout-btn">@SR["Nav_SignIn"]</a>
-                            </div>
-                        }
-                    </div>
                 </div>
             </div>
         </nav>
+
+        <!-- ============================================================
+             SESSION BAR — tier · role · sound · share · sign-out
+             Sits directly below the primary nav as a slim utility strip.
+             ============================================================ -->
+        @{
+            var sessionRoleClaim = User?.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value ?? "User";
+            var sessionIsDemo    = User?.HasClaim("is_demo", "true") ?? false;
+            string? sessionRoleKey = sessionRoleClaim switch
+            {
+                "Supervisor"         => "Role_Supervisor",
+                "Operator"           => "Role_Operator",
+                "Tech"               => "Role_Tech",
+                "MaintenanceManager" => "Role_MaintenanceManager",
+                "Manager"            => "Role_MaintenanceManager",
+                _                    => null
+            };
+            var sessionLocalizedRole = sessionRoleKey is null
+                ? sessionRoleClaim
+                : SR[sessionRoleKey].ToString();
+        }
+        <div class="sentinel-session-bar">
+            <div class="container-fluid sentinel-session-bar-inner">
+
+                <!-- Left: tier pill + role control -->
+                <div class="sentinel-session-bar-left">
+                    <div class="sentinel-tier-pill @tierClass">
+                        <span>@tierText</span>
+                        <small>@tierSuffix</small>
+                    </div>
+
+                    @if (isAuthenticated)
+                    {
+                        @if (sessionIsDemo)
+                        {
+                            <span class="sentinel-session-badge sentinel-session-badge--demo">Demo</span>
+                            <div class="dropdown">
+                                <button class="sentinel-session-btn dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    @sessionLocalizedRole
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-dark sentinel-role-menu">
+                                    <li>
+                                        <form asp-controller="DemoUser" asp-action="SwitchRole" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                                            <button type="submit" name="role" value="Supervisor"
+                                                    class="dropdown-item @(sessionRoleClaim == "Supervisor" ? "active" : "")">
+                                                @SR["Role_Supervisor"]
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form asp-controller="DemoUser" asp-action="SwitchRole" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                                            <button type="submit" name="role" value="Operator"
+                                                    class="dropdown-item @(sessionRoleClaim == "Operator" ? "active" : "")">
+                                                @SR["Role_Operator"]
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form asp-controller="DemoUser" asp-action="SwitchRole" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                                            <button type="submit" name="role" value="Tech"
+                                                    class="dropdown-item @(sessionRoleClaim == "Tech" ? "active" : "")">
+                                                @SR["Role_Tech"]
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="sentinel-session-badge">@sessionLocalizedRole</span>
+                            <span class="sentinel-session-username">@User.Identity!.Name</span>
+                        }
+                    }
+                </div>
+
+                <!-- Right: sound toggle · share (demo) · new session (demo) · sign-out -->
+                <div class="sentinel-session-bar-right">
+                    <button type="button"
+                            id="sound-toggle-btn"
+                            class="sentinel-session-btn"
+                            data-text-on="@SR["Nav_SoundOn"]"
+                            data-text-off="@SR["Nav_SoundOff"]">
+                        🔊 @SR["Nav_SoundOn"]
+                    </button>
+
+                    @if (isAuthenticated)
+                    {
+                        @if (sessionIsDemo)
+                        {
+                            <button type="button"
+                                    class="sentinel-session-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#demo-share-modal">@SR["Nav_DemoShare"]</button>
+                            <form asp-controller="DemoUser" asp-action="Switch" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="role" value="Supervisor" />
+                                <button type="submit" class="sentinel-session-btn" title="Start a fresh demo session">↺ New session</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="sentinel-session-btn">@SR["Nav_SignOut"]</button>
+                            </form>
+                        }
+                    }
+                    else
+                    {
+                        <a href="/Account/Login" class="sentinel-session-btn">@SR["Nav_SignIn"]</a>
+                    }
+                </div>
+
+            </div>
+        </div>
     </header>
 
     <div class="container">

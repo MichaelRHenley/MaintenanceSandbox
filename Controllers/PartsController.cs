@@ -19,12 +19,14 @@ public class PartsController : Controller
     private readonly AppDbContext _db;
     private readonly ITenantProvider _tenantProvider;
     private readonly MaintenanceAiService _ai;
+    private readonly IPartImageLookupService _imageService;
 
-    public PartsController(AppDbContext db, ITenantProvider tenantProvider, MaintenanceAiService ai)
+    public PartsController(AppDbContext db, ITenantProvider tenantProvider, MaintenanceAiService ai, IPartImageLookupService imageService)
     {
         _db = db;
         _tenantProvider = tenantProvider;
         _ai = ai;
+        _imageService = imageService;
     }
     public async Task<IActionResult> Index(string? q = null)
     {
@@ -125,6 +127,17 @@ public class PartsController : Controller
 
         if (part == null)
             return NotFound();
+
+        // Lazy-enrich: populate image URL the first time this part is viewed
+        // when manufacturer + part number are known but image URL is missing.
+        if (string.IsNullOrWhiteSpace(part.ManufacturerImageUrl)
+            && !string.IsNullOrWhiteSpace(part.Manufacturer)
+            && !string.IsNullOrWhiteSpace(part.ManufacturerPartNumber))
+        {
+            part.ManufacturerImageUrl = await _imageService.GetImageUrlAsync(
+                part.Manufacturer, part.ManufacturerPartNumber);
+            await _db.SaveChangesAsync();
+        }
 
         // Simple "similar parts" heuristic (same mfg, similar description)
         IQueryable<Part> simQuery = _db.Parts

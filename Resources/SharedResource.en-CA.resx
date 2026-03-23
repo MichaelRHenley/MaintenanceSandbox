@@ -793,6 +793,13 @@
   <value>Mfg part #</value>
 </data>
 
+	<data name="Parts_Details_Section_ManufacturerImage" xml:space="preserve">
+  <value>Manufacturer part image</value>
+</data>
+	<data name="Parts_Details_ManufacturerImage_None" xml:space="preserve">
+  <value>No manufacturer image available</value>
+</data>
+
 	<data name="Parts_Details_Section_InventorySummary" xml:space="preserve">
   <value>Inventory summary</value>
 </data>

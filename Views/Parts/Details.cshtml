@@ -149,8 +149,32 @@
                 </div>
 
                 <!-- Quick stats -->
-                <div class="col-lg-4">
-                    <div class="bg-dark bg-opacity-75 rounded-3 p-3 h-100">
+                <div class="col-lg-4 d-flex flex-column gap-3">
+
+                    <!-- Manufacturer image -->
+                    <div class="card part-image-card shadow-sm border-0">
+                        <div class="card-body text-center py-3">
+                            <div class="text-uppercase small text-muted fw-semibold mb-2">
+                                @SR["Parts_Details_Section_ManufacturerImage"]
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(Model.ManufacturerImageUrl))
+                            {
+                                <img src="@Model.ManufacturerImageUrl"
+                                     alt="@Model.Manufacturer @Model.ManufacturerPartNumber"
+                                     class="img-fluid rounded shadow-sm part-image mx-auto d-block"
+                                     style="max-height: 280px; width: auto;" />
+                            }
+                            else
+                            {
+                                <div class="text-muted fst-italic small py-2">
+                                    @SR["Parts_Details_ManufacturerImage_None"]
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Inventory summary -->
+                    <div class="bg-dark bg-opacity-75 rounded-3 p-3">
                         <div class="text-uppercase small text-muted fw-semibold mb-2">
                             @SR["Parts_Details_Section_InventorySummary"]
                         </div>
